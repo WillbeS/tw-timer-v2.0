@@ -1,0 +1,78 @@
+
+Dodge
+--------------------------------------
+Ram 	123 (463|459) K44	Noble (491|508) K54	Unreliable Greek Players	56.4	tomorrow at 09:52:04:818	0:10:08
+   Ram 	110 (444|477) K44	Noble (508|514) K55	Unreliable Greek Players	73.9	today at 23:58:04:188	0:16:08
+   Ram 	140 (463|457) K44	Noble (501|524) K55	Unreliable Greek Players	77.0	today at 21:10:04:852	0:28:08
+   Ram 	091 (439|470) K44	Noble (511|526) K55	Unreliable Greek Players	91.2	tomorrow at 10:11:46:584	0:29:50
+   Ram 	091 (439|470) K44	Noble (521|517) K55	Unreliable Greek P
+   Ram 	140 (463|457) K44	Noble (522|519) K55	Unreliable Greek Players	85.6	tomorrow at 01:53:32:275	16:11:36
+   Ram 	110 (444|477) K44	Noble (520|520) K55	Unreliable Greek Players	87.3	tomorrow at 15:58:18:333	16:16:22
+   Ram 	134 (435|498) K44	*We Are Mayhem* (547|618) K65	Mr.Mayhem	164.1	on 29.07. at 02:37:21:961	64:55:25
+   Ram 	117 (432|499) K44	*We Are Mayhem* (547|618) K65	Mr.Mayhem	165.5	on 29.07. at 03:17:47:202	65:35:51
+-----------------------------------------
+Command (60)	Destination	Origin	Player	Distance	Arrival time	Arrives in
+   Ram 423|496 CheekyBlinderr 	484 (495|591) K65	300. 036 (423|496) K66	CheekyBlinderr	126.8	today at 20:46:31:488	0:26:47
+   Ram 634|612 CheekyBlinderr 	509 (537|695) K65	TWT 0109 (634|612) K66	CheekyBlinderr	127.7	today at 16:47:38:376	0:29:54
+   Ram 612|600 CheekyBlinderr 	486 (529|697) K65	269. No funny business (612|600) K66	CheekyBlinderr	127.7	today at 16:58:59:413	0:41:15
+   Ram 644|633 CheekyBlinderr 	432 (530|691) K65	216. Act 228 (644|633) K66	CheekyBlinderr	127.9	today at 17:00:51:252	0:43:07
+   Ram 634|616 CheekyBlinderr 	359 (522|677) K65	TWT 0134 (634|616) K66	CheekyBlinderr	127.5	today at 17:03:38:117	0:45:54
+   Ram 668|599 CheekyBlinderr 	216 (565|675) K65	#001 Vizzini (668|599) K56	CheekyBlinderr	128	today at 17:12:19:446	0:54:35
+   Ram 658|593 CheekyBlinderr 	197 (553|666) K65	GENOME (658|593) K56	CheekyBlinderr	127.9	today at 17:14:36:976	0:56:52
+   Ram 596|605 CheekyBlinderr 	578 (500|690) K65	014. Dasher (596|605) K65	CheekyBlinderr	128.2	today at 17:17:12:744	0:59:28
+   Ram 721|553 lukeybaby 	026 (533|679) K65	Bonus village (721|553) K57	lukeybaby	226.3	today at 17:36:09:133	1:38:25
+   Ram 664|600 CheekyBlinderr 	676 (551|665) K65	016: Valhalla (664|600) K66	CheekyBlinderr	130.4	today at 18:21:19:882	2:03:35
+   Ram 719|546 lukeybaby 	095 (534|678) K65	Bonus village (719|546) K57	lukeybaby	227.3	today at 18:24:27:430	2:06:43
+   Ram 658|606 CheekyBlinderr 	067 (542|666) K65	098: (658|606) K66	CheekyBlinderr	130.6	today at 18:24:28:297	2:06:44
+   Ram 664|599 CheekyBlinderr 	203 (550|664) K65	008: Hauksness (664|599) K56	CheekyBlinderr	131.2	today at 18:31:50:264	2:14:06
+   Ram 660|598 CheekyBlinderr 	571 (565|688) K65	067: (660|598) K56	CheekyBlinderr	130.9	today at 18:39:03:671	2:21:19
+   Ram 612|601 CheekyBlinderr 	664 (518|692) K65	268. Fun nights (612|601) K66	CheekyBlinderr	130.8	today at 18:50:56:866	2:33:12
+   Ram 622|600 CheekyBlinderr 	438 (527|693) K65	Trysil 004 (622|600) K66	CheekyBlinderr	132.9	today at 19:51:41:482	3:33:57
+   Ram 623|611 CheekyBlinderr 	661 (515|689) K65	A009 (623|611) K66	CheekyBlinderr	133.2	today at 20:01:00:289	3:43:16
+   Ram 627|613 CheekyBlinderr 	659 (516|690) K65	TWT 0190 (627|613) K66	CheekyBlinderr	135.1	today at 20:36:53:258	4:19:09
+   Ram 659|595 CheekyBlinderr 	361 (570|696) K65	GENOME (659|595) K56	CheekyBlinderr	134.6	today at 20:41:50:416	4:24:06
+   Ram 667|604 CheekyBlinderr 	232 (543|657) K65	#010 Torino (667|604) K66	CheekyBlinderr	134.9	today at 20:52:51:790	4:35:07
+   Ram 662|601 CheekyBlinderr 	107 (554|682) K65	014: Asgardsrei (662|601) K66	CheekyBlinderr	135	today at 20:52:56:927	4:35:12
+   Ram 656|611 CheekyBlinderr 	028 (540|680) K65	Barbarian village (656|611) K66	CheekyBlinderr	135	today at 20:56:38:898	4:38:54
+   Ram 659|596 CheekyBlinderr 	712 (567|696) K65	GENOME (659|596) K56	CheekyBlinderr	135.9	today at 21:02:58:657	4:45:14
+   Ram 617|602 CheekyBlinderr 	658 (515|692) K65	280. FUNNEST. (617|602) K66	CheekyBlinderr	136	today at 21:11:24:422	4:53:40
+   Ram 613|609 CheekyBlinderr 	383 (505|693) K65	236. #036 - The Mystic (613|609) K66	CheekyBlinderr	136.8	today at 21:46:08:707	5:28:24
+   Ram 667|600 CheekyBlinderr 	226 (563|693) K65	#004 Palermo (667|600) K66	CheekyBlinderr	139.5	today at 22:39:56:512	6:22:12
+   Ram 661|604 CheekyBlinderr 	072 (537|667) K65	023 Rimini (661|604) K66	CheekyBlinderr	139.1	today at 22:50:05:066	6:32:21
+   Ram 623|604 CheekyBlinderr 	658 (515|692) K65	A011 (623|604) K66	CheekyBlinderr	139.3	today at 23:01:00:034	6:43:16
+   Ram 623|609 CheekyBlinderr 	652 (515|697) K65	Did you hear the log that fell? (623|609) K66	CheekyBlinderr	139.3	today at 23:01:53:238	6:44:09
+   Ram 655|604 CheekyBlinderr 	086 (539|682) K65	034: Menelaus (655|604) K66	CheekyBlinderr	139.8	today at 23:18:45:931	7:01:01
+   Ram 655|604 CheekyBlinderr 	263 (527|663) K65	034: Menelaus (655|604) K66	CheekyBlinderr	140.9	today at 23:22:39:370	7:04:55
+   Ram 641|630 CheekyBlinderr 	647 (517|699) K65	227. Act 268 (641|630) K66	CheekyBlinderr	141.9	today at 23:52:04:653	7:34:20
+   Ram 659|612 CheekyBlinderr 	102 (535|680) K65	074: (659|612) K66	CheekyBlinderr	141.4	today at 23:59:40:029	7:41:56
+   Ram 658|606 CheekyBlinderr 	042 (538|682) K65	098: (658|606) K66	CheekyBlinderr	142	tomorrow at 00:05:24:577	7:47:40
+   Ram 670|602 CheekyBlinderr 	231 (559|691) K65	072: (670|602) K66	CheekyBlinderr	142.3	tomorrow at 00:21:50:251	8:04:06
+   Ram 659|606 CheekyBlinderr 	111 (532|672) K65	009: Constantinople (659|606) K66	CheekyBlinderr	143.1	tomorrow at 00:55:49:564	8:38:05
+   Ram 665|602 CheekyBlinderr 	049 (542|678) K65	Noble Booster (665|602) K66	CheekyBlinderr	144.6	tomorrow at 01:36:55:375	9:19:11
+   Ram 659|594 CheekyBlinderr 	055 (545|683) K65	GENOME (659|594) K56	CheekyBlinderr	144.6	tomorrow at 01:39:04:014	9:21:20
+   Ram 667|602 CheekyBlinderr 	220 (533|659) K65	028: Corinth (667|602) K66	CheekyBlinderr	145.6	tomorrow at 01:45:58:064	9:28:14
+   Ram 661|607 CheekyBlinderr 	405 (541|689) K65	044: (661|607) K66	CheekyBlinderr	145.3	tomorrow at 01:53:49:437	9:36:05
+   Ram 655|603 CheekyBlinderr 	413 (538|690) K65	033: Atreus (655|603) K66	CheekyBlinderr	145.8	tomorrow at 02:12:57:757	9:55:13
+   Ram 621|598 CheekyBlinderr 	653 (512|695) K65	288. 009 (621|598) K56	CheekyBlinderr	145.9	tomorrow at 02:17:04:633	9:59:20
+   Ram 667|604 CheekyBlinderr 	083 (536|668) K65	#010 Torino (667|604) K66	CheekyBlinderr	145.8	tomorrow at 02:20:45:984	10:03:01
+   Ram 636|630 CheekyBlinderr 	380 (503|693) K65	TWT 0207 (636|630) K66	CheekyBlinderr	147.2	tomorrow at 02:58:22:502	10:40:38
+   Ram 657|602 CheekyBlinderr 	634 (542|696) K65	003: CJ (657|602) K66	CheekyBlinderr	148.5	tomorrow at 03:10:13:838	10:52:29
+   Ram 615|595 CheekyBlinderr 	671 (505|694) K65	Village 006 (615|595) K56	CheekyBlinderr	148	tomorrow at 03:14:56:980	10:57:12
+   Ram 659|596 CheekyBlinderr 	078 (533|677) K65	GENOME (659|596) K56	CheekyBlinderr	149.8	tomorrow at 04:00:09:039	11:42:25
+   Ram 660|602 CheekyBlinderr 	460 (527|674) K65	#027 Livorno (660|602) K66	CheekyBlinderr	151.2	tomorrow at 04:47:39:277	12:29:55
+   Ram 666|599 CheekyBlinderr 	485 (540|687) K65	#005 Venice (666|599) K56	CheekyBlinderr	153.7	tomorrow at 05:45:03:172	13:27:19
+   Ram 664|600 CheekyBlinderr 	402 (536|686) K65	016: Valhalla (664|600) K66	CheekyBlinderr	154.2	tomorrow at 06:26:24:564	14:08:40
+   Ram 663|605 CheekyBlinderr 	472 (523|670) K65	032 Maranello (663|605) K66	CheekyBlinderr	154.4	tomorrow at 06:31:14:510	14:13:30
+   Ram 662|601 CheekyBlinderr 	412 (532|687) K65	014: Asgardsrei (662|601) K66	CheekyBlinderr	155.9	tomorrow at 07:22:09:128	15:04:25
+   Ram 662|602 CheekyBlinderr 	453 (527|682) K65	Alpha (662|602) K66	CheekyBlinderr	156.9	tomorrow at 07:51:01:996	15:33:17
+   Ram 657|601 CheekyBlinderr 	479 (517|676) K65	001: Elena (657|601) K66	CheekyBlinderr	158.8	tomorrow at 08:50:19:242	16:32:35
+   Ram 665|598 CheekyBlinderr 	354 (524|674) K65	#020 Licodia (665|598) K56	CheekyBlinderr	160.2	tomorrow at 09:25:57:131	17:08:13
+   Ram 664|598 CheekyBlinderr 	469 (521|673) K65	#019 Capri (664|598) K56	CheekyBlinderr	161.5	tomorrow at 09:47:58:036	17:30:14
+   Ram 669|603 CheekyBlinderr 	516 (537|698) K65	032: Massa (669|603) K66	CheekyBlinderr	162.6	tomorrow at 10:32:02:086	18:14:18
+   Ram 667|602 CheekyBlinderr 	363 (522|681) K65	028: Corinth (667|602) K66	CheekyBlinderr	165.1	tomorrow at 11:58:54:434	19:41:10
+   Ram 668|599 CheekyBlinderr 	415 (527|692) K65	#001 Vizzini (668|599) K56	CheekyBlinderr	168.9	tomorrow at 13:33:41:506	21:15:57
+   Ram 664|596 CheekyBlinderr 	561 (513|696) K65	GENOME (664|596) K56	CheekyBlinderr	181.1	tomorrow at 19:53:08:061	27:35:24
+ select all	 
+Troop movements per page:	
+1000
+Server time: 16:17:45 26/04/2023	

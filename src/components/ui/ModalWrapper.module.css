@@ -1,0 +1,58 @@
+.showAnimation {
+  -webkit-animation-name: movedown;
+  -webkit-animation-duration: 0.4s;
+  animation-name: movedown;
+  animation-duration: 0.4s;
+}
+
+.hideAnimation {
+  -webkit-animation-name: moveup;
+  -webkit-animation-duration: 0.4s;
+  animation-name: moveup;
+  animation-duration: 0.4s;
+}
+
+/* Add Animation */
+@-webkit-keyframes movedown {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes movedown {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes moveup {
+  from {
+    top: 0;
+    opacity: 1;
+  }
+  to {
+    top: -300px;
+    opacity: 0;
+  }
+}
+
+@keyframes moveup {
+  from {
+    top: 0;
+    opacity: 1;
+  }
+  to {
+    top: -300px;
+    opacity: 0;
+  }
+}

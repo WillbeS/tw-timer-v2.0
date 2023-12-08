@@ -1,0 +1,6 @@
+import { saveTasks } from './saveTasks';
+import { fetchTasks } from './getTasks';
+import { deleteTask } from './deleteTask';
+import { editTask } from './editTask';
+
+export { saveTasks, fetchTasks, deleteTask, editTask };

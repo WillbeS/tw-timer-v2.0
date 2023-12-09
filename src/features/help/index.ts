@@ -1,4 +1,3 @@
-import { Help } from './components/Help';
-import { HelpModal } from './components/HelpModal';
+import { HelpWrapper } from './components/HelpWrapper';
 
-export { Help, HelpModal };
+export { HelpWrapper };

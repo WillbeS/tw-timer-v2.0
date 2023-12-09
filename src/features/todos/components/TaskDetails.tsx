@@ -1,4 +1,3 @@
-import { ModalWrapper } from '../../../components/ui/ModalWrapper';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 
@@ -11,7 +10,7 @@ type Props = {
   }[];
 };
 
-export const TodoDetails = ({ details }: Props) => {
+export const TaskDetails = ({ details }: Props) => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
 
   return (

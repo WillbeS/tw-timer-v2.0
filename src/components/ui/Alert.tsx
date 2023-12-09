@@ -3,6 +3,7 @@ import { ReactComponent as CrossIcon } from '../../assets/img/cross.svg';
 import { ReactComponent as InfoIcon } from '../../assets/img/info.svg';
 import { ReactComponent as WarningIcon } from '../../assets/img/warning.svg';
 import { useAnimation } from '../../hooks/useAnimation';
+import { CloseBtn } from './CloseBtn';
 
 type Props = {
   type?: string;
@@ -51,15 +52,7 @@ export function Alert({ type = 'information', heading, children, closable, onClo
         </span>
         <span className="font-bold">{heading}</span>
 
-        {closable && (
-          <button
-            aria-label="Close"
-            onClick={handleCloseClick}
-            className="border-none bg-transparent ml-auto cursor-pointer"
-          >
-            <CrossIcon />
-          </button>
-        )}
+        {closable && <CloseBtn onCloseClick={handleCloseClick} light={false} />}
       </div>
       <div className="ml-7 text-black">{children}</div>
     </div>

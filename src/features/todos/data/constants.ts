@@ -1,20 +1,3 @@
-export const worlds = [
-  { value: 'en136', label: '136' },
-  { value: 'en135', label: '135' },
-  { value: 'en134', label: '134' },
-  { value: 'en133', label: '133' },
-  { value: 'en132', label: '132' },
-  { value: 'en131', label: '131' },
-  { value: 'en130', label: '130' },
-  { value: 'en129', label: '129' },
-  { value: 'en128', label: '128' },
-  { value: 'enp11', label: 'Casual 11' },
-  { value: 'enp12', label: 'Casual 12' },
-  { value: 'enp13', label: 'Casual 13' },
-  { value: 'enc1', label: 'Classic' },
-  { value: 'ens1', label: 'Speed' },
-];
-
 export const WH_CAPACITY = 590000; // Will be set by the user later
 
 //assume that this amount is already there

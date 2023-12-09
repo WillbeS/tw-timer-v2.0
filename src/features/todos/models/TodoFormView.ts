@@ -1,7 +1,5 @@
 import { todoTypes } from '../data/constants';
 import { AddTodosFormInput, AddTodosFormErrors } from '../data/types';
-import { todosFormHelpData } from '../data/todos-form-help';
-import { ModalHelpContent } from '../../../data/types';
 
 export class TodoFormView {
   private offsetByType = {
@@ -29,14 +27,6 @@ export class TodoFormView {
 
   public get errors(): AddTodosFormErrors {
     return this._errors;
-  }
-
-  public getHelpData(key: string): ModalHelpContent {
-    if (!todosFormHelpData[key]) {
-      throw new Error('Unsupported help type!');
-    }
-
-    return todosFormHelpData[key];
   }
 
   private validateWorld(world: string, type: string) {

@@ -1,6 +1,7 @@
 import { ModalHelpData } from '../../../data/types';
-import { todoTypes } from './constants';
+import { todoTypes } from '../../todos/data/constants'; //temp
 
+// Keeping this only because of the data, to use it for the help component
 export const todosFormHelpData: ModalHelpData = {
   world: {
     heading: 'World Field Help',

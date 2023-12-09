@@ -3,15 +3,14 @@ import { ReactComponent as DeleteIcon } from '../../../assets/img/delete2.svg';
 import { Todo } from '../data/types';
 import { getTodoView } from '../models';
 
-//import { CountdownTimer } from '../../alarm/components/CountdownTimer';
 import { CountdownTimer } from '../../alarm/components/CountdownTimer';
-import { TodoDetails } from './TodoDetails';
-import { TodoMessage } from './TodoMessage';
+import { TaskDetails } from './TaskDetails';
+import { TaskMessage } from './TaskMessage';
 import { defaultTheme } from '../../../data/constants';
 
 type Props = { todo: Todo; onDelete: (id: string) => void; onEdit: (editedTodo: Todo) => void };
 
-export const TodoRow = ({ todo, onDelete, onEdit }: Props) => {
+export const TaskRow = ({ todo, onDelete, onEdit }: Props) => {
   const todoView = getTodoView(todo);
 
   const handleUpdate = () => {
@@ -21,9 +20,6 @@ export const TodoRow = ({ todo, onDelete, onEdit }: Props) => {
       onEdit(edited);
     }
   };
-
-  const iconSpanStyles = 'px-1 cursor-pointer';
-  const iconStyles = `w-5 h-5 fill-neutral-500 hover:fill-neutral-700`;
 
   return (
     <div
@@ -35,10 +31,10 @@ export const TodoRow = ({ todo, onDelete, onEdit }: Props) => {
           className="px-1 cursor-pointer px-2 flex items-center"
           onClick={(e) => console.log('Todo details')}
         >
-          <TodoDetails details={todoView.getDetails()} />
+          <TaskDetails details={todoView.getDetails()} />
         </span>
         <span>
-          <TodoMessage todoView={todoView} onEdit={onEdit} />
+          <TaskMessage todoView={todoView} onEdit={onEdit} />
 
           {todoView.canUpdate() ? (
             <span className="pl-3 pr-2 cursor-pointer text-lg font-bold" onClick={handleUpdate}>
@@ -49,7 +45,6 @@ export const TodoRow = ({ todo, onDelete, onEdit }: Props) => {
       </div>
       <div className="flex gap-3 md:gap-6 justify-end">
         <span>
-          {/* <CountdownTimer id={todo.id} /> */}
           <CountdownTimer todoView={todoView} />
         </span>
         <span

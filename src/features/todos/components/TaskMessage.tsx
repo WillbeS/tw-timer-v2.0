@@ -6,7 +6,7 @@ type Props = {
   onEdit: (editedTodo: Todo) => void;
 };
 
-export const TodoMessage = ({ todoView, onEdit }: Props) => {
+export const TaskMessage = ({ todoView, onEdit }: Props) => {
   const { message, urlParts } = todoView.getMessage(window.innerWidth);
 
   if (!urlParts) return <>{message}</>;

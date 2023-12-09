@@ -6,5 +6,6 @@ export const isFirstVisit = () => {
 };
 
 export const setAsVisited = () => {
-  localStorage.setItem('welcome', JSON.stringify({ firstVisit: true }));
+  console.log('Set as visited');
+  localStorage.setItem('welcome', JSON.stringify({ visited: true }));
 };

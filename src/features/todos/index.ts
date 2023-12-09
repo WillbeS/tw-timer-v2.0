@@ -1,5 +1,3 @@
-import { TodoList } from './components/TodoList';
-import { AddTodos } from './components/AddTodos';
-import { ParseTodos } from './components/ParseTodos';
+import { TaskList } from './components/TaskList';
 
-export { TodoList, AddTodos, ParseTodos };
+export { TaskList };

@@ -21,7 +21,6 @@ export function Header() {
         {/* <RoundedButton label="Help" symbol="?" onClick={() => navigate('/help')} /> */}
         <HelpWrapper />
       </div>
-      {/* <Alarm /> */}
     </header>
   );
 }

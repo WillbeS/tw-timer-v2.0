@@ -16,10 +16,10 @@ import { deleteTodo, editTodo, saveFromApi } from '../services/todoStorage';
 import { Todo } from '../data/types';
 import { formatTime } from '../../../utils/dateTime';
 
-import { TodoRow } from './TodoRow';
+import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
 
-export const TodoList = () => {
+export const TaskList = () => {
   const [world, setWorld] = useState('0');
   const [type, setType] = useState('0');
 
@@ -86,7 +86,7 @@ export const TodoList = () => {
       <div className="flex flex-col gap-2 text-sm md:text-lg font-semibold mt-5">
         {loading && <div className="text-white text-center">Loading...</div>}
         {todos.map((todo) => (
-          <TodoRow key={todo.id} todo={todo} onDelete={handleDelete} onEdit={handleEdit} />
+          <TaskRow key={todo.id} todo={todo} onDelete={handleDelete} onEdit={handleEdit} />
         ))}
       </div>
     </>

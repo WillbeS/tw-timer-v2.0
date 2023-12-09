@@ -1,7 +1,7 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
-import { HomePage, ParseTodosPage, HelpPage, ErrorPage } from './pages/';
+import { HomePage, ErrorPage } from './pages/';
 
 const router = createBrowserRouter([
   {
@@ -12,14 +12,6 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
-      },
-      {
-        path: '/parse',
-        element: <ParseTodosPage />,
-      },
-      {
-        path: '/help',
-        element: <HelpPage />,
       },
     ],
   },

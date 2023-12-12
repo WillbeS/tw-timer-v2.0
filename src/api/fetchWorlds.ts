@@ -12,6 +12,7 @@ export const fetchWorlds = async () => {
 
   const body = (await response.json()) as unknown;
   assertIsWorldData(body);
+  console.log('Worlds are fetched');
   return body;
 };
 

@@ -37,8 +37,22 @@ export class ReminderTodoParser extends TodoParser {
     }
 
     const dueMs = new Date().getTime() + minutes * 60 * 1000;
+    //const message = this.getMessage('' + match.input);
     const message = '' + match.input;
 
     return this.generateTodo(dueMs, message);
   }
+
+  // May work on this idea later, for now will not implement it
+  // or tomorrow may just generate a url from the first coords
+  private getMessage = (originalMsg: string) => {
+    const pattern = /(\d{3}\|\d{3})/g;
+    const coords = originalMsg.match(pattern);
+
+    coords?.forEach((c) => {
+      originalMsg = originalMsg.replace(c, this.replaceCoords(c));
+    });
+
+    return originalMsg;
+  };
 }

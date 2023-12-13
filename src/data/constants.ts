@@ -4,8 +4,8 @@ export const DEBUG_MODE = true;
 //export const REMOTE_URL = 'https://twtools.vvillbes.eu/serverdata/';
 //export const REMOTE_URL = "http://localhost:8000/";
 
-export const REMOTE_URL = 'https://127.0.0.1:8000/api/tw';
-//export const REMOTE_URL = 'https://www.vvillbes.eu/api/tw';
+//export const REMOTE_URL = 'https://127.0.0.1:8000/api/tw';
+export const REMOTE_URL = 'https://www.vvillbes.eu/api/tw';
 
 export const sounds = {
   VIB: 'vibration.mp3',

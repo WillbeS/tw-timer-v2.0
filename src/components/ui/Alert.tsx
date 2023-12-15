@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { ReactComponent as CrossIcon } from '../../assets/img/cross.svg';
 import { ReactComponent as InfoIcon } from '../../assets/img/info.svg';
 import { ReactComponent as WarningIcon } from '../../assets/img/warning.svg';
 import { useAnimation } from '../../hooks/useAnimation';

@@ -15,12 +15,13 @@ export type WorldData = {
   speed: number;
 };
 
-export type ResponseBodyData = {
-  error: boolean | undefined;
-  data: unknown | undefined;
-  message: string;
-};
+// export type ResponseBodyData = {
+//   error: boolean | undefined;
+//   data: unknown | undefined;
+//   message: string;
+// };
 
+// Dont think I need those any more as well
 export type ModalHelpContent = {
   heading: string;
   content: { heading: string; content: string }[];
@@ -32,6 +33,7 @@ export type ModalHelpData = {
     content: { heading: string; content: string }[];
   };
 };
+//////////////////////////////////////////////
 
 // for now noone's using this
 export type Resources = {

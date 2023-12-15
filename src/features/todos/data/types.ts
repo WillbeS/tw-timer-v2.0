@@ -1,3 +1,16 @@
+// Note: all types in VillageData are strings for now because that's how the
+// backend is parsing them atm, this may change in the future
+export type VillageData = {
+  // [key: string]: string;
+  bonus: string;
+  id: string;
+  name: string;
+  playerId: string;
+  points: string;
+  x: string;
+  y: string;
+};
+
 export type NewTodo = {
   type: string;
   world: string;

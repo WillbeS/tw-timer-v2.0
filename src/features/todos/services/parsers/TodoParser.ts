@@ -1,6 +1,6 @@
 import { NewTodo } from '../../data/types';
 import { AddTodosFormInput } from '../../data/types';
-import { fetchVillages } from '../../../../api';
+import { getVillages } from '../../api';
 import { VillageData } from '../../../../data/types';
 import { getRelativeDate } from '../../../../utils/dateTime';
 
@@ -72,14 +72,10 @@ export abstract class TodoParser {
 
     if (!coords) return;
 
-    try {
-      const villages: VillageData[] = await fetchVillages(world, coords.filter(this.onlyUnique));
-      villages.forEach((village: VillageData) => {
-        this.villages[`${village.x}|${village.y}`] = village;
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    const villages: VillageData[] = await getVillages(world, coords.filter(this.onlyUnique));
+    villages.forEach((village: VillageData) => {
+      this.villages[`${village.x}|${village.y}`] = village;
+    });
   }
 
   // is this redundant?

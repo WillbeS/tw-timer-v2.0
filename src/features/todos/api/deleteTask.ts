@@ -1,16 +1,23 @@
 import { REMOTE_URL } from '../../../data/constants';
 
-export const deleteTask = async (id: string) => {
-  const url = REMOTE_URL + '/timer/tasks/' + id;
+export const deleteTask = async (id: string): Promise<boolean> => {
+  try {
+    const url = REMOTE_URL + '/timer/tasks/' + id;
 
-  const response = await fetch(url, {
-    method: 'delete',
-    headers: {
-      Accept: 'application/json',
-    },
-  });
+    const response = await fetch(url, {
+      method: 'delete',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
 
-  const body = (await response.json()) as unknown;
-  console.log(body);
-  return body;
+    if (response.status < 200 || response.status > 299) {
+      throw new Error('Error deleting tasks, responce status code: ' + response.status);
+    }
+  } catch (error) {
+    console.log(error); // later log it on the server
+    return false;
+  }
+
+  return true;
 };

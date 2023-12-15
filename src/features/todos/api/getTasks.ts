@@ -1,60 +1,40 @@
 import { Todo } from '../data/types';
 import { REMOTE_URL } from '../../../data/constants';
+import { assertIsTaskData } from '../data/typeAsserts';
 
-export const fetchTasks = async () => {
-  const url = REMOTE_URL + '/timer/tasks';
+export const fetchTasks = async (): Promise<Todo[]> => {
+  try {
+    const url = REMOTE_URL + '/timer/tasks';
 
-  const response = await fetch(url, {
-    headers: {
-      Accept: 'application/json',
-    },
-  });
+    const response = await fetch(url, {
+      headers: {
+        Accept: 'application/json',
+      },
+    });
 
-  const body = (await response.json()) as unknown;
-  assertIsTasks(body);
-  return body;
+    if (response.status < 200 || response.status > 299) {
+      throw new Error('Error fetching tasks, responce status code: ' + response.status);
+    }
+
+    const body = (await response.json()) as unknown;
+    assertIsTaskDataArr(body);
+
+    return body;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
 };
 
-export function assertIsTasks(tasksData: unknown): asserts tasksData is Todo[] {
+export function assertIsTaskDataArr(tasksData: unknown): asserts tasksData is Todo[] {
   if (!Array.isArray(tasksData)) {
-    throw new Error("posts isn't an array");
+    throw new Error("taskData isn't an array");
   }
   if (tasksData.length === 0) {
     return;
   }
 
-  //   export type TaskData = {
-  //     alarmOffset: number;
-  //     dueMs: number;
-  //     id: string;
-  //     isRepeating: boolean;
-  //     message: string;
-  //     type: string;
-  //     world: string;
-  //   };
-
-  tasksData.forEach((task) => {
-    if (!('alarmOffset' in task)) {
-      throw new Error("task doesn't contain alarmOffset");
-    }
-    if (typeof task.alarmOffset !== 'number') {
-      throw new Error('alarmOffset is not a number');
-    }
-
-    if (!('dueMs' in task)) {
-      throw new Error("task doesn't contain dueMs");
-    }
-    if (typeof task.dueMs !== 'number') {
-      throw new Error('dueMs is not a number');
-    }
-
-    if (!('id' in task)) {
-      throw new Error("task doesn't contain id");
-    }
-    if (typeof task.id !== 'string') {
-      throw new Error('id is not a string');
-    }
-
-    // TODO the rest when doing refactoring
+  tasksData.forEach((datum) => {
+    assertIsTaskData(datum);
   });
 }

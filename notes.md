@@ -19,3 +19,9 @@ each timer will import the alarm and will call it from within, the alarm should 
 inactive tab throttling - need to find a fix
 
 ---
+
+Status codes and response body:
+
+GET - 200 - the resource
+POST - 201 - empty response body
+DELETE/PUT/PATCH - 204, empty response body

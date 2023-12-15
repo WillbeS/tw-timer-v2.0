@@ -1,45 +1,25 @@
-import { NewTodo, SavedTodo, Todo } from '../data/types';
+import { Todo } from '../data/types';
 import { REMOTE_URL } from '../../../data/constants';
 
-// export async function saveTask(newTaskData: NewTodo) {
-//   const response = await fetch(process.env.REACT_APP_API_URL!, {
-//     method: 'POST',
-//     body: JSON.stringify(newTaskData),
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//   });
+export const saveTasks = async (tasks: Todo[]): Promise<boolean> => {
+  try {
+    const url = REMOTE_URL + '/timer/tasks';
 
-//   const body = (await response.json()) as unknown;
-//   assertIsSavedTask(body);
+    const response = await fetch(url, {
+      method: 'post',
+      body: JSON.stringify(tasks),
+      headers: {
+        Accept: 'application/json',
+      },
+    });
 
-//   return { ...newTaskData, ...body };
-// }
+    if (response.status < 200 || response.status > 299) {
+      throw new Error('Error saving tasks, responce status code: ' + response.status);
+    }
+  } catch (error) {
+    console.log(error); // later log it on the server
+    return false;
+  }
 
-export const saveTasks = async (tasks: Todo[]) => {
-  console.log('Should save on the server!!!!!!!!!!!!!!!!!!!');
-  const url = REMOTE_URL + '/timer/tasks';
-
-  const response = await fetch(url, {
-    method: 'post',
-    body: JSON.stringify(tasks),
-    headers: {
-      Accept: 'application/json',
-    },
-  });
-
-  const body = (await response.json()) as unknown;
-  console.log(body);
-  return body;
+  return true;
 };
-
-// Still undecided on the return data type
-
-// function assertIsSavedTask(task: any): asserts task is SavedTodo {
-//   if (!('id' in task)) {
-//     throw new Error("post doesn't contain id");
-//   }
-//   if (typeof task.id !== 'string') {
-//     throw new Error('id is not a string');
-//   }
-// }

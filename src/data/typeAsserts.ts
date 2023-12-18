@@ -11,7 +11,11 @@ export const assertPropExists = (data: object, propName: string) => {
   }
 };
 
-export const assertPropIsCorrectType = (testObj: object, assertData: AssertData) => {
+export const assertPropIsCorrectType = (
+  testObj: object,
+  assertData: AssertData,
+  optionalData?: AssertData,
+) => {
   const propValues = Object.values(testObj);
   const propKeys = Object.keys(testObj);
 
@@ -20,7 +24,12 @@ export const assertPropIsCorrectType = (testObj: object, assertData: AssertData)
     const propName = propKeys[i];
 
     //console.log(`Type of ${propName} is `, typeof prop);
-    if (typeof prop !== assertData[propName]) {
+    if (optionalData && optionalData[propName]) {
+      console.log('Assert optional props');
+      if (typeof prop !== optionalData[propName]) {
+        throw new Error(`${propName} is not a ${optionalData[propName]}`);
+      }
+    } else if (typeof prop !== assertData[propName]) {
       throw new Error(`${propName} is not a ${assertData[propName]}`);
     }
   }

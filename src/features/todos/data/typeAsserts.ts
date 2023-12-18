@@ -26,7 +26,6 @@ export function assertIsVillageData(data: unknown): asserts data is VillageData 
 }
 
 export function assertIsTaskData(data: unknown): asserts data is Todo {
-  console.log(data);
   const taskData: AssertData = {
     alarmOffset: 'number',
     dueMs: 'number',
@@ -37,6 +36,11 @@ export function assertIsTaskData(data: unknown): asserts data is Todo {
     world: 'string',
   };
 
+  const optionalData: AssertData = {
+    url: 'string',
+    details: 'string',
+  };
+
   if (!data || typeof data !== 'object') {
     throw new Error(`The data is not an object`);
   }
@@ -45,5 +49,5 @@ export function assertIsTaskData(data: unknown): asserts data is Todo {
     assertPropExists(data, key);
   });
 
-  assertPropIsCorrectType(data, taskData);
+  assertPropIsCorrectType(data, taskData, optionalData);
 }

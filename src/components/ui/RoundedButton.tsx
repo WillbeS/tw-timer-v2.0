@@ -1,3 +1,5 @@
+import { theme } from '../../themes';
+
 type Props = {
   label: string;
   onClick?: () => void;
@@ -6,18 +8,15 @@ type Props = {
   txtColor?: string;
 };
 
-export const RoundedButton = ({
-  label,
-  onClick,
-  symbol,
-  bgColor = 'bg-yellow-700',
-  txtColor = 'text-white',
-}: Props) => {
+export const RoundedButton = ({ label, onClick, symbol, bgColor, txtColor }: Props) => {
   const handleClick = () => {
     if (onClick) {
       onClick();
     }
   };
+
+  bgColor = bgColor ? bgColor : theme.bgColors.button;
+  txtColor = txtColor ? txtColor : theme.textColors.button;
 
   return (
     <button

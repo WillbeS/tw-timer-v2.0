@@ -58,7 +58,7 @@ export const Alarm = () => {
 
   return (
     <span className="inline-flex items-center ml-auto">
-      <span className=" text-white text-md font-bold mr-2">Alarm</span>
+      <span className="text-md font-bold mr-2">Alarm</span>
       <SwitchBtn2 onToggle={handleToggle} />
     </span>
   );

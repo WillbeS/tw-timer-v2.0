@@ -1,6 +1,9 @@
+// I'm not using this but mau turn it into a reusable component
 import { useState, useRef } from 'react';
 import { ReactComponent as DownArrow } from '../../assets/img/down-arrow.svg';
 import { ReactComponent as UpArrow } from '../../assets/img/up-arrow.svg';
+
+import { theme } from '../../themes';
 
 type Option = {
   value: string;
@@ -20,14 +23,17 @@ export const CustomSelect = ({
   onSelect,
   options,
   defaultOption,
-  bgColor = 'yellow-700',
-  txtColor = 'white',
+  bgColor,
+  txtColor,
   borderColor = 'yellow-800',
 }: Props) => {
   const [isOpen, setisOpen] = useState(false);
   defaultOption = defaultOption ? defaultOption : options[0];
   const [selected, setSelected] = useState<Option>(defaultOption);
   const catMenu = useRef<HTMLDivElement>(null); // don't like this name, need a better one
+
+  bgColor = bgColor ? bgColor : theme.bgColors.button;
+  txtColor = txtColor ? txtColor : theme.textColors.button;
 
   const toggleOpen = () => {
     setisOpen((prevState) => !prevState);
@@ -51,7 +57,7 @@ export const CustomSelect = ({
   return (
     <div ref={catMenu} onClick={toggleOpen} className="relative text-sm w-28 md:w-32">
       <div
-        className={`flex items-center justify-between gap-1 p-1 pl-3 pr-2 rounded-md bg-${bgColor} text-${txtColor} cursor-pointer `}
+        className={`flex items-center justify-between gap-1 p-1 pl-3 pr-2 rounded-m ${bgColor} ${txtColor} cursor-pointer `}
       >
         <span>{selected.label}</span>
         <span>
@@ -63,9 +69,7 @@ export const CustomSelect = ({
         </span>
       </div>
       {isOpen ? (
-        <div
-          className={`absolute drop-shadow-md cursor-pointer w-full bg-${bgColor} text-${txtColor}`}
-        >
+        <div className={`absolute drop-shadow-md cursor-pointer w-full ${bgColor} ${txtColor}`}>
           {options.map((option) => {
             const bg = option.value === selected.value ? borderColor : bgColor;
 

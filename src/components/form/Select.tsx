@@ -1,5 +1,7 @@
 import { useState, ChangeEvent } from 'react';
 
+import { theme } from '../../themes';
+
 type Option = {
   value?: string;
   label: string;
@@ -24,7 +26,9 @@ export const Select = ({
 }: Props) => {
   const [selectedValue, setSelectedValue] = useState(defaultValue);
 
-  const selectStyle = `rounded-md border-yellow-800 focus:outline-none px-3 py-2 bg-yellow-700 text-white font-semibold text-sm md:text-base drop-shadow-sm ${
+  const selectStyle = `rounded-md ${theme.borderColors.button} focus:outline-none px-3 py-2 ${
+    theme.bgColors.button
+  } ${theme.textColors.button} font-semibold text-sm md:text-base drop-shadow-sm ${
     fullWidth ? ' w-full cursor-pointer' : ''
   }`;
 

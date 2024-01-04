@@ -1,6 +1,9 @@
+// Used in all components
 import { MouseEvent } from 'react';
 
 import { CloseBtn } from './CloseBtn';
+
+import { theme } from '../../themes';
 
 type Props = {
   heading: string;
@@ -58,10 +61,10 @@ export const ModalWrapper2 = ({
           onClick={handleClose}
         >
           <div
-            className={`relative m-auto w-11/12 md:w-4/6 lg:w-5/12 bg-orange-50 pb-3 rounded-md shadow-md`}
+            className={`relative m-auto w-11/12 md:w-4/6 lg:w-5/12 ${theme.bgColors.lightBox} ${theme.textColors.lightBox} pb-3 rounded-md shadow-md`}
             onClick={onIgnoreClose}
           >
-            <div className="flex items-center mb-1 py-2 px-4 text-neutral-600">
+            <div className="flex items-center mb-1 py-2 px-4">
               <span className="font-bold">{heading}</span>
 
               <CloseBtn onCloseClick={handleClose} light={false} />

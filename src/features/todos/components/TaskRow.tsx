@@ -6,7 +6,8 @@ import { getTodoView } from '../models';
 import { CountdownTimer } from '../../alarm/components/CountdownTimer';
 import { TaskDetails } from './TaskDetails';
 import { TaskMessage } from './TaskMessage';
-import { defaultTheme } from '../../../data/constants';
+
+import { theme } from '../../../themes';
 
 type Props = {
   todo: TaskData;
@@ -27,7 +28,7 @@ export const TaskRow = ({ todo, onDelete, onEdit }: Props) => {
 
   return (
     <div
-      className={`flex flex-row justify-between gap-2 items-center px-2 py-3 rounded-md ${defaultTheme.taksBgColor}`}
+      className={`flex flex-row justify-between gap-2 items-center px-2 py-3 rounded-md ${theme.bgColors.lightBox} ${theme.textColors.lightBox}`}
     >
       <div className="flex gap-1 justify-start">
         <span

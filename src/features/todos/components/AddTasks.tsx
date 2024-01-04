@@ -10,11 +10,13 @@ import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { TasksForm } from './TasksForm';
 
+import { theme } from '../../../themes';
+
 const OpenBtn = () => (
   <div
     aria-label="Add"
     area-role="button"
-    className="text-center rounded-md p-2 md:py-4 md:px-5 lg:w-4/6 mx-auto text-white bg-amber-900 border border-orange-200 border-dashed cursor-pointer mt-2 font-semibold"
+    className={`text-center rounded-md p-2 md:py-4 md:px-5 lg:w-4/6 mx-auto ${theme.bgColors.feature} border ${theme.borderColors.feature} border-dashed cursor-pointer mt-2 font-semibold ${theme.textColors.feature}`}
   >
     Add Tasks
   </div>

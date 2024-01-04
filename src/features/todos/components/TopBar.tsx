@@ -25,7 +25,7 @@ export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
 
   return (
     <div className="mt-6 py-3 border-b border-orange-200 flex justify-end md:justify-between">
-      <div className="hidden md:block text-white text-md md:text-lg font-semibold ">Tasks</div>
+      <div className="hidden md:block text-md md:text-lg font-semibold ">Tasks</div>
 
       <div className="flex gap-2 scale-x-90 md:scale-x-100">
         <div>

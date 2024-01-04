@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addTodosAction, addedTodosAction } from '../store/todoSlice';
 import { saveMany } from '../services/todoStorage';
 import { saveTasks } from '../api';
-import { AddTodosFormInput } from '../data/types';
+import { AddTasksFormInput } from '../data/types';
 import { getParser } from '../services/parsers';
 
 import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
@@ -24,7 +24,7 @@ export const AddTasks = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
   const dispatch = useDispatch();
 
-  const onSubmit = async (todoInput: AddTodosFormInput) => {
+  const onSubmit = async (todoInput: AddTasksFormInput) => {
     dispatch(addTodosAction());
 
     const todoParser = getParser(todoInput);

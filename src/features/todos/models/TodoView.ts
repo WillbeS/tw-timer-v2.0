@@ -1,10 +1,10 @@
-import { Todo } from '../data/types';
+import { TaskData } from '../data/types';
 import { TodoParser } from '../services/parsers';
 import { formatDate, formatTimeIntoText } from '../../../utils/dateTime';
 import { truncate } from '../../../utils/stringUtils';
 
 export class TodoView {
-  protected todo: Todo;
+  protected todo: TaskData;
 
   private responsive = [
     { breakpoint: { width: 0, chars: 14 } },
@@ -14,7 +14,7 @@ export class TodoView {
     { breakpoint: { width: 1024, chars: 76 } },
   ];
 
-  constructor(todo: Todo) {
+  constructor(todo: TaskData) {
     console.log('Construct new TodoView');
     this.todo = todo;
   }
@@ -101,7 +101,7 @@ export class TodoView {
     ];
   }
 
-  public update(triggeredBy: string = 'updateBtn'): Todo | undefined {
+  public update(triggeredBy: string = 'updateBtn'): TaskData | undefined {
     // if needed will be implemented by the child class
     return undefined;
   }

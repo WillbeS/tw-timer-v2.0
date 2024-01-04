@@ -1,6 +1,6 @@
 import { TodoView } from './TodoView';
 
-import { Todo } from '../data/types';
+import { TaskData } from '../data/types';
 import { formatDate } from '../../../utils/dateTime';
 
 import { TransportsService } from '../services/TransportsService';
@@ -8,7 +8,7 @@ import { TransportsService } from '../services/TransportsService';
 export class MintingTodoView extends TodoView {
   private trasportsService: TransportsService;
 
-  constructor(todo: Todo) {
+  constructor(todo: TaskData) {
     super(todo);
 
     // We know for a fact that details are not undefined
@@ -53,7 +53,7 @@ export class MintingTodoView extends TodoView {
     return undefined;
   }
 
-  public updateTransports(): Todo {
+  public updateTransports(): TaskData {
     const dueMs = this.trasportsService.getNextOverflow(new Date().getTime());
     const transports = this.trasportsService.transports;
     if (dueMs === 0) {

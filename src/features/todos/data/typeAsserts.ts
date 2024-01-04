@@ -1,6 +1,6 @@
 import { AssertData, assertPropExists, assertPropIsCorrectType } from '../../../data/typeAsserts';
 
-import { Todo } from './types';
+import { TaskData } from './types';
 import { VillageData } from './types';
 
 export function assertIsVillageData(data: unknown): asserts data is VillageData {
@@ -25,7 +25,7 @@ export function assertIsVillageData(data: unknown): asserts data is VillageData 
   assertPropIsCorrectType(data, villageData);
 }
 
-export function assertIsTaskData(data: unknown): asserts data is Todo {
+export function assertIsTaskData(data: unknown): asserts data is TaskData {
   const taskData: AssertData = {
     alarmOffset: 'number',
     dueMs: 'number',

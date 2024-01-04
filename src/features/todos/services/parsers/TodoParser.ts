@@ -1,5 +1,5 @@
-import { NewTodo } from '../../data/types';
-import { AddTodosFormInput } from '../../data/types';
+import { NewTask } from '../../data/types';
+import { AddTasksFormInput } from '../../data/types';
 import { getVillages } from '../../api';
 import { VillageData } from '../../../../data/types';
 import { getRelativeDate } from '../../../../utils/dateTime';
@@ -23,13 +23,13 @@ export abstract class TodoParser {
 
   protected patterns: Pattern[] = [];
   protected villages: VillagesByCoords = {};
-  protected input: AddTodosFormInput;
+  protected input: AddTasksFormInput;
 
-  public constructor(input: AddTodosFormInput) {
+  public constructor(input: AddTasksFormInput) {
     this.input = input;
   }
 
-  public parse = async (): Promise<NewTodo[]> => {
+  public parse = async (): Promise<NewTask[]> => {
     const matches = this.findMatches(this.input.text);
 
     if (!matches) {
@@ -80,7 +80,7 @@ export abstract class TodoParser {
 
   // is this redundant?
   protected getTodos(matches: Matches) {
-    const todos: NewTodo[] = [];
+    const todos: NewTask[] = [];
 
     for (const match of matches.value) {
       todos.push(this.parseFromMatch(match, matches.pattern));
@@ -166,7 +166,7 @@ export abstract class TodoParser {
     return new Date(`${year}-${month}-${day} ${timeStr}`);
   }
 
-  protected abstract parseFromMatch(match: RegExpMatchArray, pattern: string): NewTodo;
+  protected abstract parseFromMatch(match: RegExpMatchArray, pattern: string): NewTask;
 
   private onlyUnique(value: string, index: number, array: string[]) {
     return array.indexOf(value) === index;

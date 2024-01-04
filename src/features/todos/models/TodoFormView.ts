@@ -1,5 +1,5 @@
 import { todoTypes } from '../data/constants';
-import { AddTodosFormInput, AddTodosFormErrors } from '../data/types';
+import { AddTasksFormInput, AddTasksFormErrors } from '../data/types';
 
 export class TodoFormView {
   private offsetByType = {
@@ -10,9 +10,9 @@ export class TodoFormView {
     [todoTypes.REMINDER]: '0',
   };
 
-  protected _errors: AddTodosFormErrors = {};
+  protected _errors: AddTasksFormErrors = {};
 
-  public isValid(todoInput: AddTodosFormInput): boolean {
+  public isValid(todoInput: AddTasksFormInput): boolean {
     this.validateType(todoInput.type);
     this.validateWorld(todoInput.world, todoInput.type);
     this.validateAlarmOffset(todoInput.alarmOffset);
@@ -25,7 +25,7 @@ export class TodoFormView {
     return this.offsetByType[type] ?? '0';
   }
 
-  public get errors(): AddTodosFormErrors {
+  public get errors(): AddTasksFormErrors {
     return this._errors;
   }
 

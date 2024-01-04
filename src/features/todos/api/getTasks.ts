@@ -1,8 +1,8 @@
-import { Todo } from '../data/types';
+import { TaskData } from '../data/types';
 import { REMOTE_URL } from '../../../data/constants';
 import { assertIsTaskData } from '../data/typeAsserts';
 
-export const fetchTasks = async (): Promise<Todo[]> => {
+export const fetchTasks = async (): Promise<TaskData[]> => {
   try {
     const url = REMOTE_URL + '/timer/tasks';
 
@@ -26,7 +26,7 @@ export const fetchTasks = async (): Promise<Todo[]> => {
   }
 };
 
-export function assertIsTaskDataArr(tasksData: unknown): asserts tasksData is Todo[] {
+export function assertIsTaskDataArr(tasksData: unknown): asserts tasksData is TaskData[] {
   if (!Array.isArray(tasksData)) {
     throw new Error("taskData isn't an array");
   }

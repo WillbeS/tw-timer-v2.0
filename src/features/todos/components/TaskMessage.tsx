@@ -1,9 +1,9 @@
 import { TodoView } from '../models/TodoView';
-import { Todo } from '../data/types';
+import { TaskData } from '../data/types';
 
 type Props = {
   todoView: TodoView;
-  onEdit: (editedTodo: Todo) => void;
+  onEdit: (editedTodo: TaskData) => void;
 };
 
 export const TaskMessage = ({ todoView, onEdit }: Props) => {

@@ -1,7 +1,7 @@
 import { KeyboardEvent, SyntheticEvent, useState } from 'react';
 
 import { TodoFormView } from '../models/TodoFormView';
-import { AddTodosFormInput, AddTodosFormErrors } from '../data/types';
+import { AddTasksFormInput, AddTasksFormErrors } from '../data/types';
 import { formatTimeIntoText } from '../../../utils/dateTime';
 import { todoTypes } from '../data/constants';
 
@@ -9,19 +9,19 @@ import { ValidationError } from '../../../components/form/ValidationError';
 import { useFetchWorls } from '../../../hooks/useFetchWorls';
 
 type Props = {
-  onSubmit: (input: AddTodosFormInput) => void;
+  onSubmit: (input: AddTasksFormInput) => void;
   onCancel: () => void;
 };
 
 export const TasksForm = ({ onSubmit, onCancel }: Props) => {
-  const [input, setInput] = useState<AddTodosFormInput>({
+  const [input, setInput] = useState<AddTasksFormInput>({
     world: '-1',
     type: todoTypes.REMINDER,
     alarmOffset: '0',
     text: '',
   });
 
-  const [errors, setErrors] = useState<AddTodosFormErrors>({});
+  const [errors, setErrors] = useState<AddTasksFormErrors>({});
   const worlds = useFetchWorls();
   const todoFormView = new TodoFormView();
 

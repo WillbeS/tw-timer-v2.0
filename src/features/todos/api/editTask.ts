@@ -1,7 +1,7 @@
 import { REMOTE_URL } from '../../../data/constants';
-import { Todo } from '../data/types';
+import { TaskData } from '../data/types';
 
-export const editTask = async (task: Todo): Promise<boolean> => {
+export const editTask = async (task: TaskData): Promise<boolean> => {
   try {
     const url = REMOTE_URL + '/timer/tasks/' + task.id;
 

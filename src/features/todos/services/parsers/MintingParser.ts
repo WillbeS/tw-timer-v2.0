@@ -1,15 +1,15 @@
 import { TodoParser } from './TodoParser';
-import { NewTodo, AddTodosFormInput, Transport } from '../../data/types';
+import { NewTask, AddTasksFormInput, Transport } from '../../data/types';
 import { Matches } from './TodoParser';
 import { todoTypes } from '../../data/constants';
 import { convertUTCtoLocalMS } from '../../../../utils/dateTime';
 
 import { TransportsService } from '../TransportsService';
 
-export class MintingTodoParser extends TodoParser {
+export class MintingParser extends TodoParser {
   private serverTime: Date | undefined;
 
-  public constructor(input: AddTodosFormInput) {
+  public constructor(input: AddTasksFormInput) {
     super(input);
     this.patterns = [
       {
@@ -76,13 +76,13 @@ export class MintingTodoParser extends TodoParser {
 
     console.log('Create new minting todo, dueMS: ', dueMs);
 
-    const todo: NewTodo = this.generateTodo(dueMs, 'Mint before next overflow');
+    const todo: NewTask = this.generateTodo(dueMs, 'Mint before next overflow');
     todo.details = JSON.stringify(transports);
 
     return [todo];
   }
 
-  protected parseFromMatch(match: RegExpMatchArray): NewTodo {
+  protected parseFromMatch(match: RegExpMatchArray): NewTask {
     // Can I use this at all\?
     return this.generateTodo(0, '');
   }

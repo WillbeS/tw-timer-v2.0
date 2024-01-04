@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { selectFiltered } from '../../todos/store/todoSlice';
-import { Todo } from '../../todos/data/types';
+import { TaskData } from '../../todos/data/types';
 import { todoTypes } from '../../todos/data/constants';
 
 import { editTodo } from '../../todos/services/todoStorage';
@@ -15,7 +15,7 @@ import { SwitchBtn2 } from '../../../components/ui/SwitchBtn2';
 // TODO - refactor this at all cost!!!
 export const Alarm = () => {
   const dispatch = useDispatch();
-  const todos: Todo[] = useSelector(selectFiltered);
+  const todos: TaskData[] = useSelector(selectFiltered);
   const timer: Worker = useMemo(
     () => new Worker(new URL('../workers/alarmTimer.ts', import.meta.url)),
     [],
@@ -29,7 +29,7 @@ export const Alarm = () => {
 
   useEffect(() => {
     if (window.Worker) {
-      timer.onmessage = (e: MessageEvent<Todo>) => {
+      timer.onmessage = (e: MessageEvent<TaskData>) => {
         alarmSound.play();
 
         const todo = e.data;

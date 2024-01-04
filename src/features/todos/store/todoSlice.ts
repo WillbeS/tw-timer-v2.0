@@ -1,10 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import { TodosById, Todo } from '../data/types';
+//import { TasksById, TaskData } from '../data/types';
+import { TaskData } from '../data/types';
 import { getTodos } from '../services/todoStorage';
 
 type State = {
-  byId: TodosById;
+  byId: {
+    [id: string]: TaskData;
+  };
   loading: boolean;
 };
 
@@ -20,7 +23,7 @@ export const todosSlice = createSlice({
     addTodosAction: (state) => {
       state.loading = true;
     },
-    addedTodosAction: (state, action: PayloadAction<Todo[]>) => {
+    addedTodosAction: (state, action: PayloadAction<TaskData[]>) => {
       const todos = action.payload;
 
       todos.forEach((todo) => {
@@ -34,7 +37,7 @@ export const todosSlice = createSlice({
       state.loading = true;
     },
 
-    editedTodoAction: (state, action: PayloadAction<Todo>) => {
+    editedTodoAction: (state, action: PayloadAction<TaskData>) => {
       const todo = action.payload;
       state.byId[todo.id] = { ...todo };
       state.loading = false;
@@ -80,6 +83,6 @@ export const selectFiltered = (state: RootState, world: string = '0', type: stri
   return Object.values(sortByMs(todosArr));
 };
 
-const sortByMs = (todosArr: Todo[]) => todosArr.sort((a, b) => a.dueMs - b.dueMs);
+const sortByMs = (todosArr: TaskData[]) => todosArr.sort((a, b) => a.dueMs - b.dueMs);
 
 export default todosSlice.reducer;

@@ -1,5 +1,5 @@
 import { TodoParser } from './TodoParser';
-import { NewTodo, AddTodosFormInput } from '../../data/types';
+import { NewTask, AddTasksFormInput } from '../../data/types';
 import { attackTypes } from '../../data/constants';
 import { convertUTCtoLocalMS } from '../../../../utils/dateTime';
 
@@ -11,8 +11,8 @@ type MatchParts = {
   url: string | undefined;
 };
 
-export class AttackTodoParser extends TodoParser {
-  public constructor(input: AddTodosFormInput) {
+export class AttackParser extends TodoParser {
+  public constructor(input: AddTasksFormInput) {
     super(input);
     this.patterns = [
       {
@@ -38,7 +38,7 @@ export class AttackTodoParser extends TodoParser {
     ];
   }
 
-  protected parseFromMatch(match: RegExpMatchArray, pattern: string): NewTodo {
+  protected parseFromMatch(match: RegExpMatchArray, pattern: string): NewTask {
     let parts: MatchParts;
     switch (pattern) {
       case attackTypes.MASS_ATTACK_FODOX:

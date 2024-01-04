@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-globals */
-import { Todo } from '../../todos/data/types';
+import { TaskData } from '../../todos/data/types';
 
 let allTimes: { id: string; dueMs: number }[] = [];
-const todosById: { [id: string]: Todo } = {};
+const todosById: { [id: string]: TaskData } = {};
 
 // This should run only once for the entire app
 console.log('Setting up an interval');
@@ -15,8 +15,8 @@ setInterval(() => {
   }
 }, 1000);
 
-self.onmessage = (e: MessageEvent<Todo[]>) => {
-  const todos: Todo[] = e.data;
+self.onmessage = (e: MessageEvent<TaskData[]>) => {
+  const todos: TaskData[] = e.data;
 
   if (todos.length > 0) {
     allTimes = todos.map((todo) => {

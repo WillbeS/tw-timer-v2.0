@@ -1,6 +1,6 @@
 import { generateId } from '../../../utils/stringUtils';
 import { getData, saveData } from '../../../services/storageManager';
-import { NewTodo, Todo } from '../data/types';
+import { NewTask, TaskData } from '../data/types';
 
 const STORAGE_KEY = 'todos';
 
@@ -8,9 +8,9 @@ const STORAGE_KEY = 'todos';
 export const getTodos = () => getData(STORAGE_KEY);
 export const saveTodos = (data: object) => saveData(STORAGE_KEY, data);
 
-export const saveFromApi = (todos: Todo[]) => {
+export const saveFromApi = (todos: TaskData[]) => {
   const localTodos = getTodos();
-  const forCompare: Todo[] = Object.values(localTodos);
+  const forCompare: TaskData[] = Object.values(localTodos);
 
   for (const todo of todos) {
     if (isDuplicate(todo, forCompare)) continue;
@@ -20,11 +20,11 @@ export const saveFromApi = (todos: Todo[]) => {
 
   saveTodos(localTodos);
 
-  return Object.values(localTodos) as Todo[];
+  return Object.values(localTodos) as TaskData[];
 };
 
-export const saveMany = (todos: NewTodo[]): Todo[] => {
-  const saved: Todo[] = [];
+export const saveMany = (todos: NewTask[]): TaskData[] => {
+  const saved: TaskData[] = [];
 
   for (const todo of todos) {
     const id = saveOne(todo);
@@ -37,7 +37,7 @@ export const saveMany = (todos: NewTodo[]): Todo[] => {
   return saved;
 };
 
-export const saveOne = (todo: NewTodo) => {
+export const saveOne = (todo: NewTask) => {
   const todos = getTodos();
 
   if (isDuplicate(todo, Object.values(todos))) return false;
@@ -50,7 +50,7 @@ export const saveOne = (todo: NewTodo) => {
   return id;
 };
 
-export const editTodo = (todo: Todo) => {
+export const editTodo = (todo: TaskData) => {
   const todos = getTodos();
   todos[todo.id] = todo;
   saveTodos(todos);
@@ -71,7 +71,7 @@ export const deleteTodo = (id: string) => {
   return deleted;
 };
 
-export const isDuplicate = (newTodo: NewTodo, todos: Todo[]) => {
+export const isDuplicate = (newTodo: NewTask, todos: TaskData[]) => {
   let isDuplicate = false;
 
   for (const todo of todos) {

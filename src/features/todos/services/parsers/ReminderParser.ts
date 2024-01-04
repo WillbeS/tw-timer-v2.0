@@ -1,9 +1,9 @@
-import { AddTodosFormInput } from '../../data/types';
-import { NewTodo } from '../../data/types';
+import { AddTasksFormInput } from '../../data/types';
+import { NewTask } from '../../data/types';
 import { TodoParser } from './TodoParser';
 
-export class ReminderTodoParser extends TodoParser {
-  public constructor(input: AddTodosFormInput) {
+export class ReminderParser extends TodoParser {
+  public constructor(input: AddTasksFormInput) {
     super(input);
     this.patterns = [
       {
@@ -21,7 +21,7 @@ export class ReminderTodoParser extends TodoParser {
     ];
   }
 
-  protected parseFromMatch(match: RegExpMatchArray, pattern: string): NewTodo {
+  protected parseFromMatch(match: RegExpMatchArray, pattern: string): NewTask {
     let minutes = 0;
 
     switch (pattern) {

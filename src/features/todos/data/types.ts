@@ -11,7 +11,7 @@ export type VillageData = {
   y: string;
 };
 
-export type NewTodo = {
+export type NewTask = {
   type: string;
   world: string;
   message: string;
@@ -22,7 +22,7 @@ export type NewTodo = {
   details?: string | undefined;
 };
 
-export type Todo = {
+export type TaskData = {
   id: string;
   type: string;
   world: string;
@@ -34,22 +34,23 @@ export type Todo = {
   details?: string | undefined;
 };
 
-export type SavedTodo = {
-  id: string;
-};
+// do I use this?
+// export type SavedTask = {
+//   id: string;
+// };
 
-export type TodosById = {
-  [id: string]: Todo;
-};
+// export type TasksById = {
+//   [id: string]: TaskData;
+// };
 
-export type AddTodosFormInput = {
+export type AddTasksFormInput = {
   world: string;
   type: string;
   alarmOffset: string;
   text: string;
 };
 
-export type AddTodosFormErrors = {
+export type AddTasksFormErrors = {
   [key: string]: string | undefined;
   world?: string | undefined;
   type?: string | undefined;

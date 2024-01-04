@@ -1,11 +1,11 @@
 import { TodoParser } from './TodoParser';
-import { ReminderTodoParser } from './ReminderTodoParser';
-import { DodgeTodoParser } from './DodgeTodoParser';
+import { ReminderParser } from './ReminderParser';
+import { DodgeParser } from './DodgeParser';
 import { todoTypes } from '../../data/constants';
-import { AddTodosFormInput } from '../../data/types';
-import { AttackTodoParser } from './AttackTodoParser';
-import { SnipeTodoParser } from './SnipeTodoParser';
-import { MintingTodoParser } from './MintingTodoParser';
+import { AddTasksFormInput } from '../../data/types';
+import { AttackParser } from './AttackParser';
+import { SnipeParser } from './SnipeParser';
+import { MintingParser } from './MintingParser';
 
 export interface Parser {
   [key: string]: any;
@@ -13,14 +13,14 @@ export interface Parser {
 
 // Add all new parsers here
 export const parsers: Parser = {
-  [todoTypes.REMINDER]: ReminderTodoParser,
-  [todoTypes.DODGE]: DodgeTodoParser,
-  [todoTypes.ATTACK]: AttackTodoParser,
-  [todoTypes.SNIPE]: SnipeTodoParser,
-  [todoTypes.MINTING]: MintingTodoParser,
+  [todoTypes.REMINDER]: ReminderParser,
+  [todoTypes.DODGE]: DodgeParser,
+  [todoTypes.ATTACK]: AttackParser,
+  [todoTypes.SNIPE]: SnipeParser,
+  [todoTypes.MINTING]: MintingParser,
 };
 
-const getParser = (input: AddTodosFormInput): TodoParser => {
+const getParser = (input: AddTasksFormInput): TodoParser => {
   if (!parsers[input.type]) {
     // trow new custom error when I make it :)
     // or return the parent Parser? Need to decide
@@ -30,4 +30,4 @@ const getParser = (input: AddTodosFormInput): TodoParser => {
   return new Parser(input);
 };
 
-export { getParser, TodoParser, ReminderTodoParser };
+export { getParser, TodoParser };

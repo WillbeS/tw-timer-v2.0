@@ -1,4 +1,4 @@
-import { Todo } from '../data/types';
+import { TaskData } from '../data/types';
 import { TodoView } from './TodoView';
 import { MintingTodoView } from './MintingTodoView';
 import { DodgeTodoView } from './DodgeTodoView';
@@ -15,7 +15,7 @@ export const todoViews: View = {
   [todoTypes.DODGE]: DodgeTodoView,
 };
 
-export function getTodoView(todo: Todo): TodoView {
+export function getTodoView(todo: TaskData): TodoView {
   if (!todoViews[todo.type]) {
     const View = todoViews.general;
     return new View(todo);

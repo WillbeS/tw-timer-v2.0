@@ -1,6 +1,6 @@
 import { ReactComponent as DeleteIcon } from '../../../assets/img/delete2.svg';
 
-import { Todo } from '../data/types';
+import { TaskData } from '../data/types';
 import { getTodoView } from '../models';
 
 import { CountdownTimer } from '../../alarm/components/CountdownTimer';
@@ -8,7 +8,11 @@ import { TaskDetails } from './TaskDetails';
 import { TaskMessage } from './TaskMessage';
 import { defaultTheme } from '../../../data/constants';
 
-type Props = { todo: Todo; onDelete: (id: string) => void; onEdit: (editedTodo: Todo) => void };
+type Props = {
+  todo: TaskData;
+  onDelete: (id: string) => void;
+  onEdit: (editedTodo: TaskData) => void;
+};
 
 export const TaskRow = ({ todo, onDelete, onEdit }: Props) => {
   const todoView = getTodoView(todo);

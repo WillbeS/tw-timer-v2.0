@@ -25,7 +25,7 @@ export const assertPropIsCorrectType = (
 
     //console.log(`Type of ${propName} is `, typeof prop);
     if (optionalData && optionalData[propName]) {
-      console.log('Assert optional props');
+      //console.log('Assert optional props');
       if (typeof prop !== optionalData[propName]) {
         throw new Error(`${propName} is not a ${optionalData[propName]}`);
       }

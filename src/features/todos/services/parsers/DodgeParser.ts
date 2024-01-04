@@ -1,10 +1,10 @@
 import { TodoParser } from './TodoParser';
-import { NewTodo } from '../../data/types';
-import { AddTodosFormInput } from '../../data/types';
+import { NewTask } from '../../data/types';
+import { AddTasksFormInput } from '../../data/types';
 import { convertUTCtoLocalMS } from '../../../../utils/dateTime';
 
-export class DodgeTodoParser extends TodoParser {
-  public constructor(input: AddTodosFormInput) {
+export class DodgeParser extends TodoParser {
+  public constructor(input: AddTasksFormInput) {
     super(input);
     this.patterns = [
       {
@@ -15,7 +15,7 @@ export class DodgeTodoParser extends TodoParser {
     ];
   }
 
-  protected parseFromMatch(match: RegExpMatchArray): NewTodo {
+  protected parseFromMatch(match: RegExpMatchArray): NewTask {
     let [, destination, origin, dateStr, timeStr] = match;
 
     const dueDateST = this.getDateFromString(dateStr, timeStr);

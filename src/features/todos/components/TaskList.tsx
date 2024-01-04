@@ -13,7 +13,7 @@ import {
   addedTodosAction,
 } from '../store/todoSlice';
 import { deleteTodo, editTodo, saveFromApi } from '../services/todoStorage';
-import { Todo } from '../data/types';
+import { TaskData } from '../data/types';
 import { formatTime } from '../../../utils/dateTime';
 
 import { TaskRow } from './TaskRow';
@@ -53,7 +53,7 @@ export const TaskList = () => {
   );
 
   const handleEdit = useCallback(
-    async (todo: Todo) => {
+    async (todo: TaskData) => {
       dispatch(editTodoAction());
 
       if (editTodo(todo)) {
@@ -69,7 +69,7 @@ export const TaskList = () => {
     console.log('Sync from API');
     dispatch(addTodosAction()); // sets loading to true
 
-    const serverTasks: Todo[] = await fetchTasks();
+    const serverTasks: TaskData[] = await fetchTasks();
 
     const saved = saveFromApi(serverTasks);
     dispatch(addedTodosAction(saved));

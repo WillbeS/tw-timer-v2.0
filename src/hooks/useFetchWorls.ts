@@ -22,7 +22,8 @@ export const useFetchWorls = () => {
     } else {
       const worldsData: WorldsStorageData = JSON.parse(worldsStorage);
 
-      if (needsUpdate(worldsData.updatedAt)) {
+      if (needsUpdate(worldsData.updatedAt) || worldsData.data.length === 0) {
+        console.log('Checking for worlds');
         updateWorlds().then((r) => console.log('Updated from remote'));
       } else {
         //console.log('No need to update');

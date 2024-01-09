@@ -7,8 +7,8 @@ export const HomePage = () => {
   return (
     <>
       <TopContent />
-
-      {isFirstVisit() ? <Welcome /> : <TaskList />}
+      <TaskList />
+      {isFirstVisit() ? <Welcome /> : null}
       {/* <TaskList /> */}
     </>
   );

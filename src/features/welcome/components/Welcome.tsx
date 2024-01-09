@@ -5,13 +5,18 @@ import { Alert } from '../../../components/ui/Alert';
 
 // TODO - make this navigate/refresh the home page on close
 export const Welcome = () => {
-  useEffect(() => {
+  // useEffect(() => {
+  //   setAsVisited();
+  //   console.log('Set as visited');
+  // }, []);
+
+  const reloadPage = () => {
+    console.log('needs to reload the home page');
     setAsVisited();
-    console.log('Set as visited');
-  }, []);
+  };
 
   return (
-    <Alert type="information" heading="Welcome!" closable={true}>
+    <Alert type="information" heading="Welcome!" closable={true} onClose={reloadPage}>
       <p className="my-3 text-xl">
         This is a helper tool for the online game Tribal Wars. Its main purpose is to help with
         various timed tasks, like scheduled attack launches, dodging, etc.

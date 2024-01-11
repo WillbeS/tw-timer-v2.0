@@ -1,15 +1,7 @@
-import { useEffect } from 'react';
-
 import { setAsVisited } from '../srvices/storage';
 import { Alert } from '../../../components/ui/Alert';
 
-// TODO - make this navigate/refresh the home page on close
 export const Welcome = () => {
-  // useEffect(() => {
-  //   setAsVisited();
-  //   console.log('Set as visited');
-  // }, []);
-
   const reloadPage = () => {
     console.log('needs to reload the home page');
     setAsVisited();

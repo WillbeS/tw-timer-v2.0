@@ -45,7 +45,7 @@ export const TaskList = () => {
 
       if (deleteTodo(id)) {
         dispatch(removedTodoAction(id));
-        await deleteTask(id);
+        //await deleteTask(id);
         // TODO - handle error
       }
     },

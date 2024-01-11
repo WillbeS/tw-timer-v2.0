@@ -59,7 +59,7 @@ export const editTodo = (todo: TaskData) => {
 };
 
 export const deleteTodo = (id: string) => {
-  console.log('Deleteding, ', id);
+  //console.log('Deleteding, ', id);
   const todos = getTodos();
   console.log(todos);
   const deleted = delete todos[id];

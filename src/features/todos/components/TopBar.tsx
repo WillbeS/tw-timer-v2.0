@@ -1,9 +1,12 @@
+import { useState, useEffect } from 'react';
+
 import { Select } from '../../../components/form/Select';
 import { RoundedButton } from '../../../components/ui/RoundedButton';
 import { todoTypes } from '../data/constants';
 import { useFetchWorls } from '../../../hooks/useFetchWorls';
 
 import { theme } from '../../../themes';
+import { WorldData } from '../../../data/types';
 
 type Props = {
   onWorldChange: (world: string) => void;
@@ -12,6 +15,13 @@ type Props = {
 };
 export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
   const worlds = useFetchWorls();
+  // const [worldsCount, setWorldsCount] = useState(worlds.length);
+
+  // useEffect(() => {
+  //   if (worldsCount === 0) {
+  //     console.log('needs to fetch worlds');
+  //   }
+  // });
 
   const typeOptions = Object.values(todoTypes).map((value) => {
     return { value, label: value };
@@ -23,6 +33,12 @@ export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
   });
   worldOptions.unshift({ value: '0', label: 'All Worlds' });
 
+  const loadWorlds = () => {
+    if (worlds.length === 0) {
+      console.log('needs to fetch worlds');
+    }
+  };
+
   return (
     <div
       className={`mt-6 py-3 border-b ${theme.borderColors.feature} flex justify-end md:justify-between`}
@@ -33,7 +49,7 @@ export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
         <div>
           <Select options={typeOptions} defaultValue="0" fullWidth onChange={onTypeChange} />
         </div>
-        <div>
+        <div onClick={loadWorlds}>
           <Select options={worldOptions} defaultValue="0" fullWidth onChange={onWorldChange} />
         </div>
 

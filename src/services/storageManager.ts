@@ -12,5 +12,3 @@ export const getData = (key: string) => {
 export const saveData = (key: string, data: object) => {
   localStorage.setItem(key, JSON.stringify(data));
 };
-
-// Here should the the logic for storing on the server

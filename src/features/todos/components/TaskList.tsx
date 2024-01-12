@@ -1,16 +1,15 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTasks, deleteTask, editTask } from '../api';
+import { fetchTasks, editTask } from '../api';
 
 import { RootState } from '../../../store/store';
 import {
   removeTodoAction,
-  removedTodoAction,
   selectFiltered,
   editTodoAction,
-  editedTodoAction,
   addTodosAction,
-  addedTodosAction,
+  startLoadingAction,
+  stoptLoadingAction,
 } from '../store/todoSlice';
 import { deleteTodo, editTodo, saveFromApi } from '../services/todoStorage';
 import { TaskData } from '../data/types';
@@ -41,12 +40,16 @@ export const TaskList = () => {
 
   const handleDelete = useCallback(
     async (id: string) => {
-      dispatch(removeTodoAction());
+      try {
+        dispatch(startLoadingAction());
 
-      if (deleteTodo(id)) {
-        dispatch(removedTodoAction(id));
-        //await deleteTask(id);
-        // TODO - handle error
+        if (deleteTodo(id)) {
+          dispatch(removeTodoAction(id));
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        dispatch(stoptLoadingAction());
       }
     },
     [dispatch],
@@ -54,25 +57,34 @@ export const TaskList = () => {
 
   const handleEdit = useCallback(
     async (todo: TaskData) => {
-      dispatch(editTodoAction());
+      try {
+        dispatch(startLoadingAction());
 
-      if (editTodo(todo)) {
-        dispatch(editedTodoAction(todo));
-        await editTask(todo);
-        // TODO - error handling
+        if (editTodo(todo)) {
+          dispatch(editTodoAction(todo));
+          await editTask(todo);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        dispatch(stoptLoadingAction());
       }
     },
     [dispatch],
   );
 
   const handleSync = useCallback(async () => {
-    console.log('Sync from API');
-    dispatch(addTodosAction()); // sets loading to true
-
-    const serverTasks: TaskData[] = await fetchTasks();
-
-    const saved = saveFromApi(serverTasks);
-    dispatch(addedTodosAction(saved));
+    try {
+      console.log('Sync from API');
+      dispatch(startLoadingAction());
+      const serverTasks: TaskData[] = await fetchTasks();
+      const saved = saveFromApi(serverTasks);
+      dispatch(addTodosAction(saved));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      dispatch(stoptLoadingAction());
+    }
   }, [dispatch]);
 
   console.log('Todo list is rendering');

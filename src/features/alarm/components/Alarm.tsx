@@ -6,7 +6,11 @@ import { TaskData } from '../../todos/data/types';
 import { todoTypes } from '../../todos/data/constants';
 
 import { editTodo } from '../../todos/services/todoStorage';
-import { editTodoAction, editedTodoAction } from '../../todos/store/todoSlice';
+import {
+  editTodoAction,
+  startLoadingAction,
+  stoptLoadingAction,
+} from '../../todos/store/todoSlice';
 import { getTodoView } from '../../todos/models';
 
 import alarmSound from '../services/AlarmSound';
@@ -39,10 +43,11 @@ export const Alarm = () => {
           const edited = todoView.update();
 
           if (edited) {
-            dispatch(editTodoAction());
+            dispatch(startLoadingAction());
 
             if (editTodo(edited)) {
-              dispatch(editedTodoAction(edited));
+              dispatch(editTodoAction(edited));
+              dispatch(stoptLoadingAction());
             }
           }
         }

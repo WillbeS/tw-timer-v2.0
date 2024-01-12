@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-//import { TasksById, TaskData } from '../data/types';
 import { TaskData } from '../data/types';
 import { getTodos } from '../services/todoStorage';
 
@@ -20,53 +19,42 @@ export const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
-    addTodosAction: (state) => {
+    startLoadingAction: (state) => {
       state.loading = true;
     },
-    addedTodosAction: (state, action: PayloadAction<TaskData[]>) => {
+    stoptLoadingAction: (state) => {
+      state.loading = false;
+    },
+
+    addTodosAction: (state, action: PayloadAction<TaskData[]>) => {
       const todos = action.payload;
 
       todos.forEach((todo) => {
         state.byId[todo.id] = todo;
       });
-      state.loading = false;
     },
 
-    // Don't need it right now but if I move the data to the server will do
-    editTodoAction: (state) => {
-      state.loading = true;
-    },
-
-    editedTodoAction: (state, action: PayloadAction<TaskData>) => {
+    editTodoAction: (state, action: PayloadAction<TaskData>) => {
       const todo = action.payload;
       state.byId[todo.id] = { ...todo };
-      state.loading = false;
     },
 
-    // Don't need it right now but if I move the data to the server will do
-    removeTodoAction: (state) => {
-      state.loading = true;
-    },
-
-    removedTodoAction: (state, action: PayloadAction<string>) => {
+    removeTodoAction: (state, action: PayloadAction<string>) => {
       const id = action.payload;
 
       if (state.byId[id]) {
         delete state.byId[id];
       }
-
-      state.loading = false;
     },
   },
 });
 
 export const {
   addTodosAction,
-  addedTodosAction,
   removeTodoAction,
-  removedTodoAction,
   editTodoAction,
-  editedTodoAction,
+  startLoadingAction,
+  stoptLoadingAction,
 } = todosSlice.actions;
 
 export const selectFiltered = (state: RootState, world: string = '0', type: string = '0') => {

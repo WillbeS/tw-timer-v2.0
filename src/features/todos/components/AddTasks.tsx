@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import { addTodosAction, addedTodosAction } from '../store/todoSlice';
+import { addTodosAction, startLoadingAction, stoptLoadingAction } from '../store/todoSlice';
 import { saveMany } from '../services/todoStorage';
 import { saveTasks } from '../api';
 import { AddTasksFormInput } from '../data/types';
@@ -27,17 +27,23 @@ export const AddTasks = () => {
   const dispatch = useDispatch();
 
   const onSubmit = async (todoInput: AddTasksFormInput) => {
-    dispatch(addTodosAction());
+    try {
+      dispatch(startLoadingAction());
 
-    const todoParser = getParser(todoInput);
-    const newTodos = await todoParser.parse();
+      const todoParser = getParser(todoInput);
+      const newTodos = await todoParser.parse();
 
-    const todos = saveMany(newTodos);
-    dispatch(addedTodosAction(todos));
-    onCloseModal();
+      const todos = saveMany(newTodos);
+      dispatch(addTodosAction(todos));
 
-    await saveTasks(todos);
-    // When proper error handling is done, inform if there's an error
+      await saveTasks(todos);
+      // When proper error handling is done, inform if there's an error
+    } catch (error) {
+      console.log('Need to log the error and send message to the user');
+    } finally {
+      dispatch(stoptLoadingAction());
+      onCloseModal();
+    }
   };
 
   return (

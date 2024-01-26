@@ -6,6 +6,8 @@ export const fetchWorlds = async (): Promise<WorldData[]> => {
   try {
     const url = REMOTE_URL + '/worlds';
 
+    console.log(REMOTE_URL);
+
     const response = await fetch(url, {
       headers: {
         Accept: 'application/json',

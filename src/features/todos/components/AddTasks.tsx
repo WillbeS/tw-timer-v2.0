@@ -35,14 +35,15 @@ export const AddTasks = () => {
 
       const todos = saveMany(newTodos);
       dispatch(addTodosAction(todos));
+      onCloseModal();
 
       await saveTasks(todos);
       // When proper error handling is done, inform if there's an error
     } catch (error) {
       console.log('Need to log the error and send message to the user');
+      onCloseModal();
     } finally {
       dispatch(stoptLoadingAction());
-      onCloseModal();
     }
   };
 

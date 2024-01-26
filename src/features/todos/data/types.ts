@@ -48,6 +48,7 @@ export type AddTasksFormInput = {
   type: string;
   alarmOffset: string;
   text: string;
+  subtype: undefined | string;
 };
 
 export type AddTasksFormErrors = {

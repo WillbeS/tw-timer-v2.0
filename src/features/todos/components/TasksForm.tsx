@@ -3,7 +3,7 @@ import { KeyboardEvent, SyntheticEvent, useState } from 'react';
 import { TodoFormView } from '../models/TodoFormView';
 import { AddTasksFormInput, AddTasksFormErrors } from '../data/types';
 import { formatTimeIntoText } from '../../../utils/dateTime';
-import { todoTypes } from '../data/constants';
+import { todoTypes, attackSubtypes } from '../data/constants';
 
 import { ValidationError } from '../../../components/form/ValidationError';
 import { useFetchWorls } from '../../../hooks/useFetchWorls';
@@ -19,7 +19,12 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
     type: todoTypes.REMINDER,
     alarmOffset: '0',
     text: '',
+    subtype: undefined,
   });
+
+  if (input.type === todoTypes.ATTACK && !input.subtype) {
+    setInput({ ...input, subtype: attackSubtypes.REAL });
+  }
 
   const [errors, setErrors] = useState<AddTasksFormErrors>({});
   const worlds = useFetchWorls();
@@ -51,6 +56,10 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
     return `rounded-md border border-stone-200 focus:outline-none px-4 py-1 text-sm md:text-base bg-white bg-opacity-40 ${
       fieldError ? 'border-red-500' : ''
     }`;
+  }
+
+  if (input.type === todoTypes.ATTACK) {
+    console.log('Will add option to choose subtype!');
   }
 
   return (
@@ -94,9 +103,6 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
           }}
           className={getFieldStyle(errors.type)}
         >
-          <option value="-1" disabled hidden>
-            Select a world
-          </option>
           {Object.values(todoTypes).map((value, i) => (
             <option key={i} value={value}>
               {value}
@@ -105,6 +111,32 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
         </select>
         <ValidationError fieldError={errors.type} />
       </div>
+
+      {input.type === todoTypes.ATTACK ? (
+        <div className={fieldDivStyle}>
+          <label className={labelStyle} htmlFor="subtype">
+            <span>Select attack type</span>
+          </label>
+          <select
+            id="subtype"
+            value={input.subtype}
+            onChange={(e) => {
+              setInput({
+                ...input,
+                subtype: e.target.value,
+              });
+            }}
+            className={getFieldStyle(errors.type)}
+          >
+            {Object.values(attackSubtypes).map((value, i) => (
+              <option key={i} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
+          <ValidationError fieldError={errors.type} />
+        </div>
+      ) : null}
 
       <div className={fieldDivStyle}>
         <label className={labelStyle} htmlFor="alarmOffset">

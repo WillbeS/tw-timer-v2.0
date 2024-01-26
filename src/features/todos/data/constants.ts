@@ -1,8 +1,8 @@
-export const WH_CAPACITY = 590000; // Will be set by the user later
+export const WH_CAPACITY = 700000; // Will be set by the user later
 
 //assume that this amount is already there
 export const WH_BUFFER = {
-  wood: 88000,
+  wood: 100000,
   clay: 17000,
   iron: 167000,
 };
@@ -13,6 +13,12 @@ export const todoTypes = {
   DODGE: 'dodge',
   MINTING: 'minting',
   REMINDER: 'reminder',
+};
+
+export const attackSubtypes = {
+  REAL: 'real',
+  FAKE: 'fake',
+  FANG: 'fang',
 };
 
 export const attackTypes = {

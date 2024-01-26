@@ -18,6 +18,10 @@ export class TodoFormView {
     this.validateAlarmOffset(todoInput.alarmOffset);
     this.validateText(todoInput.text);
 
+    if (todoInput.subtype) {
+      this.validateType(todoInput.subtype);
+    }
+
     return Object.keys(this.errors).length === 0;
   }
 
@@ -37,6 +41,10 @@ export class TodoFormView {
   }
 
   private validateType(type: string) {
+    // Todo - validation
+  }
+
+  private validateSubtype(subtype: string) {
     // Todo - validation
   }
 

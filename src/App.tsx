@@ -6,7 +6,9 @@ import { Header } from './components/layouts/Header';
 import { theme } from './themes';
 
 function App() {
-  console.log('App is rendering');
+  //console.log('App is rendering');
+
+  console.log(process.env.REACT_APP_TEST);
 
   return (
     <Provider store={store}>

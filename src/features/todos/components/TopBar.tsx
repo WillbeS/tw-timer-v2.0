@@ -1,12 +1,10 @@
-import { useState, useEffect } from 'react';
-
-import { Select } from '../../../components/form/Select';
-import { RoundedButton } from '../../../components/ui/RoundedButton';
 import { todoTypes } from '../data/constants';
 import { useFetchWorls } from '../../../hooks/useFetchWorls';
 
+import { Select } from '../../../components/form/Select';
+import { DropdownButton } from '../../../components/ui/DropdownButton';
+import { DropdownMenuButton } from '../../../components/ui/DropdownMenuButton';
 import { theme } from '../../../themes';
-import { WorldData } from '../../../data/types';
 
 type Props = {
   onWorldChange: (world: string) => void;
@@ -15,13 +13,6 @@ type Props = {
 };
 export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
   const worlds = useFetchWorls();
-  // const [worldsCount, setWorldsCount] = useState(worlds.length);
-
-  // useEffect(() => {
-  //   if (worldsCount === 0) {
-  //     console.log('needs to fetch worlds');
-  //   }
-  // });
 
   const typeOptions = Object.values(todoTypes).map((value) => {
     return { value, label: value };
@@ -53,7 +44,14 @@ export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
           <Select options={worldOptions} defaultValue="0" fullWidth onChange={onWorldChange} />
         </div>
 
-        <RoundedButton label="Sync" symbol="↺" onClick={onSync} />
+        <DropdownButton>
+          <DropdownMenuButton label="Load from server" symbol="↺" onClick={onSync} />
+          <DropdownMenuButton
+            label="Clear all"
+            symbol="🗑"
+            onClick={() => localStorage.removeItem('todos')}
+          />
+        </DropdownButton>
       </div>
     </div>
   );

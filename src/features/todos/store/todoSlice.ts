@@ -76,6 +76,10 @@ export const selectFiltered = (state: RootState, world: string = '0', type: stri
   return Object.values(sortByMs(todosArr));
 };
 
+export const selectTotalCount = (state: RootState) => {
+  return Object.keys(state.todos.byId).length;
+};
+
 const sortByMs = (todosArr: TaskData[]) => todosArr.sort((a, b) => a.dueMs - b.dueMs);
 
 export default todosSlice.reducer;

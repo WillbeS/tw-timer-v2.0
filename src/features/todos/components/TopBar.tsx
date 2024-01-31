@@ -2,8 +2,7 @@ import { todoTypes } from '../data/constants';
 import { useFetchWorls } from '../../../hooks/useFetchWorls';
 
 import { Select } from '../../../components/form/Select';
-import { DropdownButton } from '../../../components/ui/DropdownButton';
-import { DropdownMenuButton } from '../../../components/ui/DropdownMenuButton';
+import { TaskOptionsMenu } from './TaskOptionsMenu';
 import { theme } from '../../../themes';
 
 type Props = {
@@ -44,14 +43,7 @@ export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
           <Select options={worldOptions} defaultValue="0" fullWidth onChange={onWorldChange} />
         </div>
 
-        <DropdownButton>
-          <DropdownMenuButton label="Load from server" symbol="↺" onClick={onSync} />
-          <DropdownMenuButton
-            label="Clear all"
-            symbol="🗑"
-            onClick={() => localStorage.removeItem('todos')}
-          />
-        </DropdownButton>
+        <TaskOptionsMenu onSync={onSync} />
       </div>
     </div>
   );

@@ -46,6 +46,10 @@ export const todosSlice = createSlice({
         delete state.byId[id];
       }
     },
+    removeAllAction: (state) => {
+      console.log('Should update');
+      state.byId = {};
+    },
   },
 });
 
@@ -53,6 +57,7 @@ export const {
   addTodosAction,
   removeTodoAction,
   editTodoAction,
+  removeAllAction,
   startLoadingAction,
   stoptLoadingAction,
 } = todosSlice.actions;

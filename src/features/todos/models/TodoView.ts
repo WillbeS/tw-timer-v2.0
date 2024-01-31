@@ -15,7 +15,7 @@ export class TodoView {
   ];
 
   constructor(todo: TaskData) {
-    console.log('Construct new TodoView');
+    //console.log('Construct new TodoView');
     this.todo = todo;
   }
 

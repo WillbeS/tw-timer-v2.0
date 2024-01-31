@@ -71,6 +71,10 @@ export const deleteTodo = (id: string) => {
   return deleted;
 };
 
+export const deleteAll = () => {
+  saveTodos({});
+};
+
 export const isDuplicate = (newTodo: NewTask, todos: TaskData[]) => {
   let isDuplicate = false;
 

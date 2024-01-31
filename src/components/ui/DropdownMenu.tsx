@@ -6,7 +6,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-export const DropdownButton = ({ children }: Props) => {
+export const DropdownMenu = ({ children }: Props) => {
   const [isOpen, setisOpen] = useState(false);
   const catMenu = useRef<HTMLDivElement>(null);
 

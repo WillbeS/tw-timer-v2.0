@@ -6,10 +6,6 @@ import { Header } from './components/layouts/Header';
 import { theme } from './themes';
 
 function App() {
-  //console.log('App is rendering');
-
-  console.log(process.env.REACT_APP_TEST);
-
   return (
     <Provider store={store}>
       <div className={`min-h-screen px-3 lg:px-6 ${theme.bgColors.main} ${theme.textColors.main}`}>

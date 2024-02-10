@@ -23,7 +23,7 @@ export class TodoView {
     return this.todo.id;
   }
 
-  public getMessage(innerWidth: number) {
+  public getTrancatedMessage(innerWidth: number) {
     const urlCharsLength = this.todo.url ? TodoParser.URL_SEPARATOR.length * 2 : 0;
     let maxChars = 0;
 
@@ -54,6 +54,18 @@ export class TodoView {
       message: truncated,
       urlParts,
     };
+  }
+
+  public getMessage() {
+    return this.todo.message;
+  }
+
+  public getUrl() {
+    return this.todo.url;
+  }
+
+  public getType() {
+    return this.todo.type;
   }
 
   public getWorld() {

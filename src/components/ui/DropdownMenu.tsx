@@ -24,7 +24,6 @@ export const DropdownMenu = ({ children }: Props) => {
 
   document.addEventListener('mousedown', closeOpenMenus);
 
-  console.log(isOpen);
   return (
     <div ref={catMenu} onClick={toggleOpen} className="relative">
       <div

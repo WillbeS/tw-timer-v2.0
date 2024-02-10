@@ -59,7 +59,7 @@ export const Alarm = () => {
     alarmSound.toggleAlarm();
   };
 
-  console.log('Alarm is rendering');
+  // console.log('Alarm is rendering');
 
   return (
     <span className="inline-flex items-center ml-auto">

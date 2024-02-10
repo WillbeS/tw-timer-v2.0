@@ -2,6 +2,23 @@ import { REMOTE_URL } from '../data/constants';
 import { WorldData } from '../data/types';
 import { assertIsWorldData } from '../data/typeAsserts';
 
+//temp name
+export const fetchAllWorlds = async () => {
+  const url = REMOTE_URL + '/worlds';
+
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'application/json',
+    },
+  });
+
+  const body = (await response.json()) as unknown;
+  assertIsWorldDataArr(body);
+
+  return body;
+};
+
+// old, will delete when new code is tested
 export const fetchWorlds = async (): Promise<WorldData[]> => {
   try {
     const url = REMOTE_URL + '/worlds';

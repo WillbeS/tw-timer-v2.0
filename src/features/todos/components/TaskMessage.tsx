@@ -1,5 +1,7 @@
 import { TodoView } from '../models/TodoView';
 import { TaskData } from '../data/types';
+import { todoTypes } from '../data/constants';
+import { AttackMessage } from './AttackMessage';
 
 type Props = {
   todoView: TodoView;
@@ -7,7 +9,11 @@ type Props = {
 };
 
 export const TaskMessage = ({ todoView, onEdit }: Props) => {
-  const { message, urlParts } = todoView.getMessage(window.innerWidth);
+  // if (todoView.getType() === todoTypes.ATTACK) {
+  //   return <AttackMessage todoView={todoView} />;
+  // }
+
+  const { message, urlParts } = todoView.getTrancatedMessage(window.innerWidth);
 
   if (!urlParts) return <>{message}</>;
   const { beforeTxt, linkTxt, afterTxt, url } = urlParts;

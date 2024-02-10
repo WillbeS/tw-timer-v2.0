@@ -87,7 +87,7 @@ export const TaskList = () => {
     }
   }, [dispatch]);
 
-  console.log('Todo list is rendering');
+  // console.log('Todo list is rendering');
   return (
     <>
       <TopBar

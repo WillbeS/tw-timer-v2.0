@@ -1,4 +1,5 @@
 import { KeyboardEvent, SyntheticEvent, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { TodoFormView } from '../models/TodoFormView';
 import { AddTasksFormInput, AddTasksFormErrors } from '../data/types';
@@ -6,7 +7,8 @@ import { formatTimeIntoText } from '../../../utils/dateTime';
 import { todoTypes, attackSubtypes } from '../data/constants';
 
 import { ValidationError } from '../../../components/form/ValidationError';
-import { useFetchWorls } from '../../../hooks/useFetchWorls';
+// import { useFetchWorls } from '../../../hooks/useFetchWorls';
+import { RootState } from '../../../store/store';
 
 type Props = {
   onSubmit: (input: AddTasksFormInput) => void;
@@ -27,7 +29,8 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
   }
 
   const [errors, setErrors] = useState<AddTasksFormErrors>({});
-  const worlds = useFetchWorls();
+  //const worlds = useFetchWorls();
+  const { worlds } = useSelector((state: RootState) => state.worlds);
   const todoFormView = new TodoFormView();
 
   const handleSubmit = (e: SyntheticEvent | KeyboardEvent) => {

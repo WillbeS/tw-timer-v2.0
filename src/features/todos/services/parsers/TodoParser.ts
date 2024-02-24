@@ -51,7 +51,7 @@ export abstract class TodoParser {
 
   protected findMatches(message: string): Matches | null {
     for (const pattern of this.patterns) {
-      console.log(pattern);
+      //console.log(pattern);
       const matched = message.match(pattern.value);
       if (!matched) continue;
 

@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTasks, editTask } from '../api';
+import { fetchTasks, editTask, deleteTask } from '../api';
 
 import { RootState } from '../../../store/store';
 import {
@@ -8,10 +8,11 @@ import {
   selectFiltered,
   editTodoAction,
   addTodosAction,
+  saveAllAction,
   startLoadingAction,
   stoptLoadingAction,
 } from '../store/todoSlice';
-import { deleteTodo, editTodo, saveFromApi } from '../services/todoStorage';
+import { deleteTodo, editTodo, saveFromApi, syncWithApi } from '../services/todoStorage';
 import { TaskData } from '../data/types';
 import { formatTime } from '../../../utils/dateTime';
 
@@ -45,6 +46,7 @@ export const TaskList = () => {
 
         if (deleteTodo(id)) {
           dispatch(removeTodoAction(id));
+          await deleteTask(id);
         }
       } catch (error) {
         console.log(error);
@@ -62,7 +64,7 @@ export const TaskList = () => {
 
         if (editTodo(todo)) {
           dispatch(editTodoAction(todo));
-          await editTask(todo);
+          await editTask(todo); //this needs to be removed and changed from the server side (shouldn't be deleted on load unless there are no more transports)
         }
       } catch (error) {
         console.log(error);
@@ -73,13 +75,25 @@ export const TaskList = () => {
     [dispatch],
   );
 
+  // const handleSyncOld = useCallback(async () => {
+  //   try {
+  //     dispatch(startLoadingAction());
+  //     const serverTasks: TaskData[] = await fetchTasks();
+  //     const saved = saveFromApi(serverTasks);
+  //     dispatch(addTodosAction(saved));
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     dispatch(stoptLoadingAction());
+  //   }
+  // }, [dispatch]);
+
   const handleSync = useCallback(async () => {
     try {
-      console.log('Sync from API');
       dispatch(startLoadingAction());
       const serverTasks: TaskData[] = await fetchTasks();
-      const saved = saveFromApi(serverTasks);
-      dispatch(addTodosAction(saved));
+      const saved = syncWithApi(serverTasks);
+      dispatch(saveAllAction(saved));
     } catch (error) {
       console.log(error);
     } finally {

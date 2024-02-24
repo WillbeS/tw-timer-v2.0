@@ -34,6 +34,10 @@ export const todosSlice = createSlice({
       });
     },
 
+    saveAllAction: (state, action: PayloadAction<{ [key: string]: TaskData }>) => {
+      state.byId = action.payload;
+    },
+
     editTodoAction: (state, action: PayloadAction<TaskData>) => {
       const todo = action.payload;
       state.byId[todo.id] = { ...todo };
@@ -58,6 +62,7 @@ export const {
   removeTodoAction,
   editTodoAction,
   removeAllAction,
+  saveAllAction,
   startLoadingAction,
   stoptLoadingAction,
 } = todosSlice.actions;

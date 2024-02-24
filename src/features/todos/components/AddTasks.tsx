@@ -41,6 +41,7 @@ export const AddTasks = () => {
       // When proper error handling is done, inform if there's an error
     } catch (error) {
       console.log('Need to log the error and send message to the user');
+      console.log(error);
       onCloseModal();
     } finally {
       dispatch(stoptLoadingAction());

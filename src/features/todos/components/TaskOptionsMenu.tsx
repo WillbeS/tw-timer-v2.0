@@ -26,7 +26,7 @@ export const TaskOptionsMenu = ({ onSync }: Props) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuButton label="Load from server" symbol="↺" onClick={onSync} />
+      <DropdownMenuButton label="Synchronize" symbol="↺" onClick={onSync} />
       <DropdownMenuButton label="Clear local" symbol="🗑" onClick={handleClearLocal} />
     </DropdownMenu>
   );

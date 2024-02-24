@@ -8,6 +8,21 @@ const STORAGE_KEY = 'todos';
 export const getTodos = () => getData(STORAGE_KEY);
 export const saveTodos = (data: object) => saveData(STORAGE_KEY, data);
 
+export const syncWithApi = (tasks: TaskData[]) => {
+  let localTasks: {
+    [key: string]: TaskData;
+  } = {};
+
+  for (const task of tasks) {
+    localTasks[task.id] = task;
+  }
+
+  saveTodos(localTasks);
+
+  return localTasks;
+};
+
+// This may become unnecessary, check if it's used on next cleanup!!!
 export const saveFromApi = (todos: TaskData[]) => {
   const localTodos = getTodos();
   const forCompare: TaskData[] = Object.values(localTodos);

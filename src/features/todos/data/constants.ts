@@ -16,9 +16,14 @@ export const todoTypes = {
 };
 
 export const attackSubtypes = {
-  REAL: 'real',
-  FAKE: 'fake',
+  RAM_NUKE: 'ram nuke',
+  CAT_NUKE: 'cat nuke',
+  SPLIT_NUKE: 'split nuke',
+  NOBLE_NUKE: 'noble nuke',
+  SPLIT_NOBLE_TRAIN: 'split noble train',
+  NOBLE_TRAIN: 'noble train',
   FANG: 'fang',
+  TIMED_FAKE: 'timed fake',
 };
 
 export const attackTypes = {

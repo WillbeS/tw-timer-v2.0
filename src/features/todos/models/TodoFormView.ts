@@ -1,4 +1,4 @@
-import { todoTypes } from '../data/constants';
+import { todoTypes, attackSubtypes } from '../data/constants';
 import { AddTasksFormInput, AddTasksFormErrors } from '../data/types';
 
 export class TodoFormView {
@@ -8,6 +8,17 @@ export class TodoFormView {
     [todoTypes.SNIPE]: '60',
     [todoTypes.MINTING]: '30',
     [todoTypes.REMINDER]: '0',
+  };
+
+  private offsetBySubtype = {
+    [attackSubtypes.RAM_NUKE]: '90',
+    [attackSubtypes.CAT_NUKE]: '90',
+    [attackSubtypes.SPLIT_NUKE]: '150',
+    [attackSubtypes.NOBLE_NUKE]: '90',
+    [attackSubtypes.SPLIT_NOBLE_TRAIN]: '150',
+    [attackSubtypes.NOBLE_TRAIN]: '120',
+    [attackSubtypes.FANG]: '90',
+    [attackSubtypes.TIMED_FAKE]: '60',
   };
 
   protected _errors: AddTasksFormErrors = {};
@@ -25,6 +36,15 @@ export class TodoFormView {
     return Object.keys(this.errors).length === 0;
   }
 
+  public getOffset(type: string, subtype?: string) {
+    if (subtype) {
+      return this.offsetBySubtype[subtype];
+    }
+
+    return this.offsetByType[type] ?? '0';
+  }
+
+  // This may become unneeded, should check on cleanup!!!
   public getOffsetByType(type: string) {
     return this.offsetByType[type] ?? '0';
   }

@@ -42,7 +42,7 @@ export const TaskList = () => {
   const handleDelete = useCallback(
     async (id: string) => {
       try {
-        dispatch(startLoadingAction());
+        // dispatch(startLoadingAction());
 
         if (deleteTodo(id)) {
           dispatch(removeTodoAction(id));
@@ -51,7 +51,7 @@ export const TaskList = () => {
       } catch (error) {
         console.log(error);
       } finally {
-        dispatch(stoptLoadingAction());
+        // dispatch(stoptLoadingAction());
       }
     },
     [dispatch],

@@ -25,7 +25,7 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
   });
 
   if (input.type === todoTypes.ATTACK && !input.subtype) {
-    setInput({ ...input, subtype: attackSubtypes.REAL });
+    setInput({ ...input, subtype: attackSubtypes.RAM_NUKE });
   }
 
   const [errors, setErrors] = useState<AddTasksFormErrors>({});
@@ -100,7 +100,7 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
             setInput({
               ...input,
               type: e.target.value,
-              alarmOffset: todoFormView.getOffsetByType(e.target.value),
+              alarmOffset: todoFormView.getOffset(e.target.value),
             });
             // setSelectedType(e.target.value);
           }}
@@ -127,6 +127,7 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
               setInput({
                 ...input,
                 subtype: e.target.value,
+                alarmOffset: todoFormView.getOffset(input.type, e.target.value),
               });
             }}
             className={getFieldStyle(errors.type)}

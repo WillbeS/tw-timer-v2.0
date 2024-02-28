@@ -58,10 +58,10 @@ export class AttackParser extends TodoParser {
 
     const { unit, origin, destination, dueDateST, url } = parts;
 
-    const attack =
-      this.input.subtype === attackSubtypes.FANG ? 'fang' : `${this.input.subtype} ${unit} attack`;
+    // const attack =
+    //   this.input.subtype === attackSubtypes.FANG ? 'fang' : `${this.input.subtype} ${unit} attack`;
 
-    const message = `${this.wrapInUrl('Send', url)} ${attack} from ${this.replaceCoords(
+    const message = `${this.wrapInUrl('Send', url)} ${this.input.subtype} from ${this.replaceCoords(
       origin,
     )} to ${this.replaceCoords(destination)}`;
 

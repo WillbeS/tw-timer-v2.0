@@ -36,7 +36,7 @@ export const TaskRow = ({ todo, onDelete, onEdit }: Props) => {
           className="px-1 cursor-pointer px-2 flex items-center"
           onClick={(e) => console.log('Todo details')}
         >
-          <TaskDetails details={todoView.getDetails()} />
+          <TaskDetails taskView={todoView} />
         </span>
         <span>
           <TaskMessage todoView={todoView} onEdit={onEdit} />

@@ -33,7 +33,7 @@ export class TransportsService {
     this._totalIron = WH_BUFFER.iron;
   }
 
-  private updateTransports(lastUpdateMs: number) {
+  public updateTransports(lastUpdateMs: number) {
     const leftTransports: Transport[] = [];
 
     for (const transport of this._transports) {
@@ -78,7 +78,7 @@ export class TransportsService {
   // should use this also to implement minute and hour grouping
   public getBySecond() {
     this.updateTransports(new Date().getTime());
-    this.restetTotalRes();
+    this.resetTotalRes();
 
     const bySecond: GropuedByTime = {};
 
@@ -101,9 +101,39 @@ export class TransportsService {
     return bySecond;
   }
 
+  public groupByMinutes(interval: number) {
+    this.updateTransports(new Date().getTime());
+    this.resetTotalRes();
+
+    const grouped: GropuedByTime = {};
+
+    for (const transport of this._transports) {
+      const seconds = new Date(transport.dueMs).getSeconds();
+      const extraMins = new Date(transport.dueMs).getMinutes() % interval;
+      const extraMs = (seconds + extraMins * 60) * 1000;
+      const groupedMs = transport.dueMs - extraMs;
+
+      if (!grouped[groupedMs]) {
+        grouped[groupedMs] = {
+          wood: 0,
+          clay: 0,
+          iron: 0,
+        };
+      }
+
+      grouped[groupedMs].wood += transport.wood;
+      grouped[groupedMs].clay += transport.clay;
+      grouped[groupedMs].iron += transport.iron;
+
+      this.updateTotalRes(transport.wood, transport.clay, transport.iron);
+    }
+
+    return grouped;
+  }
+
   public getByMinute() {
     this.updateTransports(new Date().getTime());
-    this.restetTotalRes();
+    this.resetTotalRes();
 
     const grouped: GropuedByTime = {};
 
@@ -134,7 +164,7 @@ export class TransportsService {
     this._totalIron += iron;
   }
 
-  private restetTotalRes() {
+  private resetTotalRes() {
     this._totalWood = 0;
     this._totalClay = 0;
     this._totalIron = 0;

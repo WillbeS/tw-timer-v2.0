@@ -4,6 +4,7 @@ import { TaskData } from '../data/types';
 import { formatDate } from '../../../utils/dateTime';
 
 import { TransportsService } from '../services/TransportsService';
+import { numberWithSeparator } from '../../../utils/stringUtils';
 
 export class MintingTodoView extends TodoView {
   private trasportsService: TransportsService;
@@ -18,30 +19,28 @@ export class MintingTodoView extends TodoView {
     this.trasportsService = new TransportsService(JSON.parse(details));
   }
 
-  public getDetails(): { heading: string; content: string }[] {
-    const details = super.getDetails();
-    //const transportsBySecond = this.trasportsService.getBySecond();
-    const transportsByMinute = this.trasportsService.getByMinute();
+  public getGroupedTransports() {
+    const groupedTransports = this.trasportsService.groupByMinutes(5);
+    const transportsDetails = [];
 
-    details.push({
-      heading: 'Total incoming res',
-      content: `Wood: ${this.trasportsService.totalWood}, clay: ${this.trasportsService.totalClay}, iron: ${this.trasportsService.totalIron}`,
+    transportsDetails.push({
+      date: 'Total',
+      wood: numberWithSeparator(this.trasportsService.totalWood),
+      clay: numberWithSeparator(this.trasportsService.totalClay),
+      iron: numberWithSeparator(this.trasportsService.totalIron),
     });
 
-    details.push({
-      heading: `All transports (${this.trasportsService.transports.length})`,
-      content: `Grouped by minutes (${Object.keys(transportsByMinute).length}):`,
-    });
-
-    for (const ms in transportsByMinute) {
-      const transport = transportsByMinute[ms];
-      details.push({
-        heading: formatDate(Number(ms)),
-        content: `Wood: ${transport.wood}, clay: ${transport.clay}, iron: ${transport.iron}`,
+    for (const ms in groupedTransports) {
+      const transport = groupedTransports[ms];
+      transportsDetails.push({
+        date: formatDate(Number(ms)),
+        wood: numberWithSeparator(transport.wood),
+        clay: numberWithSeparator(transport.clay),
+        iron: numberWithSeparator(transport.iron),
       });
     }
 
-    return details;
+    return transportsDetails;
   }
 
   public update(triggeredBy: string = 'updateBtn') {

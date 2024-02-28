@@ -18,6 +18,14 @@ export const truncate = (str: string, maxLength = 16) => {
   return str.length > maxLength ? str.slice(0, maxLength - 1) + '...' : str;
 };
 
+export function numberWithSeparator(num: number): string {
+  let x = num.toString();
+  var pattern = /(-?\d+)(\d{3})/;
+  while (pattern.test(x)) x = x.replace(pattern, '$1.$2');
+
+  return x;
+}
+
 // Merge 2 arrays of objects with generic types without duplicats (Chat GPT code)
 type KeyOfType<T> = keyof T;
 

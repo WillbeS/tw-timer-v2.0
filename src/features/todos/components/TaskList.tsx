@@ -64,7 +64,7 @@ export const TaskList = () => {
 
         if (editTodo(todo)) {
           dispatch(editTodoAction(todo));
-          await editTask(todo); //this needs to be removed and changed from the server side (shouldn't be deleted on load unless there are no more transports)
+          //await editTask(todo); //this needs to be removed and changed from the server side (shouldn't be deleted on load unless there are no more transports)
         }
       } catch (error) {
         console.log(error);

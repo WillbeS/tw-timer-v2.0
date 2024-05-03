@@ -52,6 +52,7 @@ export const CustomSelect = ({
     }
   };
 
+  // Shouldn't this be in a use effect? With clean up on unmount
   document.addEventListener('mousedown', closeOpenMenus);
 
   return (

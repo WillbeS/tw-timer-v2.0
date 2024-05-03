@@ -25,7 +25,7 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
   });
 
   if (input.type === todoTypes.ATTACK && !input.subtype) {
-    setInput({ ...input, subtype: attackSubtypes.RAM_NUKE });
+    setInput({ ...input, subtype: attackSubtypes.CLEAR_NUKE });
   }
 
   const [errors, setErrors] = useState<AddTasksFormErrors>({});

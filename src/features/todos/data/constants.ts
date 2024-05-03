@@ -16,9 +16,9 @@ export const todoTypes = {
 };
 
 export const attackSubtypes = {
-  RAM_NUKE: 'ram nuke',
+  CLEAR_NUKE: 'clear nuke',
   CAT_NUKE: 'cat nuke',
-  SPLIT_NUKE: 'split nuke',
+  ANTI_SNIPE: 'anti-snipe',
   NOBLE_NUKE: 'noble nuke',
   SPLIT_NOBLE_TRAIN: 'split noble train',
   NOBLE_TRAIN: 'noble train',

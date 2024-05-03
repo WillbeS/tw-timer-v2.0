@@ -4,16 +4,16 @@ import { AddTasksFormInput, AddTasksFormErrors } from '../data/types';
 export class TodoFormView {
   private offsetByType = {
     [todoTypes.DODGE]: '420',
-    [todoTypes.ATTACK]: '120',
+    [todoTypes.ATTACK]: '90',
     [todoTypes.SNIPE]: '60',
     [todoTypes.MINTING]: '30',
     [todoTypes.REMINDER]: '0',
   };
 
   private offsetBySubtype = {
-    [attackSubtypes.RAM_NUKE]: '90',
+    [attackSubtypes.CLEAR_NUKE]: '90',
     [attackSubtypes.CAT_NUKE]: '90',
-    [attackSubtypes.SPLIT_NUKE]: '150',
+    [attackSubtypes.ANTI_SNIPE]: '150',
     [attackSubtypes.NOBLE_NUKE]: '90',
     [attackSubtypes.SPLIT_NOBLE_TRAIN]: '150',
     [attackSubtypes.NOBLE_TRAIN]: '120',

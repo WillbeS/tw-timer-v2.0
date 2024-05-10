@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { RoundedButton } from '../ui/RoundedButton';
 import { HelpWrapper } from '../../features/help/components/HelpWrapper';
+import { ConnectWrapper } from '../../features/worlds/components/ConnectWrapper';
 
 import { theme } from '../../themes';
 
@@ -26,6 +27,7 @@ export function Header() {
         <RoundedButton label="Settings" symbol="⚙" onClick={() => console.log('Settings button')} />
         {/* <RoundedButton label="Help" symbol="?" onClick={() => navigate('/help')} /> */}
         <HelpWrapper />
+        <ConnectWrapper />
       </div>
     </header>
   );

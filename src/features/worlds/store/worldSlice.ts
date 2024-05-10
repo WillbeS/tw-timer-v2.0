@@ -12,16 +12,25 @@ const worlds = localWorlds ? JSON.parse(localWorlds) : [];
 
 type WorldState = {
   worlds: WorldData[];
+  syncedByTag: {
+    [tag: string]: string;
+  };
 };
 
 const initialState: WorldState = {
   worlds,
+  syncedByTag: {},
 };
 
 const worldSlice = createSlice({
   name: 'worlds',
   initialState,
-  reducers: {},
+  reducers: {
+    addSyncedWorld: (state, action) => {
+      console.log(action.payload);
+    },
+  },
+
   extraReducers: (builder) => {
     builder.addCase(getWorlds.fulfilled, (state, action) => {
       state.worlds = action.payload;

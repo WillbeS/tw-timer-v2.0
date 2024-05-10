@@ -58,6 +58,8 @@ export class AttackParser extends TodoParser {
 
     const { unit, origin, destination, dueDateST, url } = parts;
 
+    console.log(destination);
+
     // const attack =
     //   this.input.subtype === attackSubtypes.FANG ? 'fang' : `${this.input.subtype} ${unit} attack`;
 
@@ -72,8 +74,10 @@ export class AttackParser extends TodoParser {
     let [, unit, origin, dateStr, timeStr, url] = match;
     unit = this.getUnitFromBBCode(unit);
 
-    const [, , xStr, yStr] = url.split('&');
+    //const urlParts = url.split('&');
+    const [, , , xStr, yStr] = url.split('&');
     const destination = `${xStr.replace('x=', '')}|${yStr.replace('y=', '')}`;
+    //console.log('URL parts: ', urlParts);
 
     const dueDateST = this.getDateFromString(dateStr, timeStr);
 

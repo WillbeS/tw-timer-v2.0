@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import { Routes } from './Routes';
-import { TestDesignPage } from './pages';
+import Routes from './Routes';
+// import { TestDesignPage } from './pages';
 
 import './assets/css/index.css';
 

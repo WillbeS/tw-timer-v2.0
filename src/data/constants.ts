@@ -1,13 +1,17 @@
 export const DEBUG_MODE = true;
 
-//export const REMOTE_URL = process.env.REACT_APP_REMOTE_URL;
-export const REMOTE_URL = process.env.REACT_APP_REMOTE_URL_BETA;
+// For the dev version
+export const REMOTE_URL = process.env.REACT_APP_REMOTE_URL;
+
+// For the public version
+//export const REMOTE_URL = process.env.REACT_APP_REMOTE_URL_BETA;
 
 export const sounds = {
   VIB: 'vibration.mp3',
   BEEP: 'beep.wav',
 };
 
+// I dodn't need these any more!!!
 export const amberTheme = {
   bgColor: 'bg-amber-800',
   headerBorder: 'border-yellow-900',
@@ -22,3 +26,4 @@ export const stoneTheme = {
 
 //export const defaultTheme = amberTheme;
 export const defaultTheme = stoneTheme;
+/////////////////////////////////////////

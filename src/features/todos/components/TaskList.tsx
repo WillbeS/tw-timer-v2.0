@@ -7,7 +7,7 @@ import {
   removeTodoAction,
   selectFiltered,
   editTodoAction,
-  addTodosAction,
+  // addTodosAction,
   saveAllAction,
   startLoadingAction,
   stoptLoadingAction,
@@ -28,6 +28,9 @@ export const TaskList = () => {
   const dispatch = useDispatch();
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
+  const connectedWorlds = useSelector(
+    (state: RootState) => Object.keys(state.worlds.syncedByTag).length,
+  );
 
   useEffect(() => {
     if (nextDeadline) {
@@ -38,6 +41,8 @@ export const TaskList = () => {
       return () => clearInterval(interval);
     }
   }, [nextDeadline, nextTodoType]);
+
+  const loadingMessage = `Loading from server. Connected worlds: ${connectedWorlds}`;
 
   const handleDelete = useCallback(
     async (id: string) => {
@@ -75,20 +80,16 @@ export const TaskList = () => {
     [dispatch],
   );
 
-  // const handleSyncOld = useCallback(async () => {
-  //   try {
-  //     dispatch(startLoadingAction());
-  //     const serverTasks: TaskData[] = await fetchTasks();
-  //     const saved = saveFromApi(serverTasks);
-  //     dispatch(addTodosAction(saved));
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     dispatch(stoptLoadingAction());
-  //   }
-  // }, [dispatch]);
-
   const handleSync = useCallback(async () => {
+    if (connectedWorlds === 0) {
+      dispatch(startLoadingAction());
+      setTimeout(() => {
+        dispatch(stoptLoadingAction());
+      }, 5000);
+
+      return;
+    }
+
     try {
       dispatch(startLoadingAction());
       const serverTasks: TaskData[] = await fetchTasks();
@@ -110,7 +111,7 @@ export const TaskList = () => {
         onSync={handleSync}
       />
       <div className="flex flex-col gap-2 text-sm md:text-lg font-semibold mt-5">
-        {loading && <div className="text-white text-center">Loading...</div>}
+        {loading && <div className="text-white text-center">{loadingMessage}</div>}
         {todos.map((todo) => (
           <TaskRow key={todo.id} todo={todo} onDelete={handleDelete} onEdit={handleEdit} />
         ))}

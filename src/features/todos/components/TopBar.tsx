@@ -27,6 +27,7 @@ export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
   });
   worldOptions.unshift({ value: '0', label: 'All Worlds' });
 
+  // This is for delete, yes???
   const loadWorlds = () => {
     if (worlds.length === 0) {
       console.log('needs to fetch worlds');

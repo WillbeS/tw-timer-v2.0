@@ -39,9 +39,9 @@ export type TaskData = {
 //   id: string;
 // };
 
-// export type TasksById = {
-//   [id: string]: TaskData;
-// };
+export type TasksById = {
+  [id: string]: TaskData;
+};
 
 export type AddTasksFormInput = {
   world: string;

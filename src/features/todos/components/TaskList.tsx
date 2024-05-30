@@ -18,19 +18,20 @@ import { formatTime } from '../../../utils/dateTime';
 
 import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
+import { getWorldKey } from '../../../utils/api';
 
 export const TaskList = () => {
   const [world, setWorld] = useState('0');
   const [type, setType] = useState('0');
 
+  const tasksById = useSelector((state: RootState) => state.todos.byId);
   const todos = useSelector((state: RootState) => selectFiltered(state, world, type));
   const loading = useSelector((state: RootState) => state.todos.loading);
   const dispatch = useDispatch();
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
-  const connectedWorlds = useSelector(
-    (state: RootState) => Object.keys(state.worlds.syncedByTag).length,
-  );
+  const connectedWorlds = useSelector((state: RootState) => state.worlds.connected);
+  const connectedWorldsCount = Object.keys(connectedWorlds).length;
 
   useEffect(() => {
     if (nextDeadline) {
@@ -42,16 +43,20 @@ export const TaskList = () => {
     }
   }, [nextDeadline, nextTodoType]);
 
-  const loadingMessage = `Loading from server. Connected worlds: ${connectedWorlds}`;
+  const loadingMessage = `Loading from server. Connected worlds: ${connectedWorldsCount}`;
 
   const handleDelete = useCallback(
-    async (id: string) => {
+    async (id: string, world: string) => {
       try {
         // dispatch(startLoadingAction());
 
         if (deleteTodo(id)) {
           dispatch(removeTodoAction(id));
-          await deleteTask(id);
+          const apiKey = getWorldKey(world);
+
+          if (apiKey) {
+            await deleteTask(id, apiKey);
+          }
         }
       } catch (error) {
         console.log(error);
@@ -81,19 +86,28 @@ export const TaskList = () => {
   );
 
   const handleSync = useCallback(async () => {
-    if (connectedWorlds === 0) {
+    if (connectedWorldsCount === 0) {
       dispatch(startLoadingAction());
       setTimeout(() => {
         dispatch(stoptLoadingAction());
-      }, 5000);
+      }, 2000);
 
       return;
     }
 
     try {
       dispatch(startLoadingAction());
-      const serverTasks: TaskData[] = await fetchTasks();
-      const saved = syncWithApi(serverTasks);
+
+      const serverTasks: TaskData[] = [];
+      for (const cw in connectedWorlds) {
+        console.log(connectedWorlds[cw]);
+        const fetched = await fetchTasks(connectedWorlds[cw]);
+        serverTasks.push(...fetched);
+      }
+
+      console.log(serverTasks);
+      //const serverTasks: TaskData[] = await fetchTasks();
+      const saved = syncWithApi(serverTasks, tasksById);
       dispatch(saveAllAction(saved));
     } catch (error) {
       console.log(error);

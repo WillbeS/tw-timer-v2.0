@@ -11,6 +11,7 @@ import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { TasksForm } from './TasksForm';
 
 import { theme } from '../../../themes';
+import { getWorldKey } from '../../../utils/api';
 
 const OpenBtn = () => (
   <div
@@ -37,10 +38,12 @@ export const AddTasks = () => {
       dispatch(addTodosAction(todos));
       onCloseModal();
 
-      await saveTasks(todos);
-      // When proper error handling is done, inform if there's an error
+      const apiKey = getWorldKey(todoInput.world);
+
+      if (apiKey) {
+        await saveTasks(todos, apiKey);
+      }
     } catch (error) {
-      console.log('Need to log the error and send message to the user');
       console.log(error);
       onCloseModal();
     } finally {

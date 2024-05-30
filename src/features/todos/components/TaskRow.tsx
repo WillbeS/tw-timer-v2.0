@@ -11,7 +11,7 @@ import { theme } from '../../../themes';
 
 type Props = {
   todo: TaskData;
-  onDelete: (id: string) => void;
+  onDelete: (id: string, world: string) => void;
   onEdit: (editedTodo: TaskData) => void;
 };
 
@@ -55,7 +55,7 @@ export const TaskRow = ({ todo, onDelete, onEdit }: Props) => {
         <span
           role="button"
           className="px-1 cursor-pointer px-2 flex items-center"
-          onClick={(e) => onDelete(todo.id)}
+          onClick={(e) => onDelete(todo.id, todo.world)}
         >
           <DeleteIcon className="w-5 h-5 fill-neutral-500 hover:fill-neutral-600" />
         </span>

@@ -1,7 +1,7 @@
 import { TaskData } from '../data/types';
 import { REMOTE_URL } from '../../../data/constants';
 
-export const saveTasks = async (tasks: TaskData[]): Promise<boolean> => {
+export const saveTasks = async (tasks: TaskData[], apiKey: string): Promise<boolean> => {
   try {
     const url = REMOTE_URL + '/timer/tasks';
 
@@ -10,6 +10,7 @@ export const saveTasks = async (tasks: TaskData[]): Promise<boolean> => {
       body: JSON.stringify(tasks),
       headers: {
         Accept: 'application/json',
+        'X-Custom-Auth': apiKey,
       },
     });
 

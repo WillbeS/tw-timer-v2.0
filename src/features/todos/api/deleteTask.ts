@@ -1,6 +1,6 @@
 import { REMOTE_URL } from '../../../data/constants';
 
-export const deleteTask = async (id: string): Promise<boolean> => {
+export const deleteTask = async (id: string, apiKey: string): Promise<boolean> => {
   try {
     const url = REMOTE_URL + '/timer/tasks/' + id;
 
@@ -8,6 +8,7 @@ export const deleteTask = async (id: string): Promise<boolean> => {
       method: 'delete',
       headers: {
         Accept: 'application/json',
+        'X-Custom-Auth': apiKey,
       },
     });
 

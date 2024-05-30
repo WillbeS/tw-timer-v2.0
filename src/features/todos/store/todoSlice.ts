@@ -1,16 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import { TaskData } from '../data/types';
+import { TaskData, TasksById } from '../data/types';
 import { getTodos } from '../services/todoStorage';
 
-type State = {
-  byId: {
-    [id: string]: TaskData;
-  };
+type TodosState = {
+  byId: TasksById;
   loading: boolean;
 };
 
-const initialState: State = {
+const initialState: TodosState = {
   byId: getTodos(),
   loading: false,
 };

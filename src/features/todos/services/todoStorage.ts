@@ -1,6 +1,6 @@
 import { generateId } from '../../../utils/stringUtils';
 import { getData, saveData } from '../../../services/storageManager';
-import { NewTask, TaskData } from '../data/types';
+import { NewTask, TaskData, TasksById } from '../data/types';
 
 const STORAGE_KEY = 'todos';
 
@@ -8,12 +8,8 @@ const STORAGE_KEY = 'todos';
 export const getTodos = () => getData(STORAGE_KEY);
 export const saveTodos = (data: object) => saveData(STORAGE_KEY, data);
 
-export const syncWithApi = (tasks: TaskData[]) => {
-  let localTasks: {
-    [key: string]: TaskData;
-  } = {};
-
-  for (const task of tasks) {
+export const syncWithApi = (remoteTasks: TaskData[], localTasks: TasksById) => {
+  for (const task of remoteTasks) {
     localTasks[task.id] = task;
   }
 

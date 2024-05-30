@@ -8,14 +8,24 @@ const STORAGE_KEY = 'todos';
 export const getTodos = () => getData(STORAGE_KEY);
 export const saveTodos = (data: object) => saveData(STORAGE_KEY, data);
 
-export const syncWithApi = (remoteTasks: TaskData[], localTasks: TasksById) => {
+export const syncWithApi = (
+  remoteTasks: TaskData[],
+  localTasks: TasksById,
+  connectedWorlds: string[], // I actually don't need this :D
+) => {
+  const updated: TasksById = {};
+
   for (const task of remoteTasks) {
-    localTasks[task.id] = task;
+    updated[task.id] = task;
   }
 
-  saveTodos(localTasks);
+  for (const id in localTasks) {
+    if (updated[id]) continue;
 
-  return localTasks;
+    updated[id] = localTasks[id];
+  }
+
+  return updated;
 };
 
 // This may become unnecessary, check if it's used on next cleanup!!!

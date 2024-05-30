@@ -100,14 +100,13 @@ export const TaskList = () => {
 
       const serverTasks: TaskData[] = [];
       for (const cw in connectedWorlds) {
-        console.log(connectedWorlds[cw]);
         const fetched = await fetchTasks(connectedWorlds[cw]);
         serverTasks.push(...fetched);
       }
 
-      console.log(serverTasks);
       //const serverTasks: TaskData[] = await fetchTasks();
-      const saved = syncWithApi(serverTasks, tasksById);
+      const saved = syncWithApi(serverTasks, tasksById, Object.keys(connectedWorlds));
+
       dispatch(saveAllAction(saved));
     } catch (error) {
       console.log(error);

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { WorldData } from '../../../data/types';
-import { truncate } from '../../../utils/stringUtils';
 import { CopyToClipboardBtn } from '../../../components/ui/CopyToClipboardBtn';
 
 type Props = {

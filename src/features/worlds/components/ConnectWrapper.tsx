@@ -39,8 +39,8 @@ export const ConnectWrapper = () => {
   const disconnectWorld = async (worldTag: string) => {
     try {
       console.log('Start loading');
-      await removeKey(worldTag);
       dispatch(removeConnectedWorld(worldTag));
+      await removeKey(worldTag);
     } catch (error) {
       console.log(error);
     }

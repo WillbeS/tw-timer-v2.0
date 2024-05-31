@@ -10,9 +10,9 @@ export const saveTodos = (data: object) => saveData(STORAGE_KEY, data);
 
 export const syncWithApi = (
   remoteTasks: TaskData[],
-  localTasks: TasksById,
-  connectedWorlds: string[], // I actually don't need this :D
+  connectedWorlds: { [tag: string]: string },
 ) => {
+  const localTasks = getTodos();
   const updated: TasksById = {};
 
   for (const task of remoteTasks) {
@@ -20,10 +20,14 @@ export const syncWithApi = (
   }
 
   for (const id in localTasks) {
-    if (updated[id]) continue;
+    const localTask = localTasks[id];
+    // if it's a connected task, don't add it
+    if (connectedWorlds[localTask.world]) continue;
 
-    updated[id] = localTasks[id];
+    updated[id] = localTask;
   }
+
+  saveTodos(updated);
 
   return updated;
 };

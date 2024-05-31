@@ -19,6 +19,7 @@ import { formatTime } from '../../../utils/dateTime';
 import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
 import { getWorldKey } from '../../../utils/api';
+import { start } from 'repl';
 
 export const TaskList = () => {
   const [world, setWorld] = useState('0');
@@ -85,6 +86,7 @@ export const TaskList = () => {
     [dispatch],
   );
 
+  // still a bug, doesn't delete it from the server!!!
   const handleSync = useCallback(async () => {
     if (connectedWorldsCount === 0) {
       dispatch(startLoadingAction());
@@ -105,7 +107,7 @@ export const TaskList = () => {
       }
 
       //const serverTasks: TaskData[] = await fetchTasks();
-      const saved = syncWithApi(serverTasks, tasksById, Object.keys(connectedWorlds));
+      const saved = syncWithApi(serverTasks, connectedWorlds);
 
       dispatch(saveAllAction(saved));
     } catch (error) {

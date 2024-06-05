@@ -23,7 +23,9 @@ export const ConnectForm = ({ worlds, onSubmit }: Props) => {
     }
 
     onSubmit(world, key);
-    //TODO - clean up the form?
+    setWorld('-1');
+    setKey('');
+    setErrors({});
   };
 
   const fieldStyle =

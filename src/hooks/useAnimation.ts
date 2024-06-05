@@ -5,7 +5,7 @@ type Props = {
   duration?: number;
 };
 
-export const useAnimation = ({ visible, duration = 2000 }: Props) => {
+export const useAnimation = ({ visible, duration = 500 }: Props) => {
   const [animation, setAnimation] = useState(false);
   const [animationEnded, setAnimationEnded] = useState(false);
 
@@ -25,7 +25,7 @@ export const useAnimation = ({ visible, duration = 2000 }: Props) => {
     }
 
     return () => clearTimeout(timer);
-  }, [visible]);
+  }, [visible, duration]);
 
   return [animation, animationEnded];
 };

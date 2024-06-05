@@ -19,6 +19,7 @@ export const ConnectWrapper = () => {
 
   const { worlds, connected } = useSelector((state: RootState) => state.worlds);
   const connectedWorlds = worlds.filter((w) => connected[w.tag] !== undefined);
+  const unconnectedWorlds = worlds.filter((w) => connected[w.tag] === undefined);
 
   const dispatch = useDispatch();
 
@@ -85,14 +86,8 @@ export const ConnectWrapper = () => {
             If you already have a key paste it below, if you leave it empty it will generate a new
             key
           </p>
-          {generatedKey && (
-            <p>
-              This is you secret key, please save it somewhere safe and use it to connect more
-              devices with it:
-              <span>{generatedKey}</span>
-            </p>
-          )}
-          <ConnectForm worlds={worlds} onSubmit={connectWorld} />
+          {generatedKey && <p className="text-sm p-3 font-bold">The connection was successful/</p>}
+          <ConnectForm worlds={unconnectedWorlds} onSubmit={connectWorld} />
         </section>
       </div>
     </ModalWrapper2>

@@ -19,13 +19,11 @@ import { formatTime } from '../../../utils/dateTime';
 import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
 import { getWorldKey } from '../../../utils/api';
-import { start } from 'repl';
 
 export const TaskList = () => {
   const [world, setWorld] = useState('0');
   const [type, setType] = useState('0');
 
-  const tasksById = useSelector((state: RootState) => state.todos.byId);
   const todos = useSelector((state: RootState) => selectFiltered(state, world, type));
   const loading = useSelector((state: RootState) => state.todos.loading);
   const dispatch = useDispatch();

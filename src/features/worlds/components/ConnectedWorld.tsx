@@ -23,11 +23,11 @@ export const ConnectedWorld = ({ world, token, onRemove }: Props) => {
     <div className="w-11/12 md:w-3/4 mx-auto">
       <div className="flex gap-3 md:gap-5 text-sm md:text-base py-1">
         <span className="font-bold">{world.name}</span>
-        <span onClick={handleRemove} className="cursor-pointer underline text-red-700">
-          Remove
-        </span>
         <span onClick={toggleKeyVisibility} className="cursor-pointer underline text-blue-700">
           {keyIsVisible ? 'Hide key' : 'Show key'}
+        </span>
+        <span onClick={handleRemove} className="cursor-pointer underline text-red-700">
+          Remove
         </span>
       </div>
       {keyIsVisible && (

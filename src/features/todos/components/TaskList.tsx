@@ -11,6 +11,7 @@ import {
   saveAllAction,
   startLoadingAction,
   stoptLoadingAction,
+  addPendingForDeleteAction,
 } from '../store/todoSlice';
 import { deleteTodo, editTodo, saveFromApi, syncWithApi } from '../services/todoStorage';
 import { TaskData } from '../data/types';
@@ -25,6 +26,7 @@ export const TaskList = () => {
   const [type, setType] = useState('0');
 
   const todos = useSelector((state: RootState) => selectFiltered(state, world, type));
+  const pendingForDelete = useSelector((state: RootState) => state.todos.pendingForDelete);
   const loading = useSelector((state: RootState) => state.todos.loading);
   const dispatch = useDispatch();
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
@@ -46,21 +48,22 @@ export const TaskList = () => {
 
   const handleDelete = useCallback(
     async (id: string, world: string) => {
-      try {
-        // dispatch(startLoadingAction());
+      const apiKey = getWorldKey(world);
 
-        if (deleteTodo(id)) {
-          dispatch(removeTodoAction(id));
-          const apiKey = getWorldKey(world);
+      if (apiKey) {
+        dispatch(startLoadingAction());
+        const isDeleted = await deleteTask(id, apiKey);
 
-          if (apiKey) {
-            await deleteTask(id, apiKey);
-          }
+        if (!isDeleted) {
+          dispatch(addPendingForDeleteAction(id));
         }
-      } catch (error) {
-        console.log(error);
-      } finally {
-        // dispatch(stoptLoadingAction());
+
+        dispatch(stoptLoadingAction());
+      }
+
+      // procede from deleting from the oficial storage
+      if (deleteTodo(id)) {
+        dispatch(removeTodoAction(id));
       }
     },
     [dispatch],
@@ -84,7 +87,6 @@ export const TaskList = () => {
     [dispatch],
   );
 
-  // still a bug, doesn't delete it from the server!!!
   const handleSync = useCallback(async () => {
     if (connectedWorldsCount === 0) {
       dispatch(startLoadingAction());
@@ -105,7 +107,7 @@ export const TaskList = () => {
       }
 
       //const serverTasks: TaskData[] = await fetchTasks();
-      const saved = syncWithApi(serverTasks, connectedWorlds);
+      const saved = syncWithApi(serverTasks, connectedWorlds, pendingForDelete);
 
       dispatch(saveAllAction(saved));
     } catch (error) {

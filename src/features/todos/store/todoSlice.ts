@@ -2,14 +2,19 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 import { TaskData, TasksById } from '../data/types';
 import { getTodos } from '../services/todoStorage';
+import { getObjFromStorage, saveToStorage } from '../../../services/storageManager';
 
 type TodosState = {
   byId: TasksById;
+  pendingForDelete: TasksById;
+  pendingForSave: TasksById;
   loading: boolean;
 };
 
 const initialState: TodosState = {
   byId: getTodos(),
+  pendingForDelete: getObjFromStorage('pendingForDelete'),
+  pendingForSave: {},
   loading: false,
 };
 
@@ -30,6 +35,18 @@ export const todosSlice = createSlice({
       todos.forEach((todo) => {
         state.byId[todo.id] = todo;
       });
+    },
+
+    addPendingForDeleteAction: (state, action: PayloadAction<string>) => {
+      const todoId = action.payload;
+
+      state.pendingForDelete[todoId] = state.byId[todoId];
+      saveToStorage('pendingForDelete', state.pendingForDelete);
+    },
+
+    removeAllPendingForDeleteAction: (state) => {
+      state.pendingForDelete = {};
+      saveToStorage('pendingForDelete', state.pendingForDelete);
     },
 
     saveAllAction: (state, action: PayloadAction<{ [key: string]: TaskData }>) => {
@@ -57,9 +74,11 @@ export const todosSlice = createSlice({
 
 export const {
   addTodosAction,
+  addPendingForDeleteAction,
   removeTodoAction,
   editTodoAction,
   removeAllAction,
+  removeAllPendingForDeleteAction,
   saveAllAction,
   startLoadingAction,
   stoptLoadingAction,

@@ -11,11 +11,16 @@ export const saveTodos = (data: object) => saveData(STORAGE_KEY, data);
 export const syncWithApi = (
   remoteTasks: TaskData[],
   connectedWorlds: { [tag: string]: string },
+  pendingServerDelete: TasksById,
 ) => {
   const localTasks = getTodos();
   const updated: TasksById = {};
 
   for (const task of remoteTasks) {
+    console.log(task.id);
+    console.log(pendingServerDelete);
+    if (pendingServerDelete[task.id]) continue;
+
     updated[task.id] = task;
   }
 

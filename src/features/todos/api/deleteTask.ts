@@ -12,13 +12,14 @@ export const deleteTask = async (id: string, apiKey: string): Promise<boolean> =
       },
     });
 
-    if (response.status < 200 || response.status > 299) {
-      throw new Error('Error deleting tasks, responce status code: ' + response.status);
+    if (response.ok || response.status === 404) {
+      return true;
     }
+
+    throw new Error('' + response.status);
   } catch (error) {
-    console.log(error); // later log it on the server
+    //todo log the error
+
     return false;
   }
-
-  return true;
 };

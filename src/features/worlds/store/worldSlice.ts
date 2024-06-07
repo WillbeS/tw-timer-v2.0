@@ -1,18 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  getWorlds,
-  //  getWorldsWithReject
-} from './worldAction';
+import { getWorlds } from './worldAction';
+import { getArrFromStorage, getObjFromStorage } from '../../../services/storageManager';
 
-import { WorldData } from '../../../data/types';
-
-// initialize userToken from local storage
-// doing it like this because otherwise TypeScript throws an error
-const localWorlds = localStorage.getItem('tw_worlds');
-const worlds = localWorlds ? JSON.parse(localWorlds) : [];
-
-const localConnected = localStorage.getItem('connected_worlds');
-const connected = localConnected ? JSON.parse(localConnected) : {};
+import { WorldData } from '../data/types';
 
 //rename to all and connected
 type WorldState = {
@@ -23,8 +13,8 @@ type WorldState = {
 };
 
 const initialState: WorldState = {
-  worlds,
-  connected,
+  worlds: getArrFromStorage('tw_worlds'),
+  connected: getObjFromStorage('connected_worlds'),
 };
 
 const worldSlice = createSlice({
@@ -51,13 +41,6 @@ const worldSlice = createSlice({
     builder.addCase(getWorlds.fulfilled, (state, action) => {
       state.worlds = action.payload;
     });
-    // builder.addCase(getWorldsWithReject.fulfilled, (state, action) => {
-    //   console.log(action.payload);
-    //   state.worlds = action.payload;
-    // });
-    // builder.addCase(getWorldsWithReject.rejected, (state, action) => {
-    //   console.log(action.payload);
-    // });
   },
 });
 

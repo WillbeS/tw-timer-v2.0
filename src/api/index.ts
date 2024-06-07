@@ -1,9 +1,5 @@
-import { fetchWorlds } from './fetchWorlds';
+// import { fetchWorlds } from './fetchWorlds';
 //import { fetchVillages } from './fetchVillages';
-import { fetchAllWorlds } from './fetchWorlds';
+// import { fetchWorlds } from './fetchWorlds';
 
-export {
-  fetchWorlds,
-  fetchAllWorlds,
-  //fetchVillages
-};
+export {};

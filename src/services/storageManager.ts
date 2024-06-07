@@ -28,7 +28,7 @@ export const getObjFromStorage = (key: string) => {
 export const getArrFromStorage = (key: string) => {
   let data = localStorage.getItem(key);
 
-  if (!data) {
+  if (!data || data === 'undefined') {
     //saveData(key, []);
     return [];
   }
@@ -37,5 +37,7 @@ export const getArrFromStorage = (key: string) => {
 };
 
 export const saveToStorage = (key: string, data: object) => {
+  if (!data) return;
+
   localStorage.setItem(key, JSON.stringify(data));
 };

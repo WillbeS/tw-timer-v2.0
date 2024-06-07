@@ -1,6 +1,11 @@
 import { useDispatch } from 'react-redux';
 
-import { addTodosAction, startLoadingAction, stoptLoadingAction } from '../store/todoSlice';
+import {
+  addPendingForSaveAction,
+  addTodosAction,
+  startLoadingAction,
+  stoptLoadingAction,
+} from '../store/todoSlice';
 import { saveMany } from '../services/todoStorage';
 import { saveTasks } from '../api';
 import { AddTasksFormInput } from '../data/types';
@@ -12,6 +17,7 @@ import { TasksForm } from './TasksForm';
 
 import { theme } from '../../../themes';
 import { getWorldKey } from '../../../utils/api';
+import { addError } from '../../messages/store/messageSlice';
 
 const OpenBtn = () => (
   <div
@@ -41,10 +47,19 @@ export const AddTasks = () => {
       const apiKey = getWorldKey(todoInput.world);
 
       if (apiKey) {
-        await saveTasks(todos, apiKey);
+        const success = await saveTasks(todos, apiKey);
+
+        if (!success) {
+          dispatch(addError('There was a problem with the server and your tasks were not saved.'));
+        }
+
+        dispatch(addPendingForSaveAction(todos));
       }
-    } catch (error) {
-      console.log(error);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch(addError(error.message));
+      }
+
       onCloseModal();
     } finally {
       dispatch(stoptLoadingAction());

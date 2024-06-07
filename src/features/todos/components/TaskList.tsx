@@ -27,6 +27,7 @@ export const TaskList = () => {
 
   const todos = useSelector((state: RootState) => selectFiltered(state, world, type));
   const pendingForDelete = useSelector((state: RootState) => state.todos.pendingForDelete);
+  const pendingForSave = useSelector((state: RootState) => state.todos.pendingForSave);
   const loading = useSelector((state: RootState) => state.todos.loading);
   const dispatch = useDispatch();
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
@@ -107,7 +108,7 @@ export const TaskList = () => {
       }
 
       //const serverTasks: TaskData[] = await fetchTasks();
-      const saved = syncWithApi(serverTasks, connectedWorlds, pendingForDelete);
+      const saved = syncWithApi(serverTasks, connectedWorlds, pendingForDelete, pendingForSave);
 
       dispatch(saveAllAction(saved));
     } catch (error) {

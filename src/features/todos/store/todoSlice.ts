@@ -14,7 +14,7 @@ type TodosState = {
 const initialState: TodosState = {
   byId: getTodos(),
   pendingForDelete: getObjFromStorage('pendingForDelete'),
-  pendingForSave: {},
+  pendingForSave: getObjFromStorage('pendingForSave'),
   loading: false,
 };
 
@@ -35,6 +35,20 @@ export const todosSlice = createSlice({
       todos.forEach((todo) => {
         state.byId[todo.id] = todo;
       });
+    },
+
+    addPendingForSaveAction: (state, action: PayloadAction<TaskData[]>) => {
+      const todos = action.payload;
+
+      todos.forEach((todo) => {
+        state.pendingForSave[todo.id] = todo;
+      });
+      saveToStorage('pendingForSave', state.pendingForSave);
+    },
+
+    removeAllPendingForSaveAction: (state) => {
+      state.pendingForDelete = {};
+      saveToStorage('pendingForSave', state.pendingForSave);
     },
 
     addPendingForDeleteAction: (state, action: PayloadAction<string>) => {
@@ -74,10 +88,12 @@ export const todosSlice = createSlice({
 
 export const {
   addTodosAction,
+  addPendingForSaveAction,
   addPendingForDeleteAction,
   removeTodoAction,
   editTodoAction,
   removeAllAction,
+  removeAllPendingForSaveAction,
   removeAllPendingForDeleteAction,
   saveAllAction,
   startLoadingAction,

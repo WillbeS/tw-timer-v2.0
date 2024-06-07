@@ -12,6 +12,7 @@ export const syncWithApi = (
   remoteTasks: TaskData[],
   connectedWorlds: { [tag: string]: string },
   pendingServerDelete: TasksById,
+  pendingForSave: TasksById,
 ) => {
   const localTasks = getTodos();
   const updated: TasksById = {};
@@ -27,7 +28,8 @@ export const syncWithApi = (
   for (const id in localTasks) {
     const localTask = localTasks[id];
     // if it's a connected task, don't add it
-    if (connectedWorlds[localTask.world]) continue;
+    // but if it's pending for save it needs to stay
+    if (!pendingForSave[localTask.id] && connectedWorlds[localTask.world]) continue;
 
     updated[id] = localTask;
   }

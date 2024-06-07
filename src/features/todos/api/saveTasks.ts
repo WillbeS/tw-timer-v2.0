@@ -1,7 +1,7 @@
 import { TaskData } from '../data/types';
 import { REMOTE_URL } from '../../../data/constants';
 
-export const saveTasks = async (tasks: TaskData[], apiKey: string): Promise<boolean> => {
+export const saveTasks = async (tasks: TaskData[], apiKey: string) => {
   try {
     const url = REMOTE_URL + '/timer/tasks';
 
@@ -14,13 +14,14 @@ export const saveTasks = async (tasks: TaskData[], apiKey: string): Promise<bool
       },
     });
 
-    if (response.status < 200 || response.status > 299) {
+    if (!response.ok) {
       throw new Error('Error saving tasks, responce status code: ' + response.status);
     }
+
+    return true;
   } catch (error) {
     console.log(error); // later log it on the server
+
     return false;
   }
-
-  return true;
 };

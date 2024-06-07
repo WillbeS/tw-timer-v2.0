@@ -15,9 +15,11 @@ export const ErrorMessage = () => {
 
   if (!hasErrors) return null;
 
+  const errorMsg = errors.join('\n');
+
   return (
-    <Alert heading="Error" type="warning" closable onClose={() => dispatch(clearErrors)}>
-      An error occured
+    <Alert heading="Error" type="warning" closable onClose={() => dispatch(clearErrors())}>
+      {errorMsg}
     </Alert>
   );
 };

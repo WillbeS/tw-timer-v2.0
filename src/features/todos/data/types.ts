@@ -43,6 +43,13 @@ export type TasksById = {
   [id: string]: TaskData;
 };
 
+export type PendingTasks = {
+  [id: string]: {
+    id: string;
+    action: string; //this should be enum
+  };
+};
+
 export type AddTasksFormInput = {
   world: string;
   type: string;

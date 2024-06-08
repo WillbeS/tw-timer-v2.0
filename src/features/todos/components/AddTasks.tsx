@@ -8,7 +8,7 @@ import {
 } from '../store/todoSlice';
 import { saveMany } from '../services/todoStorage';
 import { saveTasks } from '../api';
-import { AddTasksFormInput } from '../data/types';
+import { AddTasksFormInput, TaskData } from '../data/types';
 import { getParser } from '../services/parsers';
 
 import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
@@ -44,17 +44,7 @@ export const AddTasks = () => {
       dispatch(addTodosAction(todos));
       onCloseModal();
 
-      const apiKey = getWorldKey(todoInput.world);
-
-      if (apiKey) {
-        const success = await saveTasks(todos, apiKey);
-
-        if (!success) {
-          dispatch(addError('There was a problem with the server and your tasks were not saved.'));
-        }
-
-        dispatch(addPendingForSaveAction(todos));
-      }
+      await saveToServer(todoInput.world, todos);
     } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch(addError(error.message));
@@ -63,6 +53,19 @@ export const AddTasks = () => {
       onCloseModal();
     } finally {
       dispatch(stoptLoadingAction());
+    }
+  };
+
+  const saveToServer = async (world: string, todos: TaskData[]) => {
+    const apiKey = getWorldKey(world); // will be refactored
+    if (!apiKey) return;
+
+    try {
+      await saveTasks(todos, apiKey);
+    } catch (error) {
+      const todoIds = Object.values(todos).map((todo) => todo.id);
+      dispatch(addPendingForSaveAction(todoIds));
+      throw Error('There was a problem with the server and your tasks were not saved.');
     }
   };
 

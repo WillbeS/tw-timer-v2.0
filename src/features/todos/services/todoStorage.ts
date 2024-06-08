@@ -1,9 +1,22 @@
 import { generateId } from '../../../utils/stringUtils';
-import { getData, saveData } from '../../../services/storageManager';
-import { NewTask, TaskData, TasksById } from '../data/types';
+import {
+  getData,
+  saveData,
+  getObjFromStorage,
+  saveToStorage,
+} from '../../../services/storageManager';
+import { NewTask, PendingTasks, TaskData, TasksById } from '../data/types';
 
 const STORAGE_KEY = 'todos';
+////////////////// NEW WAY TO DO THINGS //////////////////
+export const getTasksFromStorage = () => getObjFromStorage(STORAGE_KEY);
 
+export const saveTasksToStorage = (tasks: TasksById) => {
+  saveToStorage(STORAGE_KEY, tasks);
+};
+//////////////////////////////////////////////////////////
+
+/////////////// OLD WAY TO DO THINGS /////////////////////
 // Todo - assert that the data is Todos type
 export const getTodos = () => getData(STORAGE_KEY);
 export const saveTodos = (data: object) => saveData(STORAGE_KEY, data);
@@ -11,16 +24,15 @@ export const saveTodos = (data: object) => saveData(STORAGE_KEY, data);
 export const syncWithApi = (
   remoteTasks: TaskData[],
   connectedWorlds: { [tag: string]: string },
-  pendingServerDelete: TasksById,
-  pendingForSave: TasksById,
+  pending: PendingTasks,
 ) => {
   const localTasks = getTodos();
   const updated: TasksById = {};
 
   for (const task of remoteTasks) {
     console.log(task.id);
-    console.log(pendingServerDelete);
-    if (pendingServerDelete[task.id]) continue;
+    console.log(pending);
+    if (pending[task.id]) continue;
 
     updated[task.id] = task;
   }
@@ -29,7 +41,7 @@ export const syncWithApi = (
     const localTask = localTasks[id];
     // if it's a connected task, don't add it
     // but if it's pending for save it needs to stay
-    if (!pendingForSave[localTask.id] && connectedWorlds[localTask.world]) continue;
+    if (!pending[localTask.id] && connectedWorlds[localTask.world]) continue;
 
     updated[id] = localTask;
   }

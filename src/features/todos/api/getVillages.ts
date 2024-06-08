@@ -14,7 +14,7 @@ export const getVillages = async (world: string, coords: string[]): Promise<Vill
       },
     });
 
-    if (response.status < 200 || response.status > 299) {
+    if (!response.ok) {
       throw new Error('Error fetching villages, responce status code: ' + response.status);
     }
 
@@ -23,7 +23,7 @@ export const getVillages = async (world: string, coords: string[]): Promise<Vill
 
     return body;
   } catch (error) {
-    console.log(error);
+    console.log(error); // log the error
     return [];
   }
 };

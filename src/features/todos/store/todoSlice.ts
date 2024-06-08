@@ -1,20 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import { TaskData, TasksById } from '../data/types';
-import { getTodos } from '../services/todoStorage';
-import { getObjFromStorage, saveToStorage } from '../../../services/storageManager';
+import { PendingTasks, TaskData, TasksById } from '../data/types';
+import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
+
+import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
 
 type TodosState = {
   byId: TasksById;
-  pendingForDelete: TasksById;
-  pendingForSave: TasksById;
+  pending: PendingTasks;
   loading: boolean;
 };
 
 const initialState: TodosState = {
-  byId: getTodos(),
-  pendingForDelete: getObjFromStorage('pendingForDelete'),
-  pendingForSave: getObjFromStorage('pendingForSave'),
+  byId: getTasksFromStorage(),
+  pending: getPendingFromStorage(),
   loading: false,
 };
 
@@ -37,32 +36,6 @@ export const todosSlice = createSlice({
       });
     },
 
-    addPendingForSaveAction: (state, action: PayloadAction<TaskData[]>) => {
-      const todos = action.payload;
-
-      todos.forEach((todo) => {
-        state.pendingForSave[todo.id] = todo;
-      });
-      saveToStorage('pendingForSave', state.pendingForSave);
-    },
-
-    removeAllPendingForSaveAction: (state) => {
-      state.pendingForDelete = {};
-      saveToStorage('pendingForSave', state.pendingForSave);
-    },
-
-    addPendingForDeleteAction: (state, action: PayloadAction<string>) => {
-      const todoId = action.payload;
-
-      state.pendingForDelete[todoId] = state.byId[todoId];
-      saveToStorage('pendingForDelete', state.pendingForDelete);
-    },
-
-    removeAllPendingForDeleteAction: (state) => {
-      state.pendingForDelete = {};
-      saveToStorage('pendingForDelete', state.pendingForDelete);
-    },
-
     saveAllAction: (state, action: PayloadAction<{ [key: string]: TaskData }>) => {
       state.byId = action.payload;
     },
@@ -74,14 +47,37 @@ export const todosSlice = createSlice({
 
     removeTodoAction: (state, action: PayloadAction<string>) => {
       const id = action.payload;
-
-      if (state.byId[id]) {
-        delete state.byId[id];
-      }
+      delete state.byId[id];
+      saveTasksToStorage(state.byId);
     },
+
     removeAllAction: (state) => {
       console.log('Should update');
       state.byId = {};
+    },
+
+    // pending
+    addPendingForSaveAction: (state, action: PayloadAction<string[]>) => {
+      const ids = action.payload;
+
+      ids.forEach((id) => {
+        state.pending[id] = { id, action: 'save' };
+      });
+
+      savePendingToStorage(state.pending);
+    },
+
+    addPendingForDeleteAction: (state, action: PayloadAction<string>) => {
+      const id = action.payload;
+
+      // already there for save, need to remove it as it's not on the server
+      if (state.pending[id]) {
+        delete state.pending[id];
+      } else {
+        state.pending[id] = { id, action: 'delete' };
+      }
+
+      savePendingToStorage(state.pending);
     },
   },
 });
@@ -93,8 +89,6 @@ export const {
   removeTodoAction,
   editTodoAction,
   removeAllAction,
-  removeAllPendingForSaveAction,
-  removeAllPendingForDeleteAction,
   saveAllAction,
   startLoadingAction,
   stoptLoadingAction,

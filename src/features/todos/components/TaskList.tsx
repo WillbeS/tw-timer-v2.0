@@ -26,9 +26,7 @@ export const TaskList = () => {
   const [type, setType] = useState('0');
 
   const todos = useSelector((state: RootState) => selectFiltered(state, world, type));
-  const pendingForDelete = useSelector((state: RootState) => state.todos.pendingForDelete);
-  const pendingForSave = useSelector((state: RootState) => state.todos.pendingForSave);
-  const loading = useSelector((state: RootState) => state.todos.loading);
+  const { loading, pending } = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch();
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
@@ -49,22 +47,16 @@ export const TaskList = () => {
 
   const handleDelete = useCallback(
     async (id: string, world: string) => {
-      const apiKey = getWorldKey(world);
+      dispatch(removeTodoAction(id));
+      const apiKey = getWorldKey(world); // this will be refactored
 
       if (apiKey) {
-        dispatch(startLoadingAction());
-        const isDeleted = await deleteTask(id, apiKey);
-
-        if (!isDeleted) {
+        try {
+          await deleteTask(id, apiKey);
+        } catch (error) {
           dispatch(addPendingForDeleteAction(id));
+          console.log(error);
         }
-
-        dispatch(stoptLoadingAction());
-      }
-
-      // procede from deleting from the oficial storage
-      if (deleteTodo(id)) {
-        dispatch(removeTodoAction(id));
       }
     },
     [dispatch],
@@ -108,7 +100,7 @@ export const TaskList = () => {
       }
 
       //const serverTasks: TaskData[] = await fetchTasks();
-      const saved = syncWithApi(serverTasks, connectedWorlds, pendingForDelete, pendingForSave);
+      const saved = syncWithApi(serverTasks, connectedWorlds, pending);
 
       dispatch(saveAllAction(saved));
     } catch (error) {

@@ -5,12 +5,7 @@ import { selectFiltered } from '../../todos/store/todoSlice';
 import { TaskData } from '../../todos/data/types';
 import { todoTypes } from '../../todos/data/constants';
 
-import { editTodo } from '../../todos/services/todoStorage';
-import {
-  editTodoAction,
-  startLoadingAction,
-  stoptLoadingAction,
-} from '../../todos/store/todoSlice';
+import { dynamicUpdateAction } from '../../todos/store/todoSlice';
 import { getTodoView } from '../../todos/models';
 
 import alarmSound from '../services/AlarmSound';
@@ -47,12 +42,7 @@ export const Alarm = () => {
           const edited = todoView.update();
 
           if (edited) {
-            dispatch(startLoadingAction());
-
-            if (editTodo(edited)) {
-              dispatch(editTodoAction(edited));
-              dispatch(stoptLoadingAction());
-            }
+            dispatch(dynamicUpdateAction(edited));
           }
         }
       };

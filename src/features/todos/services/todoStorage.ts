@@ -5,7 +5,7 @@ import {
   getObjFromStorage,
   saveToStorage,
 } from '../../../services/storageManager';
-import { NewTask, PendingTasks, TaskData, TasksById } from '../data/types';
+import { NewTask, TaskData, TasksById } from '../data/types';
 
 const STORAGE_KEY = 'todos';
 ////////////////// NEW WAY TO DO THINGS //////////////////
@@ -20,52 +20,6 @@ export const saveTasksToStorage = (tasks: TasksById) => {
 // Todo - assert that the data is Todos type
 export const getTodos = () => getData(STORAGE_KEY);
 export const saveTodos = (data: object) => saveData(STORAGE_KEY, data);
-
-export const syncWithApi = (
-  remoteTasks: TaskData[],
-  connectedWorlds: { [tag: string]: string },
-  pending: PendingTasks,
-) => {
-  const localTasks = getTodos();
-  const updated: TasksById = {};
-
-  for (const task of remoteTasks) {
-    console.log(task.id);
-    console.log(pending);
-    if (pending[task.id]) continue;
-
-    updated[task.id] = task;
-  }
-
-  for (const id in localTasks) {
-    const localTask = localTasks[id];
-    // if it's a connected task, don't add it
-    // but if it's pending for save it needs to stay
-    if (!pending[localTask.id] && connectedWorlds[localTask.world]) continue;
-
-    updated[id] = localTask;
-  }
-
-  saveTodos(updated);
-
-  return updated;
-};
-
-// This may become unnecessary, check if it's used on next cleanup!!!
-export const saveFromApi = (todos: TaskData[]) => {
-  const localTodos = getTodos();
-  const forCompare: TaskData[] = Object.values(localTodos);
-
-  for (const todo of todos) {
-    if (isDuplicate(todo, forCompare)) continue;
-
-    localTodos[todo.id] = todo;
-  }
-
-  saveTodos(localTodos);
-
-  return Object.values(localTodos) as TaskData[];
-};
 
 export const saveMany = (todos: NewTask[]): TaskData[] => {
   const saved: TaskData[] = [];
@@ -94,13 +48,14 @@ export const saveOne = (todo: NewTask) => {
   return id;
 };
 
-export const editTodo = (todo: TaskData) => {
-  const todos = getTodos();
-  todos[todo.id] = todo;
-  saveTodos(todos);
+//for del
+// export const editTodo = (todo: TaskData) => {
+//   const todos = getTodos();
+//   todos[todo.id] = todo;
+//   saveTodos(todos);
 
-  return true;
-};
+//   return true;
+// };
 
 export const deleteTodo = (id: string) => {
   //console.log('Deleteding, ', id);

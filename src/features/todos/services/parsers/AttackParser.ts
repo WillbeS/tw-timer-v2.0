@@ -58,7 +58,7 @@ export class AttackParser extends TodoParser {
 
     const { unit, origin, destination, dueDateST, url } = parts;
 
-    console.log(destination);
+    // console.log(destination);
 
     // const attack =
     //   this.input.subtype === attackSubtypes.FANG ? 'fang' : `${this.input.subtype} ${unit} attack`;

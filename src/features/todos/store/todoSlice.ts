@@ -36,13 +36,33 @@ export const todosSlice = createSlice({
       });
     },
 
-    saveAllAction: (state, action: PayloadAction<{ [key: string]: TaskData }>) => {
-      state.byId = action.payload;
+    mergeConnectedAction: (state, action) => {
+      const { serverTasks, connectedWorlds } = action.payload;
+      const updated: TasksById = {};
+
+      for (const serverTask of serverTasks) {
+        if (state.pending[serverTask.id]) continue;
+
+        updated[serverTask.id] = serverTask;
+      }
+
+      for (const id in state.byId) {
+        const localTask = state.byId[id];
+        // if it's a connected task, don't add it
+        // but if it's pending for save it needs to stay
+        if (!state.pending[localTask.id] && connectedWorlds[localTask.world]) continue;
+
+        updated[id] = localTask;
+      }
+
+      state.byId = updated;
+      saveTasksToStorage(state.byId);
     },
 
-    editTodoAction: (state, action: PayloadAction<TaskData>) => {
+    dynamicUpdateAction: (state, action: PayloadAction<TaskData>) => {
       const todo = action.payload;
       state.byId[todo.id] = { ...todo };
+      saveTasksToStorage(state.byId);
     },
 
     removeTodoAction: (state, action: PayloadAction<string>) => {
@@ -52,7 +72,6 @@ export const todosSlice = createSlice({
     },
 
     removeAllAction: (state) => {
-      console.log('Should update');
       state.byId = {};
     },
 
@@ -87,9 +106,9 @@ export const {
   addPendingForSaveAction,
   addPendingForDeleteAction,
   removeTodoAction,
-  editTodoAction,
+  dynamicUpdateAction,
   removeAllAction,
-  saveAllAction,
+  mergeConnectedAction,
   startLoadingAction,
   stoptLoadingAction,
 } = todosSlice.actions;

@@ -3,28 +3,23 @@ import { REMOTE_URL } from '../../../data/constants';
 import { assertIsTaskData } from '../data/typeAsserts';
 
 export const fetchTasks = async (apiKey: string): Promise<TaskData[]> => {
-  try {
-    const url = REMOTE_URL + '/timer/tasks';
+  const url = REMOTE_URL + '/timer/tasks';
 
-    const response = await fetch(url, {
-      headers: {
-        Accept: 'application/json',
-        'X-Custom-Auth': apiKey,
-      },
-    });
+  const response = await fetch(url, {
+    headers: {
+      Accept: 'application/json',
+      'X-Custom-Auth': apiKey,
+    },
+  });
 
-    if (response.status < 200 || response.status > 299) {
-      throw new Error('Error fetching tasks, responce status code: ' + response.status);
-    }
-
-    const body = (await response.json()) as unknown;
-    assertIsTaskDataArr(body);
-
-    return body;
-  } catch (error) {
-    console.log(error);
-    return [];
+  if (!response.ok) {
+    throw new Error('Error fetching tasks, responce status code: ' + response.status);
   }
+
+  const body = (await response.json()) as unknown;
+  assertIsTaskDataArr(body);
+
+  return body;
 };
 
 export function assertIsTaskDataArr(tasksData: unknown): asserts tasksData is TaskData[] {

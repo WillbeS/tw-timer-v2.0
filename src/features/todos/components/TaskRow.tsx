@@ -12,17 +12,17 @@ import { theme } from '../../../themes';
 type Props = {
   todo: TaskData;
   onDelete: (id: string, world: string) => void;
-  onEdit: (editedTodo: TaskData) => void;
+  onDynamicUpdate: (editedTodo: TaskData) => void;
 };
 
-export const TaskRow = ({ todo, onDelete, onEdit }: Props) => {
+export const TaskRow = ({ todo, onDelete, onDynamicUpdate }: Props) => {
   const todoView = getTodoView(todo);
 
-  const handleUpdate = () => {
+  const handleDynamicUpdate = () => {
     const edited = todoView.update();
 
     if (edited) {
-      onEdit(edited);
+      onDynamicUpdate(edited);
     }
   };
 
@@ -39,10 +39,13 @@ export const TaskRow = ({ todo, onDelete, onEdit }: Props) => {
           <TaskDetails taskView={todoView} />
         </span>
         <span>
-          <TaskMessage todoView={todoView} onEdit={onEdit} />
+          <TaskMessage todoView={todoView} onEdit={onDynamicUpdate} />
 
           {todoView.canUpdate() ? (
-            <span className="pl-3 pr-2 cursor-pointer text-lg font-bold" onClick={handleUpdate}>
+            <span
+              className="pl-3 pr-2 cursor-pointer text-lg font-bold"
+              onClick={handleDynamicUpdate}
+            >
               ⟳
             </span>
           ) : null}

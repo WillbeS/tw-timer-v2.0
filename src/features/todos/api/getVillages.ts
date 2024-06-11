@@ -1,31 +1,18 @@
-import { REMOTE_URL } from '../../../data/constants';
 import { VillageData } from '../data/types';
 import { assertIsVillageData } from '../data/typeAsserts';
+import { api } from '../../../api';
 
 export const getVillages = async (world: string, coords: string[]): Promise<VillageData[]> => {
-  try {
-    const url = REMOTE_URL + '/villages/' + world;
+  const response = await api.post('villages/' + world, coords);
 
-    const response = await fetch(url, {
-      method: 'post',
-      body: JSON.stringify(coords),
-      headers: {
-        Accept: 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error('Error fetching villages, responce status code: ' + response.status);
-    }
-
-    const body = (await response.json()) as unknown;
-    assertIsVillageDataArray(body);
-
-    return body;
-  } catch (error) {
-    console.log(error); // log the error
-    return [];
+  if (!response.ok) {
+    throw new Error('Error fetching villages, responce status code: ' + response.status);
   }
+
+  const body = (await response.json()) as unknown;
+  assertIsVillageDataArray(body);
+
+  return body;
 };
 
 export function assertIsVillageDataArray(data: unknown): asserts data is VillageData[] {

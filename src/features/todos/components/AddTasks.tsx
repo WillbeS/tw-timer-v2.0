@@ -16,8 +16,8 @@ import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { TasksForm } from './TasksForm';
 
 import { theme } from '../../../themes';
-import { getWorldKey } from '../../../utils/api';
 import { addError } from '../../messages/store/messageSlice';
+import { getKeyFromStorage } from '../../worlds/services/apiKeySorage';
 
 const OpenBtn = () => (
   <div
@@ -57,7 +57,7 @@ export const AddTasks = () => {
   };
 
   const saveToServer = async (world: string, todos: TaskData[]) => {
-    const apiKey = getWorldKey(world); // will be refactored
+    const apiKey = getKeyFromStorage(world); // will be refactored
     if (!apiKey) return;
 
     try {

@@ -18,8 +18,8 @@ import { formatTime } from '../../../utils/dateTime';
 
 import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
-import { getWorldKey } from '../../../utils/api';
 import { addError } from '../../messages/store/messageSlice';
+import { getKeyFromStorage } from '../../worlds/services/apiKeySorage';
 
 export const TaskList = () => {
   const [world, setWorld] = useState('0');
@@ -48,7 +48,7 @@ export const TaskList = () => {
   const handleDelete = useCallback(
     async (id: string, world: string) => {
       dispatch(removeTodoAction(id));
-      const apiKey = getWorldKey(world); // this will be refactored
+      const apiKey = getKeyFromStorage(world);
 
       if (apiKey) {
         try {

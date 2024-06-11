@@ -1,16 +1,9 @@
 import { TaskData } from '../data/types';
-import { REMOTE_URL } from '../../../data/constants';
 import { assertIsTaskData } from '../data/typeAsserts';
+import { api } from '../../../api';
 
 export const fetchTasks = async (apiKey: string): Promise<TaskData[]> => {
-  const url = REMOTE_URL + '/timer/tasks';
-
-  const response = await fetch(url, {
-    headers: {
-      Accept: 'application/json',
-      'X-Custom-Auth': apiKey,
-    },
-  });
+  const response = await api.get('timer/tasks', apiKey);
 
   if (!response.ok) {
     throw new Error('Error fetching tasks, responce status code: ' + response.status);

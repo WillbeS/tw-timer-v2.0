@@ -33,9 +33,11 @@ export const ConnectedWorld = ({ world, token, onRemove }: Props) => {
       {keyIsVisible && (
         <div className="relative">
           <CopyToClipboardBtn textToCopy={token} />
-          <textarea className="w-full p-4 pe-24 text-xs rounded-md border border-stone-200 focus:outline-none bg-white bg-opacity-40 grow">
-            {token}
-          </textarea>
+          <textarea
+            readOnly
+            value={token}
+            className="w-full p-4 pe-24 text-xs rounded-md border border-stone-200 focus:outline-none bg-white bg-opacity-40 grow"
+          />
         </div>
       )}
     </div>

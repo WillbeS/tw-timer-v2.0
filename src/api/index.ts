@@ -1,5 +1,7 @@
-// import { fetchWorlds } from './fetchWorlds';
-//import { fetchVillages } from './fetchVillages';
-// import { fetchWorlds } from './fetchWorlds';
+import { get, post, remove } from './remote';
 
-export {};
+export const api = {
+  get,
+  post,
+  delete: remove,
+};

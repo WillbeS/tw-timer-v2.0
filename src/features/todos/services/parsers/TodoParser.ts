@@ -43,7 +43,6 @@ export abstract class TodoParser {
     } catch (err) {
       // Need to fix it on the backend
       console.log(err);
-      console.log('Error fetching villages');
     }
 
     return this.getTodos(matches);

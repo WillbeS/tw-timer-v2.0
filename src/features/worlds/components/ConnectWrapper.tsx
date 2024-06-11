@@ -1,15 +1,24 @@
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConnectForm } from './ConnectForm';
 
 import { RootState } from '../../../store/store';
 import { ConnectedWorld } from './ConnectedWorld';
 
+import { addConnectedWorld, removeConnectedWorld } from '../store/worldSlice';
+
+import { generateKey, validateKey } from '../api/fetchKey';
+import { addError } from '../../messages/store/messageSlice';
+import {
+  getAdminIdFromStorage,
+  getKeyFromStorage,
+  removeAdminIdFromStorage,
+} from '../services/apiKeySorage';
+import { removeKey } from '../api/deleteKey';
+
 import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { RoundedButton } from '../../../components/ui/RoundedButton';
-import { addConnectedWorld, removeConnectedWorld } from '../store/worldSlice';
-import { validateKey, generateNewKey, removeKey } from '../../../api/apiKey';
-import { useState } from 'react';
 
 const OpenBtn = () => <RoundedButton label="Connect" symbol="♻" onClick={console.log} />;
 
@@ -25,27 +34,48 @@ export const ConnectWrapper = () => {
 
   const connectWorld = async (worldTag: string, key: string) => {
     try {
+      // TODO - check if the world is already connected and send a message
+      // that the user should first remove it before connecting with a new key
       console.log('start loading');
-      key = key ? await validateKey(worldTag, key) : await generateNewKey(worldTag);
+      key = key ? await validateKey(worldTag, key) : await generateKey(worldTag);
 
       dispatch(addConnectedWorld({ worldTag, key }));
       setGeneratedKey(key);
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        console.log(error);
+        dispatch(addError(error.message));
+      }
     } finally {
       console.log('Stop loading');
     }
   };
 
   const disconnectWorld = async (worldTag: string) => {
+    const key = getKeyFromStorage(worldTag);
+
+    if (!key) return; // this is probably unnecessay
+
+    const adminId = getAdminIdFromStorage(worldTag);
+
+    if (!adminId) {
+      dispatch(removeConnectedWorld(worldTag));
+      return;
+    }
+
     try {
       console.log('Start loading');
+      await removeKey(key, adminId);
+      removeAdminIdFromStorage(worldTag);
       dispatch(removeConnectedWorld(worldTag));
-      await removeKey(worldTag);
     } catch (error) {
-      console.log(error);
+      if (error instanceof Error) {
+        console.log(error);
+        dispatch(addError(error.message));
+      }
+    } finally {
+      console.log('Stop loading');
     }
-    console.log('Stop loading');
   };
 
   const onCloseConnectModal = () => {

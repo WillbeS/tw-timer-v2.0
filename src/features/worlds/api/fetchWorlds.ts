@@ -1,15 +1,9 @@
-import { REMOTE_URL } from '../../../data/constants';
+import { api } from '../../../api';
 import { WorldData, assertIsWorldData } from '../data/types';
 
 export const fetchWorlds = async () => {
   try {
-    const url = REMOTE_URL + '/worlds';
-
-    const response = await fetch(url, {
-      headers: {
-        Accept: 'application/json',
-      },
-    });
+    const response = await api.get('worlds');
 
     if (!response.ok) {
       throw new Error('There was a network problem, status code: ' + response.status);

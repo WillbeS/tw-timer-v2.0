@@ -1,15 +1,7 @@
-import { REMOTE_URL } from '../../../data/constants';
+import { api } from '../../../api';
 
 export const deleteTask = async (id: string, apiKey: string) => {
-  const url = REMOTE_URL + '/timer/tasks/' + id;
-
-  const response = await fetch(url, {
-    method: 'delete',
-    headers: {
-      Accept: 'application/json',
-      'X-Custom-Auth': apiKey,
-    },
-  });
+  const response = await api.delete('timer/tasks/' + id, apiKey);
 
   // TODO - the server should not throw an error if a task is not found
   // we don't care that it doesn't exist there since we want to delete it anyway

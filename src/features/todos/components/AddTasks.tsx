@@ -2,11 +2,11 @@ import { useDispatch } from 'react-redux';
 
 import {
   addPendingForSaveAction,
-  addTodosAction,
+  addTasksAction,
   startLoadingAction,
   stoptLoadingAction,
 } from '../store/todoSlice';
-import { saveMany } from '../services/todoStorage';
+
 import { saveTasks } from '../api';
 import { AddTasksFormInput, TaskData } from '../data/types';
 import { getParser } from '../services/parsers';
@@ -18,6 +18,7 @@ import { TasksForm } from './TasksForm';
 import { theme } from '../../../themes';
 import { addError } from '../../messages/store/messageSlice';
 import { getKeyFromStorage } from '../../worlds/services/apiKeySorage';
+import { isDuplicate } from '../services/todoStorage';
 
 const OpenBtn = () => (
   <div
@@ -39,12 +40,12 @@ export const AddTasks = () => {
 
       const todoParser = getParser(todoInput);
       const newTodos = await todoParser.parse();
+      const forSave = newTodos.filter((task) => !isDuplicate(task));
 
-      const todos = saveMany(newTodos);
-      dispatch(addTodosAction(todos));
+      dispatch(addTasksAction(forSave));
       onCloseModal();
 
-      await saveToServer(todoInput.world, todos);
+      await saveToServer(todoInput.world, forSave);
     } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch(addError(error.message));
@@ -57,7 +58,7 @@ export const AddTasks = () => {
   };
 
   const saveToServer = async (world: string, todos: TaskData[]) => {
-    const apiKey = getKeyFromStorage(world); // will be refactored
+    const apiKey = getKeyFromStorage(world);
     if (!apiKey) return;
 
     try {

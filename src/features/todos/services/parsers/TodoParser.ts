@@ -1,8 +1,9 @@
-import { NewTask } from '../../data/types';
+import { NewTask, TaskData } from '../../data/types';
 import { AddTasksFormInput } from '../../data/types';
 import { getVillages } from '../../api';
 import { VillageData } from '../../../../data/types';
 import { getRelativeDate } from '../../../../utils/dateTime';
+import { generateId } from '../../../../utils/stringUtils';
 
 type Pattern = {
   name: string;
@@ -29,11 +30,11 @@ export abstract class TodoParser {
     this.input = input;
   }
 
-  public parse = async (): Promise<NewTask[]> => {
+  public parse = async () => {
     const matches = this.findMatches(this.input.text);
 
     if (!matches) {
-      throw new Error('No matches found!');
+      throw new Error('No matches found! Please check your input and try again.');
     }
 
     // make an api request for each todo and fetch their village details
@@ -41,11 +42,11 @@ export abstract class TodoParser {
     try {
       await this.loadVillages(this.input.text, this.input.world);
     } catch (err) {
-      // Need to fix it on the backend
-      console.log(err);
+      console.log(err); /// log on backend
     }
 
-    return this.getTodos(matches);
+    //return this.getTodos(matches);
+    return this.getTasks(matches);
   };
 
   protected findMatches(message: string): Matches | null {
@@ -77,16 +78,27 @@ export abstract class TodoParser {
     });
   }
 
-  // is this redundant?
-  protected getTodos(matches: Matches) {
-    const todos: NewTask[] = [];
+  protected getTasks(matches: Matches) {
+    const tasks: TaskData[] = [];
 
     for (const match of matches.value) {
-      todos.push(this.parseFromMatch(match, matches.pattern));
+      const newTask = this.parseFromMatch(match, matches.pattern);
+      tasks.push({ ...newTask, id: generateId('task') });
     }
 
-    return todos;
+    return tasks;
   }
+
+  // delete when safe!!!!
+  // protected getTodos(matches: Matches) {
+  //   const todos: NewTask[] = [];
+
+  //   for (const match of matches.value) {
+  //     todos.push(this.parseFromMatch(match, matches.pattern));
+  //   }
+
+  //   return todos;
+  // }
 
   // the + sign replaces the space
   protected replaceCoords(coords: string, key: string = 'name') {

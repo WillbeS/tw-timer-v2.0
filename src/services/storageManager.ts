@@ -1,3 +1,4 @@
+///////////// for del when safe /////////////////////
 export const getData = (key: string) => {
   let data = localStorage.getItem(key);
 
@@ -12,6 +13,7 @@ export const getData = (key: string) => {
 export const saveData = (key: string, data: object) => {
   localStorage.setItem(key, JSON.stringify(data));
 };
+///////////////////////////////////////////////////////////
 
 // New approach, the above one will be deleted after refactoring
 export const getObjFromStorage = (key: string) => {

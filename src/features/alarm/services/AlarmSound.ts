@@ -6,7 +6,8 @@ class AlarmSound {
   private _isOn: boolean;
 
   constructor() {
-    const soundFile = require(`../../../assets/media/${sounds.BEEP}`);
+    let soundFile; //may be needed for later with settings
+    soundFile = require(`../../../assets/media/${sounds.BEEP}`);
     this._alarmSound = new Audio(soundFile);
     this._isOn = false;
   }

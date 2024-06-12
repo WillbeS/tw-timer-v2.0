@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { deleteAll } from '../services/todoStorage';
 import { removeAllAction } from '../store/todoSlice';
 
 import { DropdownMenu } from '../../../components/ui/DropdownMenu';
@@ -18,7 +17,6 @@ export const TaskOptionsMenu = ({ onSync }: Props) => {
     console.log('Should call it!!!');
     try {
       dispatch(removeAllAction());
-      deleteAll();
     } catch (error) {
       console.log(error);
     }

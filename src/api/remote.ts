@@ -15,6 +15,22 @@ const makeURL = (endpoint: string) => {
   return REMOTE_URL + '/' + endpoint;
 };
 
+// const makeRequest = async (method: string, endpoint: string, body: unknown, key?: string) => {
+//   try {
+//     return await fetch(makeURL(endpoint), {
+//       method,
+//       headers: makeHeaders(key),
+//       body: body ? JSON.stringify(body) : null,
+//     });
+//   } catch (error) {
+//     throw new Error('Network connection problem. Please try again later.');
+//   }
+// };
+
+// export const get = async (endpoint: string, key?: string) => {
+//   return makeRequest('get', endpoint, null, key);
+// };
+
 export const get = async (endpoint: string, key?: string) => {
   try {
     return await fetch(makeURL(endpoint), {

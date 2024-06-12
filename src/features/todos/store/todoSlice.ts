@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import { PendingTasks, TaskData, TasksById } from '../data/types';
+import { NewTask, PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
 
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
@@ -28,6 +28,17 @@ export const todosSlice = createSlice({
       state.loading = false;
     },
 
+    addTasksAction: (state, action: PayloadAction<TaskData[]>) => {
+      const newTasks = action.payload;
+
+      newTasks.forEach((task) => {
+        state.byId[task.id] = task;
+      });
+
+      saveTasksToStorage(state.byId);
+    },
+
+    // delete when safe!
     addTodosAction: (state, action: PayloadAction<TaskData[]>) => {
       const todos = action.payload;
 
@@ -73,6 +84,7 @@ export const todosSlice = createSlice({
 
     removeAllAction: (state) => {
       state.byId = {};
+      saveTasksToStorage(state.byId);
     },
 
     // pending
@@ -103,6 +115,7 @@ export const todosSlice = createSlice({
 
 export const {
   addTodosAction,
+  addTasksAction,
   addPendingForSaveAction,
   addPendingForDeleteAction,
   removeTodoAction,
@@ -132,5 +145,23 @@ export const selectTotalCount = (state: RootState) => {
 };
 
 const sortByMs = (todosArr: TaskData[]) => todosArr.sort((a, b) => a.dueMs - b.dueMs);
+
+//helper functions
+
+const isDuplicate = (newTask: TaskData, tasks: TasksById) => {
+  for (const id in tasks) {
+    const task = tasks[id];
+    if (
+      newTask.message === task.message &&
+      newTask.type === task.type &&
+      newTask.dueMs === task.dueMs &&
+      newTask.world === task.world
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+};
 
 export default todosSlice.reducer;

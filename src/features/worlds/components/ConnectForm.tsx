@@ -23,6 +23,7 @@ export const ConnectForm = ({ worlds, onSubmit }: Props) => {
     }
 
     onSubmit(world, key);
+
     setWorld('-1');
     setKey('');
     setErrors({});
@@ -41,6 +42,7 @@ export const ConnectForm = ({ worlds, onSubmit }: Props) => {
     <form className="w-full md:w-3/4 mx-auto p-2" noValidate onSubmit={handleSubmit}>
       <div className="flex flex-col mb-5 bg-transparent">
         <textarea
+          value={key}
           id="text"
           rows={2}
           placeholder="Paste your key here if you already have one"

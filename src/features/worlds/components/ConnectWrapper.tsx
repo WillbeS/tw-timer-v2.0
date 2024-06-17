@@ -61,11 +61,12 @@ export const ConnectWrapper = () => {
       return;
     }
 
-    dispatch(
-      addInfo(
-        'Be careful, removing the world will also remove all the tasks assosiated with it from the server (this will not affect your local tasks)!',
-      ),
-    );
+    // Will replace this with a static message in the Connected worlds component!!!!!
+    // dispatch(
+    //   addInfo(
+    //     'Be careful, removing the world will also remove all the tasks assosiated with it from the server (this will not affect your local tasks)!',
+    //   ),
+    // );
     try {
       console.log('Start loading');
       await removeKey(key, adminId);

@@ -8,7 +8,7 @@ import { ConnectedWorld } from './ConnectedWorld';
 import { addConnectedWorld, removeConnectedWorld } from '../store/worldSlice';
 
 import { generateKey, validateKey } from '../api/fetchKey';
-import { addError } from '../../messages/store/messageSlice';
+import { addError, addInfo } from '../../messages/store/messageSlice';
 import {
   getAdminIdFromStorage,
   getKeyFromStorage,
@@ -34,8 +34,6 @@ export const ConnectWrapper = () => {
 
   const connectWorld = async (worldTag: string, key: string) => {
     try {
-      // TODO - check if the world is already connected and send a message
-      // that the user should first remove it before connecting with a new key
       console.log('start loading');
       key = key ? await validateKey(worldTag, key) : await generateKey(worldTag);
 
@@ -63,6 +61,11 @@ export const ConnectWrapper = () => {
       return;
     }
 
+    dispatch(
+      addInfo(
+        'Be careful, removing the world will also remove all the tasks assosiated with it from the server (this will not affect your local tasks)!',
+      ),
+    );
     try {
       console.log('Start loading');
       await removeKey(key, adminId);

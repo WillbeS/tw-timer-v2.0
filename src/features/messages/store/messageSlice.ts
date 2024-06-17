@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 
-const initialState: { errors: string[] } = {
+const initialState: { errors: string[]; info: string[] } = {
   errors: [],
+  info: [],
 };
 
 export const messageSlice = createSlice({
@@ -15,13 +16,23 @@ export const messageSlice = createSlice({
     clearErrors: (state) => {
       state.errors = [];
     },
+    addInfo: (state, action) => {
+      state.info.push(action.payload);
+    },
+    clearInfo: (state) => {
+      state.info = [];
+    },
   },
 });
 
-export const { addError, clearErrors } = messageSlice.actions;
+export const { addError, clearErrors, addInfo, clearInfo } = messageSlice.actions;
 
 export const selectErrors = (state: RootState) => {
   return state.messages.errors;
+};
+
+export const selectInfoMessages = (state: RootState) => {
+  return state.messages.info;
 };
 
 export default messageSlice.reducer;

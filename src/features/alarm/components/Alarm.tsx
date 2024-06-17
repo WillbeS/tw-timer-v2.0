@@ -21,10 +21,6 @@ export const Alarm = () => {
   );
 
   useEffect(() => {
-    // For testing the ErrorBoundery component
-    // Throws an error when there are no todos
-    //console.log(todos[0].message);
-    //////////////////////////////////////////
     if (window.Worker) {
       timer.postMessage([...todos]);
     }

@@ -4,4 +4,4 @@ import * as classicTheme from './classic';
 import * as slateTheme from './slate';
 import * as blueTheme from './blue';
 
-export const theme = defaultTheme;
+export const theme = blueTheme;

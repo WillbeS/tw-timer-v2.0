@@ -1,25 +1,20 @@
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Alert } from '../../../components/ui/Alert';
 import { clearErrors, selectErrors } from '../store/messageSlice';
+import { ToastMessage } from '../../../components/ui/ToastMessage';
+import { MESSAGE_TYPES } from '../../../data/constants';
 
-// TODO - get the messages
-// if there are any, display them (need to decide at once or one by one)
-// on close, delete them from the state
-
+// The toast message will replace this one?
 export const ErrorMessage = () => {
   const errors = useSelector(selectErrors);
-  const hasErrors = errors.length > 0;
 
   const dispatch = useDispatch();
-
-  if (!hasErrors) return null;
 
   const errorMsg = errors.join('\n');
 
   return (
-    <Alert heading="Error" type="warning" closable onClose={() => dispatch(clearErrors())}>
+    <ToastMessage type={MESSAGE_TYPES.ERROR} onClose={() => dispatch(clearErrors())}>
       {errorMsg}
-    </Alert>
+    </ToastMessage>
   );
 };

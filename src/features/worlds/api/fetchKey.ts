@@ -1,5 +1,5 @@
 import { api } from '../../../api';
-import { saveToStorage } from '../../../services/storageManager';
+import { getObjFromStorage, saveToStorage } from '../../../services/storageManager';
 
 export const generateKey = async (worldTag: string): Promise<string> => {
   const response = await api.post(`${worldTag}/key`, {});
@@ -10,7 +10,10 @@ export const generateKey = async (worldTag: string): Promise<string> => {
   }
 
   const keyData: { token: string; adminId: string } = await response.json();
-  saveToStorage('connected_ids', { [worldTag]: keyData.adminId });
+
+  const storageData = getObjFromStorage('connected_ids');
+  storageData[worldTag] = keyData.adminId;
+  saveToStorage('connected_ids', storageData);
 
   return keyData.token;
 };

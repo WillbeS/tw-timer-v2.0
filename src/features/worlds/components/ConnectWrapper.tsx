@@ -19,12 +19,14 @@ import { removeKey } from '../api/deleteKey';
 import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { RoundedButton } from '../../../components/ui/RoundedButton';
+import { TaskData } from '../../todos/data/types';
+import { saveTasks } from '../../todos/api';
 
 const OpenBtn = () => <RoundedButton label="Connect" symbol="♻" onClick={console.log} />;
 
 export const ConnectWrapper = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
-  const [generatedKey, setGeneratedKey] = useState<string | null>(null);
+  // const [generatedKey, setGeneratedKey] = useState<string | null>(null);
 
   const { worlds, connected } = useSelector((state: RootState) => state.worlds);
   const connectedWorlds = worlds.filter((w) => connected[w.tag] !== undefined);
@@ -32,13 +34,19 @@ export const ConnectWrapper = () => {
 
   const dispatch = useDispatch();
 
-  const connectWorld = async (worldTag: string, key: string) => {
+  const connectWorld = async (worldTag: string, key: string, tasks: TaskData[]) => {
     try {
       console.log('start loading');
       key = key ? await validateKey(worldTag, key) : await generateKey(worldTag);
 
       dispatch(addConnectedWorld({ worldTag, key }));
-      setGeneratedKey(key);
+
+      if (tasks.length > 0) {
+        await saveTasks(tasks, key);
+        dispatch(addInfo('Your tasks were successfully saved on the server.'));
+      }
+
+      // setGeneratedKey(key);
     } catch (error) {
       if (error instanceof Error) {
         console.log(error);
@@ -61,12 +69,6 @@ export const ConnectWrapper = () => {
       return;
     }
 
-    // Will replace this with a static message in the Connected worlds component!!!!!
-    // dispatch(
-    //   addInfo(
-    //     'Be careful, removing the world will also remove all the tasks assosiated with it from the server (this will not affect your local tasks)!',
-    //   ),
-    // );
     try {
       console.log('Start loading');
       await removeKey(key, adminId);
@@ -83,7 +85,7 @@ export const ConnectWrapper = () => {
   };
 
   const onCloseConnectModal = () => {
-    setGeneratedKey(null);
+    // setGeneratedKey(null);
     onCloseModal();
   };
 
@@ -120,7 +122,7 @@ export const ConnectWrapper = () => {
             If you already have a key paste it below, if you leave it empty it will generate a new
             key
           </p>
-          {generatedKey && <p className="text-sm p-3 font-bold">The connection was successful/</p>}
+          {/* {generatedKey && <p className="text-sm p-3 font-bold">The connection was successful/</p>} */}
           <ConnectForm worlds={unconnectedWorlds} onSubmit={connectWorld} />
         </section>
       </div>

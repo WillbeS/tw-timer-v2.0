@@ -2,16 +2,23 @@ import { KeyboardEvent, SyntheticEvent, useState } from 'react';
 
 import { WorldData } from '../../../data/types';
 import { ValidationError } from '../../../components/form/ValidationError';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store/store';
+import { selectFiltered } from '../../todos/store/todoSlice';
+import { TaskData, TasksById } from '../../todos/data/types';
 
 type Props = {
   worlds: WorldData[];
-  onSubmit: (worldTag: string, key: string) => void;
+  onSubmit: (worldTag: string, key: string, tasks: TaskData[]) => void;
 };
 
 export const ConnectForm = ({ worlds, onSubmit }: Props) => {
   const [world, setWorld] = useState('-1');
   const [key, setKey] = useState('');
   const [errors, setErrors] = useState<{ world?: string | undefined }>({});
+
+  //this is to synch the tasks of a newly connected world
+  const tasks = useSelector((state: RootState) => selectFiltered(state, world, '0'));
 
   const handleSubmit = async (e: SyntheticEvent | KeyboardEvent) => {
     e.preventDefault();
@@ -22,7 +29,7 @@ export const ConnectForm = ({ worlds, onSubmit }: Props) => {
       return;
     }
 
-    onSubmit(world, key);
+    onSubmit(world, key, tasks);
 
     setWorld('-1');
     setKey('');

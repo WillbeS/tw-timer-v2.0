@@ -8,15 +8,15 @@ export class ReminderParser extends TodoParser {
     this.patterns = [
       {
         name: 'hours',
-        value: /(?:in|after)\s*(?:(\d{1,3})\s*hour{1}s*)$/g,
+        value: /(?:in|after)\s*(?:(\d{1,4})\s*hour{1}s*)$/g,
       },
       {
         name: 'minutes',
-        value: /(?:in|after)\s*(?:(\d{1,3})\s*minute{1}s*)$/g,
+        value: /(?:in|after)\s*(?:(\d{1,4})\s*minute{1}s*)$/g,
       },
       {
         name: 'hours and minutes',
-        value: /(?:in|after)\s*(?:(\d{1,3})\s*hour{1}s*).+?(?:(\d{1,4})\s*minute{1}s*)/g,
+        value: /(?:in|after)\s*(?:(\d{1,4})\s*hour{1}s*).+?(?:(\d{1,4})\s*minute{1}s*)/g,
       },
     ];
   }

@@ -16,9 +16,10 @@ import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { TasksForm } from './TasksForm';
 
 import { theme } from '../../../themes';
-import { addError } from '../../messages/store/messageSlice';
+import { addError, addMessage } from '../../messages/store/messageSlice';
 import { getKeyFromStorage } from '../../worlds/services/apiKeySorage';
 import { isDuplicate } from '../services/todoStorage';
+import { MessageTypes } from '../../../data/types';
 
 const OpenBtn = () => (
   <div

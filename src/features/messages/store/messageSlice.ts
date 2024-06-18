@@ -1,38 +1,51 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { RootState } from '../../../store/store';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-const initialState: { errors: string[]; info: string[] } = {
-  errors: [],
+import { MessageTypes } from '../../../data/types';
+
+type MessagesInitState = {
+  [key in MessageTypes]: string[];
+};
+
+const initialState: MessagesInitState = {
+  error: [],
   info: [],
+  success: [],
+  warning: [],
 };
 
 export const messageSlice = createSlice({
-  name: 'errors',
+  name: 'messages',
   initialState,
   reducers: {
-    addError: (state, action) => {
-      state.errors.push(action.payload);
+    addSuccess: (state, action) => {
+      state.success.push(action.payload);
     },
-    clearErrors: (state) => {
-      state.errors = [];
-    },
+
     addInfo: (state, action) => {
       state.info.push(action.payload);
     },
-    clearInfo: (state) => {
-      state.info = [];
+
+    addWarning: (state, action) => {
+      state.warning.push(action.payload);
+    },
+
+    addError: (state, action) => {
+      state.error.push(action.payload);
+    },
+
+    // this is actuallly not very convinient
+    addMessage: (state, action: PayloadAction<{ message: string; type: MessageTypes }>) => {
+      const { message, type } = action.payload;
+      state[type].push(message);
+    },
+
+    clearMessages: (state, action: PayloadAction<MessageTypes>) => {
+      const type = action.payload;
+      state[type] = [];
     },
   },
 });
 
-export const { addError, clearErrors, addInfo, clearInfo } = messageSlice.actions;
-
-export const selectErrors = (state: RootState) => {
-  return state.messages.errors;
-};
-
-export const selectInfoMessages = (state: RootState) => {
-  return state.messages.info;
-};
+export const { addMessage, addError, addInfo, clearMessages } = messageSlice.actions;
 
 export default messageSlice.reducer;

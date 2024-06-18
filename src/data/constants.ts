@@ -11,12 +11,6 @@ export const sounds = {
   BEEP: 'beep.wav',
 };
 
-export const MESSAGE_TYPES = {
-  INFO: 'INFO',
-  WARNING: 'WARNING',
-  ERROR: 'ERROR',
-};
-
 // I dodn't need these any more!!!
 export const amberTheme = {
   bgColor: 'bg-amber-800',

@@ -16,7 +16,7 @@ import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { TasksForm } from './TasksForm';
 
 import { theme } from '../../../themes';
-import { addError, addMessage } from '../../messages/store/messageSlice';
+import { addError, addMessage, addSuccess } from '../../messages/store/messageSlice';
 import { getKeyFromStorage } from '../../worlds/services/apiKeySorage';
 import { isDuplicate } from '../services/todoStorage';
 import { MessageTypes } from '../../../data/types';
@@ -64,6 +64,7 @@ export const AddTasks = () => {
 
     try {
       await saveTasks(todos, apiKey);
+      dispatch(addSuccess('Your tasks were saved to the server.'));
     } catch (error) {
       const todoIds = Object.values(todos).map((todo) => todo.id);
       dispatch(addPendingForSaveAction(todoIds));

@@ -76,20 +76,48 @@ export const TaskList = () => {
     try {
       dispatch(startLoadingAction());
 
-      const serverTasks: TaskData[] = [];
+      // const serverTasks: TaskData[] = [];
+      // for (const cw in connectedWorlds) {
+      //   const fetched = await fetchTasks(connectedWorlds[cw]);
+      //   serverTasks.push(...fetched);
+      // }
+
+      const serverTasks = await fetchServerTasks();
+
+      dispatch(mergeConnectedAction({ serverTasks, connectedWorlds }));
+    } catch (error) {
+      if (error instanceof Error) {
+        dispatch(addError(error.message));
+      }
+    } finally {
+      dispatch(stoptLoadingAction());
+    }
+  }, []);
+
+  const fetchServerTasks = async () => {
+    const serverTasks: TaskData[] = [];
+    let currentWorld: string = 'N/A';
+
+    try {
       for (const cw in connectedWorlds) {
+        currentWorld = cw;
         const fetched = await fetchTasks(connectedWorlds[cw]);
         serverTasks.push(...fetched);
       }
 
-      dispatch(mergeConnectedAction({ serverTasks, connectedWorlds }));
+      return serverTasks;
     } catch (error) {
-      console.log(error);
-      dispatch(addError('Problem connecting to the server, please try again alater'));
-    } finally {
-      dispatch(stoptLoadingAction());
+      let message;
+      if (error instanceof Error) {
+        message =
+          error.message === '401'
+            ? `Invalid key for world ${currentWorld}, please remove/replace it and try again`
+            : "Problem connecting to the server, please try again later'";
+      }
+
+      throw new Error(message);
     }
-  }, [dispatch, connectedWorldsCount, connectedWorlds]);
+  };
 
   // console.log('Todo list is rendering');
   return (

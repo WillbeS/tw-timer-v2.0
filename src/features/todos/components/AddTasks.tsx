@@ -64,7 +64,7 @@ export const AddTasks = () => {
 
     try {
       await saveTasks(todos, apiKey);
-      dispatch(addSuccess('Your tasks were saved to the server.'));
+      dispatch(addSuccess('Your tasks were successfully saved on the server.'));
     } catch (error) {
       const todoIds = Object.values(todos).map((todo) => todo.id);
       dispatch(addPendingForSaveAction(todoIds));

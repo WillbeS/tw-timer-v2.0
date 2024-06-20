@@ -6,7 +6,8 @@ export const fetchTasks = async (apiKey: string): Promise<TaskData[]> => {
   const response = await api.get('timer/tasks', apiKey);
 
   if (!response.ok) {
-    throw new Error('Error fetching tasks, responce status code: ' + response.status);
+    console.log(await response.json());
+    throw new Error('' + response.status);
   }
 
   const body = (await response.json()) as unknown;

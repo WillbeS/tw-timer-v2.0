@@ -55,8 +55,8 @@ export function ToastMessage({ type = MessageTypes.Info, children, onClose }: Pr
     return null;
   }
 
-  console.log('Show: ', show);
-  console.log('Hide: ', hide);
+  // console.log('Show: ', show);
+  // console.log('Hide: ', hide);
 
   const opacityTransition = show ? 'opacity-100' : 'opacity-0';
 

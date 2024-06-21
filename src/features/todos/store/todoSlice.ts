@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 import { PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
@@ -39,13 +39,13 @@ export const todosSlice = createSlice({
     },
 
     // delete when safe!
-    addTodosAction: (state, action: PayloadAction<TaskData[]>) => {
-      const todos = action.payload;
+    // addTodosAction: (state, action: PayloadAction<TaskData[]>) => {
+    //   const todos = action.payload;
 
-      todos.forEach((todo) => {
-        state.byId[todo.id] = todo;
-      });
-    },
+    //   todos.forEach((todo) => {
+    //     state.byId[todo.id] = todo;
+    //   });
+    // },
 
     mergeConnectedAction: (state, action) => {
       const { serverTasks, connectedWorlds } = action.payload;
@@ -114,7 +114,7 @@ export const todosSlice = createSlice({
 });
 
 export const {
-  addTodosAction,
+  // addTodosAction,
   addTasksAction,
   addPendingForSaveAction,
   addPendingForDeleteAction,
@@ -126,19 +126,45 @@ export const {
   stoptLoadingAction,
 } = todosSlice.actions;
 
-export const selectFiltered = (state: RootState, world: string = '0', type: string = '0') => {
-  let todosArr = Object.values(state.todos.byId);
+export const taskSelector = (state: RootState) => state.todos.byId;
 
-  if (world !== '0') {
-    todosArr = todosArr.filter((t) => t.world === world);
-  }
+export const filteredTasksSelector = createSelector(
+  [
+    // First input selector extracts items from the state
+    taskSelector,
+    // Second input selector forwards the world argument
+    (state: RootState, world: string) => world,
+    // Third input selector forwards the type argument
+    (state: RootState, world: string, type: string) => type,
+  ],
+  (tasks, world, type) => {
+    let todosArr = Object.values(tasks);
 
-  if (type !== '0') {
-    todosArr = todosArr.filter((t) => t.type === type);
-  }
+    if (world !== '0') {
+      todosArr = todosArr.filter((t) => t.world === world);
+    }
 
-  return Object.values(sortByMs(todosArr));
-};
+    if (type !== '0') {
+      todosArr = todosArr.filter((t) => t.type === type);
+    }
+
+    return Object.values(sortByMs(todosArr));
+  },
+);
+
+// export const selectFiltered = (state: RootState, world: string = '0', type: string = '0') => {
+//   let todosArr = Object.values(state.todos.byId);
+
+//   if (world !== '0') {
+//     todosArr = todosArr.filter((t) => t.world === world);
+//   }
+
+//   if (type !== '0') {
+//     todosArr = todosArr.filter((t) => t.type === type);
+//   }
+
+//   return Object.values(sortByMs(todosArr));
+// };
 
 export const selectTotalCount = (state: RootState) => {
   return Object.keys(state.todos.byId).length;

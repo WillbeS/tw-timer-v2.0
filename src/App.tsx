@@ -8,8 +8,7 @@ import { theme } from './themes';
 import { TopContent } from './features/todos/components/TopContent';
 import { UIMessage } from './features/messages/components/UIMessage';
 
-console.log('App is rendering');
-console.log(theme);
+//console.log('App is rendering');
 
 function App() {
   return (

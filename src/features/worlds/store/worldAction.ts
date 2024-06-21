@@ -1,22 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-// import { fetchWorlds } from '../api/fetchWorlds';
-// import { saveToStorage, getArrFromStorage } from '../../../services/storageManager';
 import { WorldData, assertIsWorldData } from '../data/types';
 import { api } from '../../../api';
-
-// export const getWorlds = createAsyncThunk('worlds/fetchAll', async () => {
-//   let worlds = await fetchWorlds();
-
-//   if (!worlds) {
-//     const localWorlds: WorldData[] = getArrFromStorage('tw_worlds');
-
-//     return localWorlds ? localWorlds : [];
-//   }
-
-//   saveToStorage('tw_worlds', worlds);
-
-//   return worlds;
-// });
 
 export const fetchWorlds = createAsyncThunk<WorldData[], void, { rejectValue: string }>(
   'worlds/fetchWorlds',

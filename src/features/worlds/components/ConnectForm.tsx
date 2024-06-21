@@ -4,8 +4,8 @@ import { WorldData } from '../../../data/types';
 import { ValidationError } from '../../../components/form/ValidationError';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
-import { selectFiltered } from '../../todos/store/todoSlice';
-import { TaskData, TasksById } from '../../todos/data/types';
+import { filteredTasksSelector } from '../../todos/store/todoSlice';
+import { TaskData } from '../../todos/data/types';
 
 type Props = {
   worlds: WorldData[];
@@ -18,7 +18,7 @@ export const ConnectForm = ({ worlds, onSubmit }: Props) => {
   const [errors, setErrors] = useState<{ world?: string | undefined }>({});
 
   //this is to synch the tasks of a newly connected world
-  const tasks = useSelector((state: RootState) => selectFiltered(state, world, '0'));
+  const tasks = useSelector((state: RootState) => filteredTasksSelector(state, world, '0'));
 
   const handleSubmit = async (e: SyntheticEvent | KeyboardEvent) => {
     e.preventDefault();

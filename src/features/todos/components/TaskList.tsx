@@ -1,16 +1,16 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { fetchTasks, deleteTask } from '../api';
 
 import { RootState } from '../../../store/store';
 import {
   removeTodoAction,
-  selectFiltered,
   dynamicUpdateAction,
   startLoadingAction,
   stoptLoadingAction,
   addPendingForDeleteAction,
   mergeConnectedAction,
+  filteredTasksSelector,
 } from '../store/todoSlice';
 
 import { TaskData } from '../data/types';
@@ -20,18 +20,19 @@ import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
 import { addError, addInfo } from '../../messages/store/messageSlice';
 import { getKeyFromStorage } from '../../worlds/services/apiKeySorage';
-import { useAppSelector } from '../../../store/hooks';
+// import { useAppSelector } from '../../../store/hooks';
 
 export const TaskList = () => {
   const [world, setWorld] = useState('0');
   const [type, setType] = useState('0');
 
-  const todos = useAppSelector((state: RootState) => selectFiltered(state, world, type));
-  const { loading } = useAppSelector((state: RootState) => state.todos);
+  const todos = useSelector((state: RootState) => filteredTasksSelector(state, world, type));
+
+  const { loading } = useSelector((state: RootState) => state.todos);
   const dispatch = useDispatch();
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
-  const connectedWorlds = useAppSelector((state: RootState) => state.worlds.connected);
+  const connectedWorlds = useSelector((state: RootState) => state.worlds.connected);
   const connectedWorldsCount = Object.keys(connectedWorlds).length;
 
   useEffect(() => {

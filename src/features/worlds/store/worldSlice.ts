@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-// import { getWorlds } from './worldAction';
 import { getArrFromStorage, getObjFromStorage } from '../../../services/storageManager';
 
 import { WorldData } from '../data/types';
 import { fetchWorlds } from './worldAction';
+import { RootState } from '../../../store/store';
 
 //rename to all and connected
 type WorldState = {
@@ -60,5 +60,7 @@ const worldSlice = createSlice({
 });
 
 export const { addConnectedWorld, removeConnectedWorld } = worldSlice.actions;
+
+export const worldSelector = (state: RootState) => state.worlds;
 
 export default worldSlice.reducer;

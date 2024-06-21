@@ -1,7 +1,7 @@
 import { api } from '../../../api';
 import { getObjFromStorage, saveToStorage } from '../../../services/storageManager';
 
-export const generateKey = async (worldTag: string): Promise<string> => {
+export const generateKey = async (worldTag: string) => {
   const response = await api.post(`${worldTag}/key`, {});
 
   if (!response.ok) {
@@ -11,11 +11,7 @@ export const generateKey = async (worldTag: string): Promise<string> => {
 
   const keyData: { token: string; adminId: string } = await response.json();
 
-  const storageData = getObjFromStorage('connected_ids');
-  storageData[worldTag] = keyData.adminId;
-  saveToStorage('connected_ids', storageData);
-
-  return keyData.token;
+  return keyData;
 };
 
 export const validateKey = async (worldTag: string, key: string): Promise<string> => {

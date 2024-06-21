@@ -18,6 +18,7 @@ export const ConnectForm = ({ worlds, onSubmit }: Props) => {
   const [errors, setErrors] = useState<{ world?: string | undefined }>({});
 
   //this is to synch the tasks of a newly connected world
+  // but maybe it shouldn't be here!!!
   const tasks = useSelector((state: RootState) => filteredTasksSelector(state, world, '0'));
 
   const handleSubmit = async (e: SyntheticEvent | KeyboardEvent) => {

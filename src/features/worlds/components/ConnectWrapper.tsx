@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { ConnectForm } from './ConnectForm';
 
@@ -21,6 +21,8 @@ import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { RoundedButton } from '../../../components/ui/RoundedButton';
 import { TaskData } from '../../todos/data/types';
 import { saveTasks } from '../../todos/api';
+import { connectWorld } from '../store/worldAction';
+import { useAppDispatch } from '../../../store/hooks';
 
 const OpenBtn = () => <RoundedButton label="Connect" symbol="♻" onClick={console.log} />;
 
@@ -32,29 +34,26 @@ export const ConnectWrapper = () => {
   const connectedWorlds = worlds.filter((w) => connected[w.tag] !== undefined);
   const unconnectedWorlds = worlds.filter((w) => connected[w.tag] === undefined);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const connectWorld = async (worldTag: string, key: string, tasks: TaskData[]) => {
-    try {
-      console.log('start loading');
-      key = key ? await validateKey(worldTag, key) : await generateKey(worldTag);
+  const handleConnectWorld = async (worldTag: string, key: string, tasks: TaskData[]) => {
+    dispatch(connectWorld({ key, world: worldTag, tasks }));
+    // try {
+    //   console.log('start loading');
+    //   key = key ? await validateKey(worldTag, key) : await generateKey(worldTag);
 
-      dispatch(addConnectedWorld({ worldTag, key }));
+    //   dispatch(addConnectedWorld({ worldTag, key }));
 
-      if (tasks.length > 0) {
-        await saveTasks(tasks, key);
-        dispatch(addInfo('Your tasks were successfully saved on the server.'));
-      }
-
-      // setGeneratedKey(key);
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error);
-        dispatch(addError(error.message));
-      }
-    } finally {
-      console.log('Stop loading');
-    }
+    //   if (tasks.length > 0) {
+    //     await saveTasks(tasks, key);
+    //     dispatch(addInfo('Your tasks were successfully saved on the server.'));
+    //   }
+    // } catch (error: any) {
+    //   console.log(error);
+    //   dispatch(addError(error.message));
+    // } finally {
+    //   console.log('Stop loading');
+    // }
   };
 
   const disconnectWorld = async (worldTag: string) => {
@@ -123,7 +122,7 @@ export const ConnectWrapper = () => {
             key
           </p>
           {/* {generatedKey && <p className="text-sm p-3 font-bold">The connection was successful/</p>} */}
-          <ConnectForm worlds={unconnectedWorlds} onSubmit={connectWorld} />
+          <ConnectForm worlds={unconnectedWorlds} onSubmit={handleConnectWorld} />
         </section>
       </div>
     </ModalWrapper2>

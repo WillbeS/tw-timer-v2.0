@@ -1,6 +1,7 @@
 import { api } from '../../../api';
 import { WorldData, assertIsWorldData } from '../data/types';
 
+// Delete when safe
 export const fetchWorlds = async () => {
   try {
     const response = await api.get('worlds');

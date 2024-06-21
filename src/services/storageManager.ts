@@ -19,7 +19,7 @@ export const saveData = (key: string, data: object) => {
 export const getObjFromStorage = (key: string) => {
   let data = localStorage.getItem(key);
 
-  if (!data) {
+  if (!data || data === 'undefined') {
     //saveData(key, {});
     return {};
   }

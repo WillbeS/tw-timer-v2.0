@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
-import { NewTask, PendingTasks, TaskData, TasksById } from '../data/types';
+import { PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
 
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
@@ -145,23 +145,5 @@ export const selectTotalCount = (state: RootState) => {
 };
 
 const sortByMs = (todosArr: TaskData[]) => todosArr.sort((a, b) => a.dueMs - b.dueMs);
-
-//helper functions
-
-const isDuplicate = (newTask: TaskData, tasks: TasksById) => {
-  for (const id in tasks) {
-    const task = tasks[id];
-    if (
-      newTask.message === task.message &&
-      newTask.type === task.type &&
-      newTask.dueMs === task.dueMs &&
-      newTask.world === task.world
-    ) {
-      return true;
-    }
-  }
-
-  return false;
-};
 
 export default todosSlice.reducer;

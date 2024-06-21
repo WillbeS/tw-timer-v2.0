@@ -9,8 +9,6 @@ import { theme } from '../../../themes';
 
 export const TopContent = () => {
   const totalCount = useSelector(selectTotalCount);
-  console.log(theme);
-  console.log('top content');
   return (
     <>
       <div className={`${theme.bgColors.button} rounded-md p-2 md:py-3 md:px-5 lg:w-4/6 mx-auto`}>

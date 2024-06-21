@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { fetchTasks, deleteTask } from '../api';
 
 import { RootState } from '../../../store/store';
@@ -18,19 +18,20 @@ import { formatTime } from '../../../utils/dateTime';
 
 import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
-import { addError } from '../../messages/store/messageSlice';
+import { addError, addInfo } from '../../messages/store/messageSlice';
 import { getKeyFromStorage } from '../../worlds/services/apiKeySorage';
+import { useAppSelector } from '../../../store/hooks';
 
 export const TaskList = () => {
   const [world, setWorld] = useState('0');
   const [type, setType] = useState('0');
 
-  const todos = useSelector((state: RootState) => selectFiltered(state, world, type));
-  const { loading } = useSelector((state: RootState) => state.todos);
+  const todos = useAppSelector((state: RootState) => selectFiltered(state, world, type));
+  const { loading } = useAppSelector((state: RootState) => state.todos);
   const dispatch = useDispatch();
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
-  const connectedWorlds = useSelector((state: RootState) => state.worlds.connected);
+  const connectedWorlds = useAppSelector((state: RootState) => state.worlds.connected);
   const connectedWorldsCount = Object.keys(connectedWorlds).length;
 
   useEffect(() => {
@@ -64,23 +65,12 @@ export const TaskList = () => {
 
   const handleSync = useCallback(async () => {
     if (connectedWorldsCount === 0) {
-      dispatch(startLoadingAction());
-      setTimeout(() => {
-        dispatch(stoptLoadingAction());
-      }, 2000);
-      // instead of this will show a message
-
+      dispatch(addInfo("You don't have any connected worlds to synchronize from!"));
       return;
     }
 
     try {
       dispatch(startLoadingAction());
-
-      // const serverTasks: TaskData[] = [];
-      // for (const cw in connectedWorlds) {
-      //   const fetched = await fetchTasks(connectedWorlds[cw]);
-      //   serverTasks.push(...fetched);
-      // }
 
       const serverTasks = await fetchServerTasks();
 

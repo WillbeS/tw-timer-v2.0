@@ -4,6 +4,7 @@ import { PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
 
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
+import { fetchTasks } from './taskActions';
 
 type TodosState = {
   byId: TasksById;
@@ -38,20 +39,12 @@ export const todosSlice = createSlice({
       saveTasksToStorage(state.byId);
     },
 
-    // delete when safe!
-    // addTodosAction: (state, action: PayloadAction<TaskData[]>) => {
-    //   const todos = action.payload;
-
-    //   todos.forEach((todo) => {
-    //     state.byId[todo.id] = todo;
-    //   });
-    // },
-
     mergeConnectedAction: (state, action) => {
       const { serverTasks, connectedWorlds } = action.payload;
       const updated: TasksById = {};
 
       for (const serverTask of serverTasks) {
+        // if it's in the pending array then it's for delete so don't readd it
         if (state.pending[serverTask.id]) continue;
 
         updated[serverTask.id] = serverTask;
@@ -111,10 +104,46 @@ export const todosSlice = createSlice({
       savePendingToStorage(state.pending);
     },
   },
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchTasks.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      fetchTasks.fulfilled,
+      (state, action: PayloadAction<{ world: String; tasks: TaskData[] }>) => {
+        state.loading = false;
+
+        const { world, tasks } = action.payload;
+        const updated: TasksById = {};
+
+        for (const serverTask of tasks) {
+          // if it's in the pending array then it's for delete so don't readd it
+          if (state.pending[serverTask.id]) continue;
+
+          updated[serverTask.id] = serverTask;
+        }
+
+        for (const id in state.byId) {
+          const localTask = state.byId[id];
+
+          //already added from the server
+          //or is pending to be saved
+          if (localTask.world === world && !state.pending[localTask.id]) continue;
+
+          updated[id] = localTask;
+        }
+        state.byId = updated;
+        saveTasksToStorage(state.byId);
+      },
+    );
+    builder.addCase(fetchTasks.rejected, (state) => {
+      state.loading = false;
+    });
+  },
 });
 
 export const {
-  // addTodosAction,
   addTasksAction,
   addPendingForSaveAction,
   addPendingForDeleteAction,
@@ -151,20 +180,6 @@ export const filteredTasksSelector = createSelector(
     return Object.values(sortByMs(todosArr));
   },
 );
-
-// export const selectFiltered = (state: RootState, world: string = '0', type: string = '0') => {
-//   let todosArr = Object.values(state.todos.byId);
-
-//   if (world !== '0') {
-//     todosArr = todosArr.filter((t) => t.world === world);
-//   }
-
-//   if (type !== '0') {
-//     todosArr = todosArr.filter((t) => t.type === type);
-//   }
-
-//   return Object.values(sortByMs(todosArr));
-// };
 
 export const selectTotalCount = (state: RootState) => {
   return Object.keys(state.todos.byId).length;

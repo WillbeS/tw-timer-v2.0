@@ -78,6 +78,11 @@ const worldSlice = createSlice({
       localStorage.setItem('connected_worlds', JSON.stringify(state.connected));
       localStorage.setItem('connected_ids', JSON.stringify(state.connectedIds));
     });
+    builder.addCase(disconnectWorld.rejected, (state, action: PayloadAction<any>) => {
+      state.loading = false;
+      //to log on backend later
+      console.log(action.payload);
+    });
   },
 });
 

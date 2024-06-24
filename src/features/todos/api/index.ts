@@ -1,6 +1,6 @@
 import { saveTasks } from './saveTasks';
-import { fetchTasks } from './getTasks';
+// import { fetchTasks } from './getTasks';
 import { deleteTask } from './deleteTask';
 import { getVillages } from './getVillages';
 
-export { saveTasks, fetchTasks, deleteTask, getVillages };
+export { saveTasks, deleteTask, getVillages };

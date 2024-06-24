@@ -4,7 +4,7 @@ import { PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
 
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
-import { fetchTasks } from './taskActions';
+import { deleteTask, fetchTasks } from './taskActions';
 
 type TodosState = {
   byId: TasksById;
@@ -69,11 +69,11 @@ export const todosSlice = createSlice({
       saveTasksToStorage(state.byId);
     },
 
-    removeTodoAction: (state, action: PayloadAction<string>) => {
-      const id = action.payload;
-      delete state.byId[id];
-      saveTasksToStorage(state.byId);
-    },
+    // removeTodoAction: (state, action: PayloadAction<string>) => {
+    //   const id = action.payload;
+    //   delete state.byId[id];
+    //   saveTasksToStorage(state.byId);
+    // },
 
     removeAllAction: (state) => {
       state.byId = {};
@@ -140,6 +140,34 @@ export const todosSlice = createSlice({
     builder.addCase(fetchTasks.rejected, (state) => {
       state.loading = false;
     });
+
+    builder.addCase(deleteTask.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteTask.fulfilled, (state, action: PayloadAction<string>) => {
+      state.loading = false;
+      delete state.byId[action.payload];
+      saveTasksToStorage(state.byId);
+    });
+    builder.addCase(deleteTask.rejected, (state, action: PayloadAction<any>) => {
+      state.loading = false;
+      const id = action.payload;
+      console.log(id);
+      console.log('Promise rejected!');
+
+      // First, add to penging for delete
+      // but if it's already there for save, need to remove it as it's not on the server
+      if (state.pending[id] && state.pending[id].action === 'save') {
+        delete state.pending[id];
+      } else {
+        state.pending[id] = { id, action: 'delete' };
+      }
+
+      // Then delete if from state and update the storage
+      delete state.byId[action.payload];
+      saveTasksToStorage(state.byId);
+      savePendingToStorage(state.pending);
+    });
   },
 });
 
@@ -147,7 +175,7 @@ export const {
   addTasksAction,
   addPendingForSaveAction,
   addPendingForDeleteAction,
-  removeTodoAction,
+  // removeTodoAction,
   dynamicUpdateAction,
   removeAllAction,
   mergeConnectedAction,

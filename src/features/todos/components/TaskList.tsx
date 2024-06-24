@@ -1,21 +1,14 @@
 import { useState, useCallback, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { deleteTask } from '../api';
 
 import { RootState } from '../../../store/store';
-import {
-  removeTodoAction,
-  dynamicUpdateAction,
-  addPendingForDeleteAction,
-  filteredTasksSelector,
-} from '../store/todoSlice';
+import { dynamicUpdateAction, filteredTasksSelector } from '../store/todoSlice';
 
 import { formatTime } from '../../../utils/dateTime';
 
 import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
-import { getKeyFromStorage } from '../../worlds/services/apiKeySorage';
-import { fetchTasks } from '../store/taskActions';
+import { deleteTask, fetchTasks } from '../store/taskActions';
 import { useAppDispatch } from '../../../store/hooks';
 // import { useAppSelector } from '../../../store/hooks';
 
@@ -46,17 +39,7 @@ export const TaskList = () => {
 
   const handleDelete = useCallback(
     async (id: string, world: string) => {
-      dispatch(removeTodoAction(id));
-      const apiKey = getKeyFromStorage(world);
-
-      if (apiKey) {
-        try {
-          await deleteTask(id, apiKey);
-        } catch (error) {
-          dispatch(addPendingForDeleteAction(id));
-          console.log(error);
-        }
-      }
+      dispatch(deleteTask({ id, world }));
     },
     [dispatch],
   );

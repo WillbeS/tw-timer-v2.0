@@ -6,7 +6,7 @@ export const saveTasks = async (tasks: TaskData[], apiKey: string) => {
 
   if (!response.ok) {
     const errorMessage = await response.json();
-    console.log(errorMessage);
-    throw new Error(errorMessage + '; responce status code: ' + response.status);
+    console.log(errorMessage + '; responce status code: ' + response.status);
+    throw new Error(errorMessage);
   }
 };

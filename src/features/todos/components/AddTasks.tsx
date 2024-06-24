@@ -1,25 +1,18 @@
-import { useDispatch } from 'react-redux';
+import { startLoadingAction, stoptLoadingAction } from '../store/todoSlice';
 
-import {
-  addPendingForSaveAction,
-  addTasksAction,
-  startLoadingAction,
-  stoptLoadingAction,
-} from '../store/todoSlice';
-
-import { saveTasks } from '../api';
-import { AddTasksFormInput, TaskData } from '../data/types';
+import { AddTasksFormInput } from '../data/types';
 import { getParser } from '../services/parsers';
+
+import { addError } from '../../messages/store/messageSlice';
+import { isDuplicate } from '../services/todoStorage';
+import { saveTodos } from '../store/taskActions';
+import { useAppDispatch } from '../../../store/hooks';
 
 import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { TasksForm } from './TasksForm';
 
 import { theme } from '../../../themes';
-import { addError, addMessage, addSuccess } from '../../messages/store/messageSlice';
-import { getKeyFromStorage } from '../../worlds/services/apiKeySorage';
-import { isDuplicate } from '../services/todoStorage';
-import { MessageTypes } from '../../../data/types';
 
 const OpenBtn = () => (
   <div
@@ -33,42 +26,21 @@ const OpenBtn = () => (
 
 export const AddTasks = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const onSubmit = async (todoInput: AddTasksFormInput) => {
     try {
       dispatch(startLoadingAction());
-
       const todoParser = getParser(todoInput);
       const newTodos = await todoParser.parse();
       const forSave = newTodos.filter((task) => !isDuplicate(task));
-
-      dispatch(addTasksAction(forSave));
+      dispatch(saveTodos({ world: todoInput.world, tasks: forSave }));
       onCloseModal();
-
-      await saveToServer(todoInput.world, forSave);
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        dispatch(addError(error.message));
-      }
-
+    } catch (error: any) {
+      dispatch(addError(error.message));
       onCloseModal();
     } finally {
       dispatch(stoptLoadingAction());
-    }
-  };
-
-  const saveToServer = async (world: string, todos: TaskData[]) => {
-    const apiKey = getKeyFromStorage(world);
-    if (!apiKey) return;
-
-    try {
-      await saveTasks(todos, apiKey);
-      dispatch(addSuccess('Your tasks were successfully saved on the server.'));
-    } catch (error) {
-      const todoIds = Object.values(todos).map((todo) => todo.id);
-      dispatch(addPendingForSaveAction(todoIds));
-      throw Error('There was a problem with the server and your tasks were not saved.');
     }
   };
 

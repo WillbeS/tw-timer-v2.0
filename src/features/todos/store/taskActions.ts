@@ -2,7 +2,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TaskData } from '../data/types';
 import { api } from '../../../api';
 import { RootState } from '../../../store/store';
-import { addError } from '../../messages/store/messageSlice';
+import { addError, addSuccess } from '../../messages/store/messageSlice';
+
+import { addTasksAction } from './todoSlice';
+import { saveTasks } from '../api';
 
 export const fetchTasks = createAsyncThunk<
   { world: string; tasks: TaskData[] },
@@ -30,11 +33,32 @@ export const fetchTasks = createAsyncThunk<
   }
 });
 
+//temp, will rename to something else
+export const saveTodos = createAsyncThunk<
+  void,
+  { tasks: TaskData[]; world: string },
+  { rejectValue: TaskData[] }
+>('tasks/saveTasks', async ({ tasks, world }, thunkAPI) => {
+  try {
+    thunkAPI.dispatch(addTasksAction(tasks));
+    const apiKey = (thunkAPI.getState() as RootState).worlds.connected[world];
+
+    if (!apiKey) return;
+
+    await saveTasks(tasks, apiKey);
+    thunkAPI.dispatch(addSuccess('Your tasks were successfully saved on the server.'));
+  } catch (error: any) {
+    console.log(error.message);
+    thunkAPI.dispatch(addError('Error sving the tasks to the remote server'));
+    return thunkAPI.rejectWithValue(tasks);
+  }
+});
+
 export const deleteTask = createAsyncThunk<
   string,
   { id: string; world: string },
   { rejectValue: string }
->('tasks/deleteTasks', async ({ id, world }, thunkAPI) => {
+>('tasks/deleteTask', async ({ id, world }, thunkAPI) => {
   try {
     const apiKey = (thunkAPI.getState() as RootState).worlds.connected[world];
 

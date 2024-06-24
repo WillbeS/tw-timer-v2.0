@@ -4,7 +4,7 @@ import { PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
 
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
-import { deleteTask, fetchTasks } from './taskActions';
+import { deleteTask, fetchTasks, saveTodos } from './taskActions';
 
 type TodosState = {
   byId: TasksById;
@@ -39,69 +39,15 @@ export const todosSlice = createSlice({
       saveTasksToStorage(state.byId);
     },
 
-    mergeConnectedAction: (state, action) => {
-      const { serverTasks, connectedWorlds } = action.payload;
-      const updated: TasksById = {};
-
-      for (const serverTask of serverTasks) {
-        // if it's in the pending array then it's for delete so don't readd it
-        if (state.pending[serverTask.id]) continue;
-
-        updated[serverTask.id] = serverTask;
-      }
-
-      for (const id in state.byId) {
-        const localTask = state.byId[id];
-        // if it's a connected task, don't add it
-        // but if it's pending for save it needs to stay
-        if (!state.pending[localTask.id] && connectedWorlds[localTask.world]) continue;
-
-        updated[id] = localTask;
-      }
-
-      state.byId = updated;
-      saveTasksToStorage(state.byId);
-    },
-
     dynamicUpdateAction: (state, action: PayloadAction<TaskData>) => {
       const todo = action.payload;
       state.byId[todo.id] = { ...todo };
       saveTasksToStorage(state.byId);
     },
 
-    // removeTodoAction: (state, action: PayloadAction<string>) => {
-    //   const id = action.payload;
-    //   delete state.byId[id];
-    //   saveTasksToStorage(state.byId);
-    // },
-
     removeAllAction: (state) => {
       state.byId = {};
       saveTasksToStorage(state.byId);
-    },
-
-    // pending
-    addPendingForSaveAction: (state, action: PayloadAction<string[]>) => {
-      const ids = action.payload;
-
-      ids.forEach((id) => {
-        state.pending[id] = { id, action: 'save' };
-      });
-
-      savePendingToStorage(state.pending);
-    },
-
-    addPendingForDeleteAction: (state, action: PayloadAction<string>) => {
-      const id = action.payload;
-
-      // already there for save, need to remove it as it's not on the server
-      if (state.pending[id]) {
-        delete state.pending[id];
-      } else {
-        state.pending[id] = { id, action: 'delete' };
-      }
-
-      savePendingToStorage(state.pending);
     },
   },
 
@@ -168,17 +114,29 @@ export const todosSlice = createSlice({
       saveTasksToStorage(state.byId);
       savePendingToStorage(state.pending);
     });
+
+    builder.addCase(saveTodos.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(saveTodos.fulfilled, (state) => {
+      state.loading = false;
+    });
+    builder.addCase(saveTodos.rejected, (state, action: PayloadAction<any>) => {
+      const tasks = action.payload as TaskData[];
+
+      tasks.forEach((task) => {
+        state.pending[task.id] = { id: task.id, action: 'save' };
+      });
+
+      savePendingToStorage(state.pending);
+    });
   },
 });
 
 export const {
   addTasksAction,
-  addPendingForSaveAction,
-  addPendingForDeleteAction,
-  // removeTodoAction,
   dynamicUpdateAction,
   removeAllAction,
-  mergeConnectedAction,
   startLoadingAction,
   stoptLoadingAction,
 } = todosSlice.actions;

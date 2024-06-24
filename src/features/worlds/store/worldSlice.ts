@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { getArrFromStorage, getObjFromStorage } from '../../../services/storageManager';
 
 import { WorldData } from '../data/types';
-import { ConnectedWorldData, connectWorld, fetchWorlds } from './worldAction';
+import { ConnectedWorldData, connectWorld, fetchWorlds, disconnectWorld } from './worldAction';
 import { RootState } from '../../../store/store';
 
 interface WorldState {
@@ -29,22 +29,7 @@ const initialState: WorldState = {
 const worldSlice = createSlice({
   name: 'worlds',
   initialState,
-  reducers: {
-    addConnectedWorld: (state, action) => {
-      const { worldTag, key } = action.payload;
-
-      state.connected = { ...state.connected, [worldTag]: key };
-      localStorage.setItem('connected_worlds', JSON.stringify(state.connected));
-    },
-    removeConnectedWorld: (state, action) => {
-      const worldTag = action.payload;
-
-      if (state.connected[worldTag]) {
-        delete state.connected[worldTag];
-        localStorage.setItem('connected_worlds', JSON.stringify(state.connected));
-      }
-    },
-  },
+  reducers: {},
 
   extraReducers: (builder) => {
     // Fetching worlds
@@ -72,8 +57,8 @@ const worldSlice = createSlice({
       const { world, token, adminKey } = action.payload;
       state.loading = false;
       state.connected[world] = token;
-      localStorage.setItem('connected_worlds', JSON.stringify(state.connected));
       state.connectedIds[world] = adminKey;
+      localStorage.setItem('connected_worlds', JSON.stringify(state.connected));
       localStorage.setItem('connected_ids', JSON.stringify(state.connectedIds));
     });
     builder.addCase(connectWorld.rejected, (state, action: PayloadAction<any>) => {
@@ -81,10 +66,22 @@ const worldSlice = createSlice({
       //to log on backend later
       console.log(action.payload);
     });
+
+    builder.addCase(disconnectWorld.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(disconnectWorld.fulfilled, (state, action: PayloadAction<any>) => {
+      const world = action.payload;
+      state.loading = false;
+      delete state.connected[world];
+      delete state.connectedIds[world];
+      localStorage.setItem('connected_worlds', JSON.stringify(state.connected));
+      localStorage.setItem('connected_ids', JSON.stringify(state.connectedIds));
+    });
   },
 });
 
-export const { addConnectedWorld, removeConnectedWorld } = worldSlice.actions;
+export const {} = worldSlice.actions;
 
 export const worldSelector = (state: RootState) => state.worlds;
 

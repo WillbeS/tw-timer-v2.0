@@ -1,5 +1,4 @@
 import { api } from '../../../api';
-import { getObjFromStorage, saveToStorage } from '../../../services/storageManager';
 
 export const generateKey = async (worldTag: string) => {
   const response = await api.post(`${worldTag}/key`, {});

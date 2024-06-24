@@ -1,34 +1,20 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { ConnectForm } from './ConnectForm';
+import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../store/store';
-import { ConnectedWorld } from './ConnectedWorld';
-
-import { addConnectedWorld, removeConnectedWorld } from '../store/worldSlice';
-
-import { generateKey, validateKey } from '../api/fetchKey';
-import { addError, addInfo } from '../../messages/store/messageSlice';
-import {
-  getAdminIdFromStorage,
-  getKeyFromStorage,
-  removeAdminIdFromStorage,
-} from '../services/apiKeySorage';
-import { removeKey } from '../api/deleteKey';
+import { connectWorld, disconnectWorld } from '../store/worldAction';
+import { useAppDispatch } from '../../../store/hooks';
 
 import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { RoundedButton } from '../../../components/ui/RoundedButton';
+import { ConnectForm } from './ConnectForm';
+import { ConnectedWorld } from './ConnectedWorld';
 import { TaskData } from '../../todos/data/types';
-import { saveTasks } from '../../todos/api';
-import { connectWorld } from '../store/worldAction';
-import { useAppDispatch } from '../../../store/hooks';
 
 const OpenBtn = () => <RoundedButton label="Connect" symbol="♻" onClick={console.log} />;
 
 export const ConnectWrapper = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
-  // const [generatedKey, setGeneratedKey] = useState<string | null>(null);
 
   const { worlds, connected } = useSelector((state: RootState) => state.worlds);
   const connectedWorlds = worlds.filter((w) => connected[w.tag] !== undefined);
@@ -38,53 +24,13 @@ export const ConnectWrapper = () => {
 
   const handleConnectWorld = async (worldTag: string, key: string, tasks: TaskData[]) => {
     dispatch(connectWorld({ key, world: worldTag, tasks }));
-    // try {
-    //   console.log('start loading');
-    //   key = key ? await validateKey(worldTag, key) : await generateKey(worldTag);
-
-    //   dispatch(addConnectedWorld({ worldTag, key }));
-
-    //   if (tasks.length > 0) {
-    //     await saveTasks(tasks, key);
-    //     dispatch(addInfo('Your tasks were successfully saved on the server.'));
-    //   }
-    // } catch (error: any) {
-    //   console.log(error);
-    //   dispatch(addError(error.message));
-    // } finally {
-    //   console.log('Stop loading');
-    // }
   };
 
-  const disconnectWorld = async (worldTag: string) => {
-    const key = getKeyFromStorage(worldTag);
-
-    if (!key) return; // this is probably unnecessay
-
-    const adminId = getAdminIdFromStorage(worldTag);
-
-    if (!adminId) {
-      dispatch(removeConnectedWorld(worldTag));
-      return;
-    }
-
-    try {
-      console.log('Start loading');
-      await removeKey(key, adminId);
-      removeAdminIdFromStorage(worldTag);
-      dispatch(removeConnectedWorld(worldTag));
-    } catch (error) {
-      if (error instanceof Error) {
-        console.log(error);
-        dispatch(addError(error.message));
-      }
-    } finally {
-      console.log('Stop loading');
-    }
+  const handleDisconnectWorld = async (world: string) => {
+    dispatch(disconnectWorld(world));
   };
 
   const onCloseConnectModal = () => {
-    // setGeneratedKey(null);
     onCloseModal();
   };
 
@@ -110,7 +56,7 @@ export const ConnectWrapper = () => {
               key={cw.tag}
               world={cw}
               token={connected[cw.tag]}
-              onRemove={disconnectWorld}
+              onRemove={handleDisconnectWorld}
             />
           ))}
         </section>
@@ -121,7 +67,6 @@ export const ConnectWrapper = () => {
             If you already have a key paste it below, if you leave it empty it will generate a new
             key
           </p>
-          {/* {generatedKey && <p className="text-sm p-3 font-bold">The connection was successful/</p>} */}
           <ConnectForm worlds={unconnectedWorlds} onSubmit={handleConnectWorld} />
         </section>
       </div>

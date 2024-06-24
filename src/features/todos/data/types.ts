@@ -22,6 +22,7 @@ export type NewTask = {
   details?: string | undefined;
 };
 
+// need to add the server id and delete by it
 export type TaskData = {
   id: string;
   type: string;

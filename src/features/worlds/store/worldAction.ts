@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { WorldData, assertIsWorldData } from '../data/types';
+import { WorldData } from '../data/types';
 import { api } from '../../../api';
-import { TaskData, TasksById } from '../../todos/data/types';
+import { TaskData } from '../../todos/data/types';
 import { validateKey, generateKey } from '../api/fetchKey';
-import { saveData } from '../../../services/storageManager';
 import { saveTasks } from '../../todos/api';
-import { addError } from '../../messages/store/messageSlice';
+import { addError, addSuccess } from '../../messages/store/messageSlice';
+import { removeKey } from '../api/deleteKey';
+import { RootState } from '../../../store/store';
 
 export const fetchWorlds = createAsyncThunk<WorldData[], void, { rejectValue: string }>(
   'worlds/fetchWorlds',
@@ -47,9 +48,8 @@ export const connectWorld = createAsyncThunk<
     }
 
     if (tasks.length > 0) {
-      console.log(tasks);
-      console.log(key);
       await saveTasks(tasks, key);
+      thunkAPI.dispatch(addSuccess('Your tasks were successfully saved on the server.'));
     }
 
     return { world, token: key, adminKey };
@@ -59,17 +59,22 @@ export const connectWorld = createAsyncThunk<
   }
 });
 
-// Helper functions
-// but hate it and don't wanna use it if possible
-// function assertIsWorldDataArr(worldData: unknown): asserts worldData is WorldData[] {
-//   if (!Array.isArray(worldData)) {
-//     throw new Error("worldData isn't an array");
-//   }
-//   if (worldData.length === 0) {
-//     return;
-//   }
+export const disconnectWorld = createAsyncThunk(
+  'worlds/removeConnectedWorldAdmin',
+  async (world: string, thunkAPI) => {
+    try {
+      const state: RootState = thunkAPI.getState() as RootState;
+      const token = state.worlds.connected[world];
+      const adminId = state.worlds.connectedIds[world];
 
-//   worldData.forEach((datum) => {
-//     assertIsWorldData(datum);
-//   });
-// }
+      if (adminId) {
+        await removeKey(token, adminId);
+      }
+
+      return world;
+    } catch (error: any) {
+      thunkAPI.dispatch(addError(error.message));
+      console.log(error.message);
+    }
+  },
+);

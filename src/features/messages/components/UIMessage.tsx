@@ -1,13 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-
 import { clearMessages } from '../store/messageSlice';
 import { ToastMessage } from '../../../components/ui/ToastMessage';
 import { RootState } from '../../../store/store';
 import { MessageTypes } from '../../../data/types';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 export const UIMessage = () => {
-  const dispatch = useDispatch();
-  const uiMessages = useSelector((state: RootState) => state.messages);
+  const dispatch = useAppDispatch();
+  const uiMessages = useAppSelector((state: RootState) => state.messages);
 
   let messageType: MessageTypes | undefined;
   let message: string | undefined;

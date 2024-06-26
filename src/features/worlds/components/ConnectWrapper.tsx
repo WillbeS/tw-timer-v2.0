@@ -1,8 +1,6 @@
-import { useSelector } from 'react-redux';
-
 import { RootState } from '../../../store/store';
 import { connectWorld, disconnectWorld } from '../store/worldAction';
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
@@ -16,7 +14,7 @@ const OpenBtn = () => <RoundedButton label="Connect" symbol="♻" onClick={conso
 export const ConnectWrapper = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
 
-  const { worlds, connected } = useSelector((state: RootState) => state.worlds);
+  const { worlds, connected } = useAppSelector((state: RootState) => state.worlds);
   const connectedWorlds = worlds.filter((w) => connected[w.tag] !== undefined);
   const unconnectedWorlds = worlds.filter((w) => connected[w.tag] === undefined);
 

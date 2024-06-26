@@ -1,14 +1,13 @@
-import { useSelector } from 'react-redux';
-
 import { selectTotalCount } from '../store/todoSlice';
 
 import { AddTasks } from './AddTasks';
 import { Alarm } from '../../alarm';
 
 import { theme } from '../../../themes';
+import { useAppSelector } from '../../../store/hooks';
 
 export const TopContent = () => {
-  const totalCount = useSelector(selectTotalCount);
+  const totalCount = useAppSelector(selectTotalCount);
   return (
     <>
       <div className={`${theme.bgColors.button} rounded-md p-2 md:py-3 md:px-5 lg:w-4/6 mx-auto`}>

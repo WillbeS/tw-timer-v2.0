@@ -83,7 +83,7 @@ export abstract class TodoParser {
 
     for (const match of matches.value) {
       const newTask = this.parseFromMatch(match, matches.pattern);
-      tasks.push({ ...newTask, id: generateId('task') });
+      tasks.push({ ...newTask, id: generateId('task'), completed: false });
     }
 
     return tasks;

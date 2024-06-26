@@ -51,7 +51,7 @@ export const TaskRow = ({ todo, onDelete, onDynamicUpdate }: Props) => {
           ) : null}
         </span>
       </div>
-      <div className="flex gap-3 md:gap-6 justify-end">
+      <div className="flex gap-2 md:gap-6 justify-end">
         <span>
           <CountdownTimer todoView={todoView} />
         </span>

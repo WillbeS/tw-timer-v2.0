@@ -2,10 +2,10 @@ import { KeyboardEvent, SyntheticEvent, useState } from 'react';
 
 import { WorldData } from '../../../data/types';
 import { ValidationError } from '../../../components/form/ValidationError';
-import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 import { filteredTasksSelector } from '../../todos/store/todoSlice';
 import { TaskData } from '../../todos/data/types';
+import { useSelector } from 'react-redux';
 
 type Props = {
   worlds: WorldData[];

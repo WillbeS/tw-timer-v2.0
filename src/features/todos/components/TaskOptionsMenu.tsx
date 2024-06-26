@@ -1,17 +1,17 @@
 import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 
 import { removeAllAction } from '../store/todoSlice';
 
 import { DropdownMenu } from '../../../components/ui/DropdownMenu';
 import { DropdownMenuButton } from '../../../components/ui/DropdownMenuButton';
+import { useAppDispatch } from '../../../store/hooks';
 
 type Props = {
   onSync: () => void;
 };
 
 export const TaskOptionsMenu = ({ onSync }: Props) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const handleClearLocal = useCallback(() => {
     try {

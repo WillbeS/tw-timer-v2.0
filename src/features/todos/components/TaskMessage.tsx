@@ -1,7 +1,7 @@
 import { TodoView } from '../models/TodoView';
 import { TaskData } from '../data/types';
-import { todoTypes } from '../data/constants';
-import { AttackMessage } from './AttackMessage';
+// import { todoTypes } from '../data/constants';
+// import { AttackMessage } from './AttackMessage';
 
 type Props = {
   todoView: TodoView;

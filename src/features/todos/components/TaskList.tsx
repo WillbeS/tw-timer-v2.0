@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 
 import { RootState } from '../../../store/store';
 import { dynamicUpdateAction, filteredTasksSelector } from '../store/todoSlice';
@@ -10,19 +9,19 @@ import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
 import { deleteTask, fetchTasks } from '../store/taskActions';
 import { useAppDispatch } from '../../../store/hooks';
-// import { useAppSelector } from '../../../store/hooks';
+import { useAppSelector } from '../../../store/hooks';
 
 export const TaskList = () => {
   const [world, setWorld] = useState('0');
   const [type, setType] = useState('0');
 
-  const todos = useSelector((state: RootState) => filteredTasksSelector(state, world, type));
+  const todos = useAppSelector((state: RootState) => filteredTasksSelector(state, world, type));
 
-  const { loading } = useSelector((state: RootState) => state.todos);
+  const { loading } = useAppSelector((state: RootState) => state.todos);
   const dispatch = useAppDispatch();
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
-  const connectedWorlds = useSelector((state: RootState) => state.worlds.connected);
+  const connectedWorlds = useAppSelector((state: RootState) => state.worlds.connected);
   const connectedWorldsCount = Object.keys(connectedWorlds).length;
 
   useEffect(() => {

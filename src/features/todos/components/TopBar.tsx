@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 
 import { todoTypes } from '../data/constants';
@@ -6,6 +5,7 @@ import { todoTypes } from '../data/constants';
 import { Select } from '../../../components/form/Select';
 import { TaskOptionsMenu } from './TaskOptionsMenu';
 import { theme } from '../../../themes';
+import { useAppSelector } from '../../../store/hooks';
 
 type Props = {
   onWorldChange: (world: string) => void;
@@ -13,7 +13,7 @@ type Props = {
   onSync: () => void;
 };
 export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
-  const { worlds } = useSelector((state: RootState) => state.worlds);
+  const { worlds } = useAppSelector((state: RootState) => state.worlds);
 
   const typeOptions = Object.values(todoTypes).map((value) => {
     return { value, label: value };

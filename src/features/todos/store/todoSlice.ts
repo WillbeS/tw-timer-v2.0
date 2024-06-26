@@ -112,8 +112,14 @@ export const todosSlice = createSlice({
     });
     builder.addCase(deleteTask.fulfilled, (state, action: PayloadAction<string>) => {
       state.loading = false;
-      delete state.byId[action.payload];
+      const id = action.payload;
+      delete state.byId[id];
       saveTasksToStorage(state.byId);
+
+      if (state.pending[id] && state.pending[id].action === 'save') {
+        delete state.pending[id];
+        savePendingToStorage(state.pending);
+      }
     });
     builder.addCase(deleteTask.rejected, (state, action: PayloadAction<any>) => {
       state.loading = false;

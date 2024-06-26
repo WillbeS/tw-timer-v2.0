@@ -1,6 +1,4 @@
-import { useDispatch } from 'react-redux';
 import { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
 import { taskSelector } from '../../todos/store/todoSlice';
 import { TaskData } from '../../todos/data/types';
 import { todoTypes } from '../../todos/data/constants';
@@ -10,11 +8,12 @@ import { getTodoView } from '../../todos/models';
 
 import alarmSound from '../services/AlarmSound';
 import { SwitchBtn2 } from '../../../components/ui/SwitchBtn2';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 // TODO - refactor this at all cost!!!
 export const Alarm = () => {
-  const dispatch = useDispatch();
-  const todos: TaskData[] = Object.values(useSelector(taskSelector));
+  const dispatch = useAppDispatch();
+  const todos: TaskData[] = Object.values(useAppSelector(taskSelector));
   const timer: Worker = useMemo(
     () => new Worker(new URL('../workers/alarmTimer.ts', import.meta.url)),
     [],

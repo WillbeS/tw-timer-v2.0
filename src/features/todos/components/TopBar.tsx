@@ -2,7 +2,6 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../../../store/store';
 
 import { todoTypes } from '../data/constants';
-// import { useFetchWorls } from '../../../hooks/useFetchWorls';
 
 import { Select } from '../../../components/form/Select';
 import { TaskOptionsMenu } from './TaskOptionsMenu';
@@ -14,7 +13,6 @@ type Props = {
   onSync: () => void;
 };
 export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
-  //const worlds = useFetchWorls();
   const { worlds } = useSelector((state: RootState) => state.worlds);
 
   const typeOptions = Object.values(todoTypes).map((value) => {
@@ -27,13 +25,6 @@ export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
   });
   worldOptions.unshift({ value: '0', label: 'All Worlds' });
 
-  // This is for delete, yes???
-  const loadWorlds = () => {
-    if (worlds.length === 0) {
-      console.log('needs to fetch worlds');
-    }
-  };
-
   return (
     <div
       className={`mt-6 py-3 border-b ${theme.borderColors.feature} flex justify-end md:justify-between`}
@@ -44,7 +35,7 @@ export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
         <div>
           <Select options={typeOptions} defaultValue="0" fullWidth onChange={onTypeChange} />
         </div>
-        <div onClick={loadWorlds}>
+        <div>
           <Select options={worldOptions} defaultValue="0" fullWidth onChange={onWorldChange} />
         </div>
 

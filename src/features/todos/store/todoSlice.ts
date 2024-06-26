@@ -5,6 +5,7 @@ import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage
 
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
 import { deleteTask, fetchTasks, saveTodos } from './taskActions';
+import { generateId } from '../../../utils/stringUtils';
 
 type TodosState = {
   byId: TasksById;
@@ -29,6 +30,7 @@ export const todosSlice = createSlice({
       state.loading = false;
     },
 
+    //does this need to be public???
     addTasksAction: (state, action: PayloadAction<TaskData[]>) => {
       const newTasks = action.payload;
 
@@ -45,8 +47,26 @@ export const todosSlice = createSlice({
       saveTasksToStorage(state.byId);
     },
 
+    // this needs to become a thunk
     removeAllAction: (state) => {
       state.byId = {};
+      saveTasksToStorage(state.byId);
+    },
+
+    // this seems very wrong but is the easiest thing to do
+    replaceWorldTasks: (state, action: PayloadAction<string>) => {
+      const world = action.payload;
+
+      Object.values(state.byId).forEach((task) => {
+        if (task.world !== world) {
+          return;
+        }
+
+        const newId = generateId('task');
+        state.byId[newId] = { ...task, id: newId };
+        delete state.byId[task.id];
+      });
+
       saveTasksToStorage(state.byId);
     },
   },
@@ -139,6 +159,7 @@ export const {
   removeAllAction,
   startLoadingAction,
   stoptLoadingAction,
+  replaceWorldTasks,
 } = todosSlice.actions;
 
 export const taskSelector = (state: RootState) => state.todos.byId;

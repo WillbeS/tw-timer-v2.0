@@ -14,7 +14,6 @@ export const TaskOptionsMenu = ({ onSync }: Props) => {
   const dispatch = useDispatch();
 
   const handleClearLocal = useCallback(() => {
-    console.log('Should call it!!!');
     try {
       dispatch(removeAllAction());
     } catch (error) {

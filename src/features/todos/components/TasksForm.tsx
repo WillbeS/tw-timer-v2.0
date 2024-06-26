@@ -7,7 +7,6 @@ import { formatTimeIntoText } from '../../../utils/dateTime';
 import { todoTypes, attackSubtypes } from '../data/constants';
 
 import { ValidationError } from '../../../components/form/ValidationError';
-// import { useFetchWorls } from '../../../hooks/useFetchWorls';
 import { RootState } from '../../../store/store';
 
 type Props = {
@@ -29,7 +28,6 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
   }
 
   const [errors, setErrors] = useState<AddTasksFormErrors>({});
-  //const worlds = useFetchWorls();
   const { worlds } = useSelector((state: RootState) => state.worlds);
   const todoFormView = new TodoFormView();
 
@@ -41,7 +39,6 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
     if (isValid && onSubmit) {
       onSubmit(input);
     } else {
-      console.log(todoFormView.errors);
       setErrors(todoFormView.errors);
     }
   };

@@ -4,7 +4,7 @@ import { PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
 
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
-import { deleteTask, fetchTasks, saveTodos } from './taskActions';
+import { deleteTask, editTask, fetchTasks, saveTodos } from './taskActions';
 import { generateId } from '../../../utils/stringUtils';
 
 type TodosState = {
@@ -79,32 +79,21 @@ export const todosSlice = createSlice({
       fetchTasks.fulfilled,
       (state, action: PayloadAction<{ world: String; tasks: TaskData[] }>) => {
         state.loading = false;
-
-        const { world, tasks } = action.payload;
-        const updated: TasksById = {};
+        const { tasks } = action.payload;
 
         for (const serverTask of tasks) {
           // if it's in the pending array then it's for delete so don't readd it
           if (state.pending[serverTask.id]) continue;
 
-          updated[serverTask.id] = serverTask;
+          state.byId[serverTask.id] = serverTask;
         }
 
-        for (const id in state.byId) {
-          const localTask = state.byId[id];
-
-          //already added from the server
-          //or is pending to be saved
-          if (localTask.world === world && !state.pending[localTask.id]) continue;
-
-          updated[id] = localTask;
-        }
-        state.byId = updated;
         saveTasksToStorage(state.byId);
       },
     );
     builder.addCase(fetchTasks.rejected, (state) => {
       state.loading = false;
+      console.log('Fetching tasks rejected');
     });
 
     builder.addCase(deleteTask.pending, (state) => {
@@ -155,6 +144,19 @@ export const todosSlice = createSlice({
       });
 
       savePendingToStorage(state.pending);
+    });
+
+    builder.addCase(editTask.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(editTask.fulfilled, (state, action: PayloadAction<{ task: TaskData }>) => {
+      state.loading = false;
+      const { task } = action.payload;
+      state.byId[task.id] = task;
+      saveTasksToStorage(state.byId);
+    });
+    builder.addCase(editTask.rejected, (state) => {
+      state.loading = false;
     });
   },
 });

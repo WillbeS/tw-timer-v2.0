@@ -79,6 +79,7 @@ export const disconnectWorld = createAsyncThunk(
     } catch (error: any) {
       thunkAPI.dispatch(addError(error.message));
       console.log(error.message);
+      return thunkAPI.rejectWithValue(error.message);
     }
   },
 );

@@ -28,7 +28,7 @@ export const Select = ({
 
   const selectStyle = `rounded-md ${theme.borderColors.button} focus:outline-none px-3 py-2 ${
     theme.bgColors.button
-  } ${theme.textColors.button} font-semibold text-sm md:text-base drop-shadow-sm ${
+  } ${theme.textColors.button} font-semibold text-sm md:text-base drop-shadow-sm border-0 ${
     fullWidth ? ' w-full cursor-pointer' : ''
   }`;
 

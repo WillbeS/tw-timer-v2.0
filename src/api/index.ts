@@ -1,7 +1,8 @@
-import { get, post, remove } from './remote';
+import { get, post, put, remove } from './remote';
 
 export const api = {
   get,
   post,
+  put,
   delete: remove,
 };

@@ -54,6 +54,34 @@ export const saveTodos = createAsyncThunk<
   }
 });
 
+export const editTask = createAsyncThunk<
+  { task: TaskData },
+  { task: TaskData },
+  { rejectValue: void }
+>('tasks/editTask', async ({ task }, thunkAPI) => {
+  try {
+    const apiKey = (thunkAPI.getState() as RootState).worlds.connected[task.world];
+
+    console.log(task);
+    if (!apiKey) {
+      return { task };
+    }
+
+    const response = await api.put('timer/tasks/' + task.id, task, apiKey);
+
+    if (!response.ok) {
+      console.log(await response.json());
+      throw new Error('There was a problem connecting to the server.');
+    }
+
+    return { task };
+  } catch (error: any) {
+    console.log(error.message);
+    thunkAPI.dispatch(addError(error.message));
+    return thunkAPI.rejectWithValue();
+  }
+});
+
 export const deleteTask = createAsyncThunk<
   string,
   { id: string; world: string },

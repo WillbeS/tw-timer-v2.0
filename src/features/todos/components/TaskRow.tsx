@@ -8,6 +8,9 @@ import { TaskDetails } from './TaskDetails';
 import { TaskMessage } from './TaskMessage';
 
 import { theme } from '../../../themes';
+import { CompletedCheckbox } from './CompletedCheckbox';
+import { useAppDispatch } from '../../../store/hooks';
+import { editTask } from '../store/taskActions';
 
 type Props = {
   todo: TaskData;
@@ -16,6 +19,8 @@ type Props = {
 };
 
 export const TaskRow = ({ todo, onDelete, onDynamicUpdate }: Props) => {
+  const dispatch = useAppDispatch();
+
   const todoView = getTodoView(todo);
 
   const handleDynamicUpdate = () => {
@@ -24,6 +29,12 @@ export const TaskRow = ({ todo, onDelete, onDynamicUpdate }: Props) => {
     if (edited) {
       onDynamicUpdate(edited);
     }
+  };
+
+  const toggleCompleted = () => {
+    const edited: TaskData = { ...todo };
+    edited.completed = !edited.completed;
+    dispatch(editTask({ task: edited }));
   };
 
   return (
@@ -51,17 +62,18 @@ export const TaskRow = ({ todo, onDelete, onDynamicUpdate }: Props) => {
           ) : null}
         </span>
       </div>
-      <div className="flex gap-2 md:gap-6 justify-end">
+      <div className="flex gap-2 md:gap-6 justify-end items-center pr-0 md:pr-3">
         <span>
           <CountdownTimer todoView={todoView} />
         </span>
-        <span
+        {/* <span
           role="button"
           className="px-1 cursor-pointer px-2 flex items-center"
           onClick={(e) => onDelete(todo.id, todo.world)}
         >
           <DeleteIcon className="w-5 h-5 fill-neutral-500 hover:fill-neutral-600" />
-        </span>
+        </span> */}
+        <CompletedCheckbox isCompleted={todo.completed} onToggleCompleted={toggleCompleted} />
       </div>
     </div>
   );

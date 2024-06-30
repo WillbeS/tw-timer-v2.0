@@ -62,7 +62,6 @@ export const editTask = createAsyncThunk<
   try {
     const apiKey = (thunkAPI.getState() as RootState).worlds.connected[task.world];
 
-    console.log(task);
     if (!apiKey) {
       return { task };
     }
@@ -106,5 +105,31 @@ export const deleteTask = createAsyncThunk<
     console.log(error.message);
     dispatch(addError(error.message));
     return thunkAPI.rejectWithValue(id);
+  }
+});
+
+export const deleteManyTasks = createAsyncThunk<
+  { criteria: string | undefined; world: string },
+  { world: string; apiKey: string; criteria: string | undefined },
+  { rejectValue: { criteria: string | undefined; world: string } }
+>('tasks/deleteMany', async ({ world, apiKey, criteria }, thunkAPI) => {
+  try {
+    let byCritetia = criteria ? '/' + criteria : '';
+    const response = await api.delete('timer/tasks/criteria' + byCritetia, apiKey);
+
+    if (!response.ok) {
+      console.log(await response.json());
+      throw new Error('There was a problem with your request data.');
+    }
+
+    console.log(response.status);
+
+    console.log(await response.json());
+
+    return { criteria, world };
+  } catch (error: any) {
+    console.log(error.message);
+    thunkAPI.dispatch(addError(error.message));
+    return thunkAPI.rejectWithValue({ criteria, world });
   }
 });

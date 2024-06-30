@@ -6,6 +6,7 @@ import { Select } from '../../../components/form/Select';
 import { TaskOptionsMenu } from './TaskOptionsMenu';
 import { theme } from '../../../themes';
 import { useAppSelector } from '../../../store/hooks';
+import { showActiveSelector } from '../store/todoSlice';
 
 type Props = {
   onWorldChange: (world: string) => void;
@@ -14,6 +15,7 @@ type Props = {
 };
 export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
   const { worlds } = useAppSelector((state: RootState) => state.worlds);
+  const showActive = useAppSelector(showActiveSelector);
 
   const typeOptions = Object.values(todoTypes).map((value) => {
     return { value, label: value };
@@ -29,7 +31,9 @@ export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
     <div
       className={`mt-6 py-3 border-b ${theme.borderColors.feature} flex justify-end md:justify-between`}
     >
-      <div className="hidden md:block text-md md:text-lg font-semibold ">Tasks</div>
+      <div className="hidden md:block text-md md:text-lg font-semibold ">
+        {showActive ? 'Tasks' : 'Completed'}
+      </div>
 
       <div className="flex gap-2 scale-x-90 md:scale-x-100">
         <div>

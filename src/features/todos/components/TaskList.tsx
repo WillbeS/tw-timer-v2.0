@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 
 import { RootState } from '../../../store/store';
-import { dynamicUpdateAction, filteredTasksSelector } from '../store/todoSlice';
+import { dynamicUpdateAction, filteredTasksSelector, showActiveSelector } from '../store/todoSlice';
 
 import { formatTime } from '../../../utils/dateTime';
 
@@ -15,12 +15,17 @@ export const TaskList = () => {
   const [world, setWorld] = useState('0');
   const [type, setType] = useState('0');
 
-  const todos = useAppSelector((state: RootState) => filteredTasksSelector(state, world, type));
-
-  const { loading } = useAppSelector((state: RootState) => state.todos);
   const dispatch = useAppDispatch();
+
+  const todos = useAppSelector((state: RootState) => filteredTasksSelector(state, world, type));
+  const { loading, showActive } = useAppSelector((state: RootState) => state.todos);
+  const displayTodos = showActive
+    ? todos.filter((t) => !t.completed)
+    : todos.filter((t) => t.completed);
+
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
+
   const connectedWorlds = useAppSelector((state: RootState) => state.worlds.connected);
   const connectedWorldsCount = Object.keys(connectedWorlds).length;
 
@@ -59,7 +64,7 @@ export const TaskList = () => {
       />
       <div className="flex flex-col gap-2 text-sm md:text-lg font-semibold mt-5">
         {loading && <div className="text-white text-center">{loadingMessage}</div>}
-        {todos.map((todo) => (
+        {displayTodos.map((todo) => (
           <TaskRow
             key={todo.id}
             todo={todo}

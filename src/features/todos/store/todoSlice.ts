@@ -1,22 +1,24 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, isAction, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 import { PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
 
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
-import { deleteTask, editTask, fetchTasks, saveTodos } from './taskActions';
+import { deleteManyTasks, deleteTask, editTask, fetchTasks, saveTodos } from './taskActions';
 import { generateId } from '../../../utils/stringUtils';
 
 type TodosState = {
+  loading: boolean;
   byId: TasksById;
   pending: PendingTasks;
-  loading: boolean;
+  showActive: boolean;
 };
 
 const initialState: TodosState = {
-  byId: getTasksFromStorage(),
-  pending: getPendingFromStorage(),
   loading: false,
+  byId: getTasksFromStorage(), //these are all, the rest can be derived
+  pending: getPendingFromStorage(), //this can be done better, with ids from the server
+  showActive: true,
 };
 
 export const todosSlice = createSlice({
@@ -28,6 +30,10 @@ export const todosSlice = createSlice({
     },
     stoptLoadingAction: (state) => {
       state.loading = false;
+    },
+
+    showActiveAction: (state, action: PayloadAction<boolean>) => {
+      state.showActive = action.payload;
     },
 
     //does this need to be public???
@@ -158,6 +164,30 @@ export const todosSlice = createSlice({
     builder.addCase(editTask.rejected, (state) => {
       state.loading = false;
     });
+
+    // this whole shit is temp, until I remove the worlds from connected
+    builder.addCase(deleteManyTasks.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      deleteManyTasks.fulfilled,
+      (state, action: PayloadAction<{ criteria: string | undefined; world: string }>) => {
+        state.loading = false;
+        const { criteria, world } = action.payload;
+        const { remainingTasks } = deleteTasks(state.byId, criteria, world);
+        state.byId = remainingTasks;
+      },
+    );
+    builder.addCase(deleteManyTasks.rejected, (state, action: PayloadAction<any>) => {
+      state.loading = false;
+      const { criteria, world } = action.payload;
+      const { remainingTasks, tasksForDelete } = deleteTasks(state.byId, criteria, world);
+
+      state.byId = remainingTasks;
+      Object.values(tasksForDelete).forEach(
+        (t) => (state.pending[t.id] = { id: t.id, action: 'delete' }),
+      );
+    });
   },
 });
 
@@ -168,9 +198,12 @@ export const {
   startLoadingAction,
   stoptLoadingAction,
   replaceWorldTasks,
+  showActiveAction,
 } = todosSlice.actions;
 
 export const taskSelector = (state: RootState) => state.todos.byId;
+
+export const showActiveSelector = (state: RootState) => state.todos.showActive;
 
 export const filteredTasksSelector = createSelector(
   [
@@ -201,5 +234,29 @@ export const selectTotalCount = (state: RootState) => {
 };
 
 const sortByMs = (todosArr: TaskData[]) => todosArr.sort((a, b) => a.dueMs - b.dueMs);
+
+const getByWorld = (tasks: TaskData[], world: string) => tasks.filter((t) => t.world === world);
+
+const getByCompleted = (tasks: TaskData[], completed: boolean) =>
+  tasks.filter((t) => t.completed === completed);
+
+const deleteTasks = (allTasks: TasksById, criteria: string | undefined, world: string) => {
+  let tasksForDelete = getByWorld(Object.values(allTasks), world);
+  const remainingTasks = { ...allTasks };
+
+  if (criteria) {
+    const completed = criteria === 'completed';
+    tasksForDelete = getByCompleted(tasksForDelete, completed);
+  }
+
+  tasksForDelete.forEach((task) => delete remainingTasks[task.id]);
+
+  saveTasksToStorage(remainingTasks);
+
+  return {
+    remainingTasks,
+    tasksForDelete,
+  };
+};
 
 export default todosSlice.reducer;

@@ -4,6 +4,7 @@ import { todoTypes } from '../data/constants';
 import { MintingDetails } from './MintingDetails';
 import { TodoView } from '../models/TodoView';
 import { MintingTodoView } from '../models/MintingTodoView';
+import { RoundedButton } from '../../../components/ui/RoundedButton';
 
 const OpenBtn = () => <span className="pl-2 cursor-pointer">🔎</span>;
 
@@ -22,19 +23,21 @@ export const TaskDetails = ({ taskView }: Props) => {
       onClose={onCloseModal}
       openBtn={<OpenBtn />}
     >
-      <div className="text-sm">
-        {taskView.getDetails().map((d, i) => {
-          return (
-            <div key={i} className="flex flex-col sm:flex-row mb-2">
-              <div className="sm:basis-2/6 font-bold sm:text-right sm:mr-2">{d.heading}</div>
-              <div className="sm:basis-4/6">{d.content}</div>
-            </div>
-          );
-        })}
+      <div className="flex flex-col gap-3">
+        <div className="text-sm">
+          {taskView.getDetails().map((d, i) => {
+            return (
+              <div key={i} className="flex flex-col sm:flex-row mb-2">
+                <div className="sm:basis-2/6 font-bold sm:text-right sm:mr-2">{d.heading}</div>
+                <div className="sm:basis-4/6">{d.content}</div>
+              </div>
+            );
+          })}
 
-        {taskView.getType() === todoTypes.MINTING ? (
-          <MintingDetails viewData={taskView as MintingTodoView} />
-        ) : null}
+          {taskView.getType() === todoTypes.MINTING ? (
+            <MintingDetails viewData={taskView as MintingTodoView} />
+          ) : null}
+        </div>
       </div>
     </ModalWrapper2>
   );

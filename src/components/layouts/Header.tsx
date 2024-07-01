@@ -6,6 +6,7 @@ import { HelpWrapper } from '../../features/help/components/HelpWrapper';
 import { ConnectWrapper } from '../../features/worlds/components/ConnectWrapper';
 
 import { theme } from '../../themes';
+import { RemoteConnection } from '../../features/security/components/RemoteConnection';
 
 export function Header() {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export function Header() {
         {/* <RoundedButton label="Help" symbol="?" onClick={() => navigate('/help')} /> */}
         <HelpWrapper />
         <ConnectWrapper />
+        <RemoteConnection />
       </div>
     </header>
   );

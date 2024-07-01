@@ -23,6 +23,8 @@ export const TaskList = () => {
     ? todos.filter((t) => !t.completed)
     : todos.filter((t) => t.completed);
 
+  console.log(todos);
+
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
 

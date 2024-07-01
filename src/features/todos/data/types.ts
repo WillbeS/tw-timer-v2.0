@@ -25,6 +25,7 @@ export type NewTask = {
 // need to add the server id and delete by it
 export type TaskData = {
   id: string;
+  serverId?: number | undefined;
   completed: boolean;
   type: string;
   world: string;

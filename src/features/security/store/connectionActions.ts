@@ -6,6 +6,9 @@ import { RootState } from '../../../store/store';
 import { saveTasks } from '../../todos/api';
 import { getTasksFromStorage } from '../../todos/services/todoStorage';
 import { TasksById } from '../../todos/data/types';
+import { removeKey } from '../../worlds/api/deleteKey';
+import { ApiKey } from '../data/types';
+import { assignNewIds } from '../../todos/store/todoSlice';
 
 export const connectToServer = createAsyncThunk<
   { token: string; adminId: string | undefined },
@@ -38,3 +41,24 @@ export const connectToServer = createAsyncThunk<
     return thunkAPI.rejectWithValue();
   }
 });
+
+export const disconnecFromServer = createAsyncThunk(
+  'connection/disconnect',
+  async (_, thunkAPI) => {
+    try {
+      const { connection }: RootState = thunkAPI.getState() as RootState;
+
+      const { token, adminId } = connection.apiKey as ApiKey;
+
+      if (adminId) {
+        await removeKey(token, adminId);
+      }
+
+      thunkAPI.dispatch(assignNewIds());
+    } catch (error: any) {
+      thunkAPI.dispatch(addError(error.message));
+      console.log(error.message);
+      return thunkAPI.rejectWithValue(null);
+    }
+  },
+);

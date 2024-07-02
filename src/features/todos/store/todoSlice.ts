@@ -1,4 +1,4 @@
-import { createSelector, createSlice, isAction, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 import { PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
@@ -59,20 +59,15 @@ export const todosSlice = createSlice({
       saveTasksToStorage(state.byId);
     },
 
-    // this seems very wrong but is the easiest thing to do
-    replaceWorldTasks: (state, action: PayloadAction<string>) => {
-      const world = action.payload;
+    assignNewIds: (state) => {
+      const newTasks: TasksById = {};
 
       Object.values(state.byId).forEach((task) => {
-        if (task.world !== world) {
-          return;
-        }
-
         const newId = generateId('task');
-        state.byId[newId] = { ...task, id: newId };
-        delete state.byId[task.id];
+        newTasks[newId] = { ...task, id: newId };
       });
 
+      state.byId = newTasks;
       saveTasksToStorage(state.byId);
     },
   },
@@ -197,7 +192,7 @@ export const {
   removeAllAction,
   startLoadingAction,
   stoptLoadingAction,
-  replaceWorldTasks,
+  assignNewIds,
   showActiveAction,
 } = todosSlice.actions;
 

@@ -10,6 +10,10 @@ export const saveApiKeyToStorage = (key: ApiKey) => {
   saveToStorage(STORAGE_KEY, key);
 };
 
+export const removeApiKeyFromStorage = () => {
+  localStorage.removeItem(STORAGE_KEY);
+};
+
 // temp until the migration from the current system is done
 export const getApiKeyFromStorage = () => {
   const apiKey = localStorage.getItem(STORAGE_KEY);

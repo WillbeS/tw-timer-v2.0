@@ -8,7 +8,7 @@ import { addError, addSuccess } from '../../messages/store/messageSlice';
 import { removeKey } from '../api/deleteKey';
 import { RootState } from '../../../store/store';
 import { generateKey } from '../api/generateKey';
-import { replaceWorldTasks } from '../../todos/store/todoSlice';
+// import { replaceWorldTasks } from '../../todos/store/todoSlice';
 
 export const fetchWorlds = createAsyncThunk<WorldData[], void, { rejectValue: string }>(
   'worlds/fetchWorlds',
@@ -73,7 +73,7 @@ export const disconnectWorld = createAsyncThunk(
         await removeKey(token, adminId);
       }
 
-      thunkAPI.dispatch(replaceWorldTasks(world));
+      //thunkAPI.dispatch(replaceWorldTasks(world));
 
       return world;
     } catch (error: any) {

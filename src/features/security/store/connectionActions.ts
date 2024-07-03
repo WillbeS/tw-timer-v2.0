@@ -26,12 +26,12 @@ export const connectToServer = createAsyncThunk<
       token = await validateKey(token);
     }
 
-    const forSave = Object.values(getTasksFromStorage() as TasksById);
+    // const forSave = Object.values(getTasksFromStorage() as TasksById);
 
     // for future refactor - decide if it's not better to dispatch an action instead
-    if (forSave.length > 0) {
-      await saveTasks(forSave, token);
-    }
+    // if (forSave.length > 0) {
+    //   await saveTasks(forSave, token);
+    // }
 
     thunkAPI.dispatch(addSuccess('Successfully connected to the server!'));
 

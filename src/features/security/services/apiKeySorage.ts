@@ -1,4 +1,4 @@
-import { getObjFromStorage, saveToStorage } from '../../../services/storageManager';
+import { saveToStorage } from '../../../services/storageManager';
 import { ApiKey } from '../data/types';
 
 const STORAGE_KEY = 'apiKey';
@@ -19,7 +19,14 @@ export const getApiKeyFromStorage = () => {
   const apiKey = localStorage.getItem(STORAGE_KEY);
 
   if (!apiKey) {
-    return getApiKeyFromOldStorage();
+    console.log('Searching for old keys!!!');
+    const oldKey = getApiKeyFromOldStorage();
+
+    if (oldKey) {
+      saveApiKeyToStorage(oldKey);
+    }
+
+    return oldKey;
   }
 
   return JSON.parse(apiKey) as ApiKey;

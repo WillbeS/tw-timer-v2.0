@@ -28,7 +28,7 @@ export function Header() {
         <RoundedButton label="Settings" symbol="⚙" onClick={() => console.log('Settings button')} />
         {/* <RoundedButton label="Help" symbol="?" onClick={() => navigate('/help')} /> */}
         <HelpWrapper />
-        <ConnectWrapper />
+        {/* <ConnectWrapper /> */}
         <RemoteConnection />
       </div>
     </header>

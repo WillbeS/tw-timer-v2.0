@@ -10,21 +10,13 @@ import { addError } from '../../messages/store/messageSlice';
 import { deleteManyTasks } from '../store/taskActions';
 
 type Props = {
-  onSync: () => void;
+  // onSync: () => void;
 };
 
-export const TaskOptionsMenu = ({ onSync }: Props) => {
+export const TaskOptionsMenu = () => {
   const dispatch = useAppDispatch();
   const showActive = useAppSelector(showActiveSelector);
   const connectedWorlds = useAppSelector((state: RootState) => state.worlds.connected);
-
-  const handleClearLocal = useCallback(() => {
-    try {
-      dispatch(removeAllAction());
-    } catch (error) {
-      console.log(error);
-    }
-  }, [dispatch]);
 
   const onShowCompleted = () => {
     dispatch(showActiveAction(false));
@@ -47,7 +39,7 @@ export const TaskOptionsMenu = ({ onSync }: Props) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuButton label="Synchronize" symbol="↺" onClick={onSync} />
+      {/* <DropdownMenuButton label="Synchronize" symbol="↺" onClick={onSync} /> */}
 
       {!showActive && (
         <DropdownMenuButton label="Show active tasks" symbol="✔" onClick={onShowActive} />

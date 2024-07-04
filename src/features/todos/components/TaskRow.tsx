@@ -50,8 +50,7 @@ export const TaskRow = ({ todo, onDelete, onDynamicUpdate }: Props) => {
           <TaskDetails taskView={todoView} />
         </span>
         <span>
-          <TaskMessage todoView={todoView} onEdit={onDynamicUpdate} />
-
+          <TaskMessage todoView={todoView} onEdit={onDynamicUpdate} />-{todo.serverId}
           {todoView.canUpdate() ? (
             <span
               className="pl-3 pr-2 cursor-pointer text-lg font-bold"

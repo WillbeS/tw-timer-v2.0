@@ -6,53 +6,105 @@ import { addError, addSuccess } from '../../messages/store/messageSlice';
 
 import { addTasksAction } from './todoSlice';
 import { saveTasks } from '../api';
+import { generateId } from '../../../utils/stringUtils';
+import { ApiKey } from '../../security/data/types';
 
-export const fetchTasks = createAsyncThunk<
-  { world: string; tasks: TaskData[] },
-  string,
-  { rejectValue: null }
->('tasks/fetchTasks', async (world: string, thunkAPI) => {
-  try {
-    const apiKey = (thunkAPI.getState() as RootState).worlds.connected[world];
-    const response = await api.get('timer/tasks', apiKey);
+export const fetchAllTasks = createAsyncThunk<{ tasks: TaskData[] }, void, { rejectValue: null }>(
+  'tasks/fetchAll',
+  async (_, thunkAPI) => {
+    try {
+      //will get this from the api get function
+      const apiKey = (thunkAPI.getState() as RootState).connection.apiKey;
 
-    if (!response.ok) {
-      // I'm losing the status code with this, need to check if it's still needed
-      const errorMessage =
-        response.status === 404 ? "The URL address doesn't exist" : await response.json();
-      throw new Error(errorMessage);
+      const response = await api.get('timer/tasks', apiKey?.token);
+
+      if (!response.ok) {
+        // I'm losing the status code with this, need to check if it's still needed
+        const errorMessage =
+          response.status === 404 ? "The URL address doesn't exist" : await response.json();
+        throw new Error(errorMessage);
+      }
+
+      const tasks = (await response.json()) as TaskData[];
+
+      return { tasks };
+    } catch (error: any) {
+      const dispatch = thunkAPI.dispatch;
+      console.log(error.message);
+      dispatch(addError(`Error fetching tasks.`));
+      return thunkAPI.rejectWithValue(null);
     }
+  },
+);
 
-    const tasks = (await response.json()) as TaskData[];
-    return { world, tasks };
-  } catch (error: any) {
-    const dispatch = thunkAPI.dispatch;
-    console.log(error.message);
-    dispatch(addError(`Error fetching tasks for world  ${world}. ` + error.message));
-    return thunkAPI.rejectWithValue(null);
-  }
-});
+// This is the old, will probably delete it
+// export const fetchTasks = createAsyncThunk<
+//   { world: string; tasks: TaskData[] },
+//   string,
+//   { rejectValue: null }
+// >('tasks/fetchTasks', async (world: string, thunkAPI) => {
+//   try {
+//     const apiKey = (thunkAPI.getState() as RootState).worlds.connected[world];
+//     const response = await api.get('timer/tasks', apiKey);
+
+//     if (!response.ok) {
+//       // I'm losing the status code with this, need to check if it's still needed
+//       const errorMessage =
+//         response.status === 404 ? "The URL address doesn't exist" : await response.json();
+//       throw new Error(errorMessage);
+//     }
+
+//     const tasks = (await response.json()) as TaskData[];
+//     return { world, tasks };
+//   } catch (error: any) {
+//     const dispatch = thunkAPI.dispatch;
+//     console.log(error.message);
+//     dispatch(addError(`Error fetching tasks for world  ${world}. ` + error.message));
+//     return thunkAPI.rejectWithValue(null);
+//   }
+// });
+
+//potential bottleneck, need it now for the migration from the old apiKey system, won't need it after that!!!!
+export const connectTasks = createAsyncThunk<{ tasks: TaskData[] }, string, { rejectValue: void }>(
+  'tasks/savePending',
+  async (token: string, thunkAPI) => {
+    try {
+      const state = thunkAPI.getState() as RootState;
+      let pending = Object.values(state.todos.byId).filter((task) => !task.serverId);
+      console.log(pending);
+
+      if (pending.length === 0) return { tasks: [] };
+
+      await saveTasks(pending, token);
+      thunkAPI.dispatch(addSuccess('You data was successfully saved to the server!'));
+
+      return { tasks: pending };
+    } catch (error: any) {
+      console.log(error.message);
+      thunkAPI.dispatch(addError('Error sving the tasks to the remote server'));
+      return thunkAPI.rejectWithValue();
+    }
+  },
+);
 
 //temp, will rename to something else
-export const saveTodos = createAsyncThunk<
-  void,
-  { tasks: TaskData[]; world: string },
-  { rejectValue: TaskData[] }
->('tasks/saveTasks', async ({ tasks, world }, thunkAPI) => {
-  try {
-    thunkAPI.dispatch(addTasksAction(tasks));
-    const apiKey = (thunkAPI.getState() as RootState).worlds.connected[world];
+export const saveTodos = createAsyncThunk<void, { tasks: TaskData[] }, { rejectValue: TaskData[] }>(
+  'tasks/saveTasks',
+  async ({ tasks }, thunkAPI) => {
+    try {
+      thunkAPI.dispatch(addTasksAction(tasks));
+      const apiKey = (thunkAPI.getState() as RootState).connection.apiKey;
 
-    if (!apiKey) return;
+      if (!apiKey) return;
 
-    await saveTasks(tasks, apiKey);
-    thunkAPI.dispatch(addSuccess('Your tasks were successfully saved on the server.'));
-  } catch (error: any) {
-    console.log(error.message);
-    thunkAPI.dispatch(addError('Error sving the tasks to the remote server'));
-    return thunkAPI.rejectWithValue(tasks);
-  }
-});
+      await saveTasks(tasks, apiKey.token);
+    } catch (error: any) {
+      console.log(error.message);
+      thunkAPI.dispatch(addError('Error sving the tasks to the remote server'));
+      return thunkAPI.rejectWithValue(tasks);
+    }
+  },
+);
 
 export const editTask = createAsyncThunk<
   { task: TaskData },

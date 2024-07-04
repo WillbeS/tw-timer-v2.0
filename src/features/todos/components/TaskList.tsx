@@ -7,7 +7,7 @@ import { formatTime } from '../../../utils/dateTime';
 
 import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
-import { deleteTask, fetchTasks } from '../store/taskActions';
+import { deleteTask, saveTodos } from '../store/taskActions';
 import { useAppDispatch } from '../../../store/hooks';
 import { useAppSelector } from '../../../store/hooks';
 
@@ -18,12 +18,11 @@ export const TaskList = () => {
   const dispatch = useAppDispatch();
 
   const todos = useAppSelector((state: RootState) => filteredTasksSelector(state, world, type));
+
   const { loading, showActive } = useAppSelector((state: RootState) => state.todos);
   const displayTodos = showActive
     ? todos.filter((t) => !t.completed)
     : todos.filter((t) => t.completed);
-
-  console.log(todos);
 
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
@@ -50,11 +49,11 @@ export const TaskList = () => {
     [dispatch],
   );
 
-  const handleSync = useCallback(async () => {
-    for (const cw in connectedWorlds) {
-      dispatch(fetchTasks(cw));
-    }
-  }, [dispatch, connectedWorlds]);
+  // const handleSync = useCallback(async () => {
+  //   for (const cw in connectedWorlds) {
+  //     dispatch(fetchTasks(cw));
+  //   }
+  // }, [dispatch, connectedWorlds]);
 
   //console.log('Todo list is rendering');
   return (
@@ -62,7 +61,7 @@ export const TaskList = () => {
       <TopBar
         onWorldChange={(newWorld) => setWorld(newWorld)}
         onTypeChange={(newType) => setType(newType)}
-        onSync={handleSync}
+        // onSync={handleSync}
       />
       <div className="flex flex-col gap-2 text-sm md:text-lg font-semibold mt-5">
         {loading && <div className="text-white text-center">{loadingMessage}</div>}

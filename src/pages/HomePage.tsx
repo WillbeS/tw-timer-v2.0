@@ -1,17 +1,24 @@
 import { useEffect } from 'react';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 // import { getWorlds } from '../features/worlds/store/worldAction';
 
 import { TaskList } from '../features/todos';
 import { Welcome, isFirstVisit } from '../features/welcome';
 import { fetchWorlds } from '../features/worlds/store/worldAction';
+import { fetchAllTasks } from '../features/todos/store/taskActions';
+import { connectionSelector } from '../features/security/store/connectionSlice';
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
+  const { online, apiKey } = useAppSelector(connectionSelector);
 
   useEffect(() => {
     dispatch(fetchWorlds());
-  }, [dispatch]);
+
+    if (apiKey) {
+      dispatch(fetchAllTasks());
+    }
+  }, [dispatch, online, apiKey]);
 
   return (
     <>

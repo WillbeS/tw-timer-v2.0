@@ -34,7 +34,7 @@ export const AddTasks = () => {
       const todoParser = getParser(todoInput);
       const newTodos = await todoParser.parse();
       const forSave = newTodos.filter((task) => !isDuplicate(task));
-      dispatch(saveTodos({ world: todoInput.world, tasks: forSave }));
+      dispatch(saveTodos({ tasks: forSave }));
       onCloseModal();
     } catch (error: any) {
       dispatch(addError(error.message));

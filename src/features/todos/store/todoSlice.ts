@@ -4,8 +4,17 @@ import { PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
 
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
-import { deleteManyTasks, deleteTask, editTask, fetchTasks, saveTodos } from './taskActions';
+import {
+  connectTasks,
+  deleteManyTasks,
+  deleteTask,
+  editTask,
+  fetchAllTasks,
+  // fetchTasks,
+  saveTodos,
+} from './taskActions';
 import { generateId } from '../../../utils/stringUtils';
+import { act } from 'react';
 
 type TodosState = {
   loading: boolean;
@@ -59,6 +68,19 @@ export const todosSlice = createSlice({
       saveTasksToStorage(state.byId);
     },
 
+    disconnectTasks: (state) => {
+      const newTasks: TasksById = {};
+
+      Object.values(state.byId).forEach((task) => {
+        const newId = generateId('task');
+        newTasks[newId] = { ...task, id: newId, serverId: undefined };
+      });
+
+      state.byId = newTasks;
+      saveTasksToStorage(state.byId);
+    },
+
+    // delete when safe
     assignNewIds: (state) => {
       const newTasks: TasksById = {};
 
@@ -73,29 +95,29 @@ export const todosSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(fetchTasks.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(
-      fetchTasks.fulfilled,
-      (state, action: PayloadAction<{ world: String; tasks: TaskData[] }>) => {
-        state.loading = false;
-        const { tasks } = action.payload;
+    // builder.addCase(fetchTasks.pending, (state) => {
+    //   state.loading = true;
+    // });
+    // builder.addCase(
+    //   fetchTasks.fulfilled,
+    //   (state, action: PayloadAction<{ world: String; tasks: TaskData[] }>) => {
+    //     state.loading = false;
+    //     const { tasks } = action.payload;
 
-        for (const serverTask of tasks) {
-          // if it's in the pending array then it's for delete so don't readd it
-          if (state.pending[serverTask.id]) continue;
+    //     for (const serverTask of tasks) {
+    //       // if it's in the pending array then it's for delete so don't readd it
+    //       if (state.pending[serverTask.id]) continue;
 
-          state.byId[serverTask.id] = serverTask;
-        }
+    //       state.byId[serverTask.id] = serverTask;
+    //     }
 
-        saveTasksToStorage(state.byId);
-      },
-    );
-    builder.addCase(fetchTasks.rejected, (state) => {
-      state.loading = false;
-      console.log('Fetching tasks rejected');
-    });
+    //     saveTasksToStorage(state.byId);
+    //   },
+    // );
+    // builder.addCase(fetchTasks.rejected, (state) => {
+    //   state.loading = false;
+    //   console.log('Fetching tasks rejected');
+    // });
 
     builder.addCase(deleteTask.pending, (state) => {
       state.loading = true;
@@ -183,6 +205,39 @@ export const todosSlice = createSlice({
         (t) => (state.pending[t.id] = { id: t.id, action: 'delete' }),
       );
     });
+
+    builder.addCase(fetchAllTasks.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(
+      fetchAllTasks.fulfilled,
+      (state, action: PayloadAction<{ tasks: TaskData[] }>) => {
+        state.loading = false;
+        const { tasks } = action.payload;
+
+        tasks.forEach((t) => {
+          state.byId[t.id] = t;
+        });
+
+        saveTasksToStorage(state.byId);
+      },
+    );
+    builder.addCase(fetchAllTasks.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(
+      connectTasks.fulfilled,
+      (state, action: PayloadAction<{ tasks: TaskData[] }>) => {
+        const { tasks } = action.payload;
+
+        tasks.forEach((task) => {
+          state.byId[task.id] = task;
+        });
+
+        saveTasksToStorage(state.byId);
+      },
+    );
   },
 });
 
@@ -194,6 +249,7 @@ export const {
   stoptLoadingAction,
   assignNewIds,
   showActiveAction,
+  disconnectTasks,
 } = todosSlice.actions;
 
 export const taskSelector = (state: RootState) => state.todos.byId;

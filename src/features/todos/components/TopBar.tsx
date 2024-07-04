@@ -11,9 +11,9 @@ import { showActiveSelector } from '../store/todoSlice';
 type Props = {
   onWorldChange: (world: string) => void;
   onTypeChange: (type: string) => void;
-  onSync: () => void;
+  // onSync: () => void;
 };
-export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
+export const TopBar = ({ onWorldChange, onTypeChange }: Props) => {
   const { worlds } = useAppSelector((state: RootState) => state.worlds);
   const showActive = useAppSelector(showActiveSelector);
 
@@ -43,7 +43,7 @@ export const TopBar = ({ onWorldChange, onTypeChange, onSync }: Props) => {
           <Select options={worldOptions} defaultValue="0" fullWidth onChange={onWorldChange} />
         </div>
 
-        <TaskOptionsMenu onSync={onSync} />
+        <TaskOptionsMenu />
       </div>
     </div>
   );

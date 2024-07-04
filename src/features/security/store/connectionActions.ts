@@ -3,12 +3,11 @@ import { generateKey } from '../api/generateKey';
 import { validateKey } from '../api/validateKey';
 import { addError, addSuccess } from '../../messages/store/messageSlice';
 import { RootState } from '../../../store/store';
-import { saveTasks } from '../../todos/api';
-import { getTasksFromStorage } from '../../todos/services/todoStorage';
-import { TasksById } from '../../todos/data/types';
+
 import { removeKey } from '../../worlds/api/deleteKey';
 import { ApiKey } from '../data/types';
-import { assignNewIds } from '../../todos/store/todoSlice';
+import { assignNewIds, disconnectTasks } from '../../todos/store/todoSlice';
+import { connectTasks } from '../../todos/store/taskActions';
 
 export const connectToServer = createAsyncThunk<
   { token: string; adminId: string | undefined },
@@ -26,12 +25,7 @@ export const connectToServer = createAsyncThunk<
       token = await validateKey(token);
     }
 
-    // const forSave = Object.values(getTasksFromStorage() as TasksById);
-
-    // for future refactor - decide if it's not better to dispatch an action instead
-    // if (forSave.length > 0) {
-    //   await saveTasks(forSave, token);
-    // }
+    thunkAPI.dispatch(connectTasks(token));
 
     thunkAPI.dispatch(addSuccess('Successfully connected to the server!'));
 
@@ -54,7 +48,7 @@ export const disconnecFromServer = createAsyncThunk(
         await removeKey(token, adminId);
       }
 
-      thunkAPI.dispatch(assignNewIds());
+      thunkAPI.dispatch(disconnectTasks());
     } catch (error: any) {
       thunkAPI.dispatch(addError(error.message));
       console.log(error.message);

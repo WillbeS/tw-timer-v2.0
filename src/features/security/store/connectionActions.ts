@@ -4,10 +4,10 @@ import { validateKey } from '../api/validateKey';
 import { addError, addSuccess } from '../../messages/store/messageSlice';
 import { RootState } from '../../../store/store';
 
-import { removeKey } from '../../worlds/api/deleteKey';
 import { ApiKey } from '../data/types';
-import { assignNewIds, disconnectTasks } from '../../todos/store/todoSlice';
+import { disconnectTasks } from '../../todos/store/todoSlice';
 import { connectTasks } from '../../todos/store/taskActions';
+import { api } from '../../../api';
 
 export const connectToServer = createAsyncThunk<
   { token: string; adminId: string | undefined },
@@ -45,7 +45,7 @@ export const disconnecFromServer = createAsyncThunk(
       const { token, adminId } = connection.apiKey as ApiKey;
 
       if (adminId) {
-        await removeKey(token, adminId);
+        await api.removeNew('key', `${token}${adminId}`);
       }
 
       thunkAPI.dispatch(disconnectTasks());

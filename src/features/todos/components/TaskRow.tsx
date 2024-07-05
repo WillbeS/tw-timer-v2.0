@@ -32,9 +32,8 @@ export const TaskRow = ({ todo, onDelete, onDynamicUpdate }: Props) => {
   };
 
   const toggleCompleted = () => {
-    const edited: TaskData = { ...todo };
-    edited.completed = !edited.completed;
-    dispatch(editTask({ task: edited }));
+    const forEdit: TaskData = { ...todo, completed: !todo.completed };
+    dispatch(editTask(forEdit));
   };
 
   return (

@@ -16,7 +16,7 @@ export const HomePage = () => {
     dispatch(fetchWorlds());
 
     if (apiKey) {
-      dispatch(fetchAllTasks());
+      dispatch(fetchAllTasks(apiKey.token));
     }
   }, [dispatch, online, apiKey]);
 

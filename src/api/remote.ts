@@ -60,64 +60,18 @@ const makeRequest = async (method: string, endpoint: string, body: unknown, key?
   }
 };
 
-export const getNew = async (endpoint: string, key?: string) => {
+export const get = async (endpoint: string, key?: string) => {
   return makeRequest('get', endpoint, null, key);
 };
 
-export const get = async (endpoint: string, key?: string) => {
-  try {
-    return await fetch(makeURL(endpoint), {
-      method: 'get',
-      headers: makeHeaders(key),
-    });
-  } catch (error) {
-    throw new Error('Network connection problem. Please try again later.');
-  }
-};
-
-export const postNew = async (endpoint: string, body: unknown, key?: string) => {
+export const post = async (endpoint: string, body: unknown, key?: string) => {
   return makeRequest('post', endpoint, body, key);
 };
 
-export const post = async (endpoint: string, body: unknown, key?: string) => {
-  try {
-    return await fetch(makeURL(endpoint), {
-      method: 'post',
-      headers: makeHeaders(key),
-      body: JSON.stringify(body),
-    });
-  } catch (error) {
-    throw new Error('Network connection problem. Please try again later.');
-  }
-};
-
-export const putNew = async (endpoint: string, body: unknown, key?: string) => {
+export const put = async (endpoint: string, body: unknown, key?: string) => {
   return makeRequest('put', endpoint, body, key);
 };
 
-export const put = async (endpoint: string, body: unknown, key?: string) => {
-  try {
-    return await fetch(makeURL(endpoint), {
-      method: 'put',
-      headers: makeHeaders(key),
-      body: JSON.stringify(body),
-    });
-  } catch (error) {
-    throw new Error('Network connection problem. Please try again later.');
-  }
-};
-
-export const removeNew = async (endpoint: string, key?: string) => {
-  return makeRequest('delete', endpoint, null, key);
-};
-
 export const remove = async (endpoint: string, key?: string) => {
-  try {
-    return await fetch(makeURL(endpoint), {
-      method: 'delete',
-      headers: makeHeaders(key),
-    });
-  } catch (error) {
-    throw new Error('Network connection problem. Please try again later.');
-  }
+  return makeRequest('delete', endpoint, null, key);
 };

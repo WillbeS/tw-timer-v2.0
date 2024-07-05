@@ -45,7 +45,7 @@ export const disconnecFromServer = createAsyncThunk(
       const { token, adminId } = connection.apiKey as ApiKey;
 
       if (adminId) {
-        await api.removeNew('key', `${token}${adminId}`);
+        await api.delete('key', `${token}${adminId}`);
       }
 
       thunkAPI.dispatch(disconnectTasks());

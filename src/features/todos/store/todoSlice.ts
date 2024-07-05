@@ -6,15 +6,13 @@ import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
 import {
   connectTasks,
-  deleteManyTasks,
+  deleteCompleted,
   deleteTask,
   editTask,
   fetchAllTasks,
-  // fetchTasks,
   saveTodos,
 } from './taskActions';
 import { generateId } from '../../../utils/stringUtils';
-import { act } from 'react';
 
 type TodosState = {
   loading: boolean;
@@ -79,46 +77,9 @@ export const todosSlice = createSlice({
       state.byId = newTasks;
       saveTasksToStorage(state.byId);
     },
-
-    // delete when safe
-    assignNewIds: (state) => {
-      const newTasks: TasksById = {};
-
-      Object.values(state.byId).forEach((task) => {
-        const newId = generateId('task');
-        newTasks[newId] = { ...task, id: newId };
-      });
-
-      state.byId = newTasks;
-      saveTasksToStorage(state.byId);
-    },
   },
 
   extraReducers: (builder) => {
-    // builder.addCase(fetchTasks.pending, (state) => {
-    //   state.loading = true;
-    // });
-    // builder.addCase(
-    //   fetchTasks.fulfilled,
-    //   (state, action: PayloadAction<{ world: String; tasks: TaskData[] }>) => {
-    //     state.loading = false;
-    //     const { tasks } = action.payload;
-
-    //     for (const serverTask of tasks) {
-    //       // if it's in the pending array then it's for delete so don't readd it
-    //       if (state.pending[serverTask.id]) continue;
-
-    //       state.byId[serverTask.id] = serverTask;
-    //     }
-
-    //     saveTasksToStorage(state.byId);
-    //   },
-    // );
-    // builder.addCase(fetchTasks.rejected, (state) => {
-    //   state.loading = false;
-    //   console.log('Fetching tasks rejected');
-    // });
-
     builder.addCase(deleteTask.pending, (state) => {
       state.loading = true;
     });
@@ -182,28 +143,23 @@ export const todosSlice = createSlice({
       state.loading = false;
     });
 
-    // this whole shit is temp, until I remove the worlds from connected
-    builder.addCase(deleteManyTasks.pending, (state) => {
+    builder.addCase(deleteCompleted.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(
-      deleteManyTasks.fulfilled,
-      (state, action: PayloadAction<{ criteria: string | undefined; world: string }>) => {
-        state.loading = false;
-        const { criteria, world } = action.payload;
-        const { remainingTasks } = deleteTasks(state.byId, criteria, world);
-        state.byId = remainingTasks;
-      },
-    );
-    builder.addCase(deleteManyTasks.rejected, (state, action: PayloadAction<any>) => {
+    builder.addCase(deleteCompleted.fulfilled, (state) => {
       state.loading = false;
-      const { criteria, world } = action.payload;
-      const { remainingTasks, tasksForDelete } = deleteTasks(state.byId, criteria, world);
+      const activeTasks: TasksById = {};
+      Object.values(state.byId).forEach((task) => {
+        if (task.completed) return;
 
-      state.byId = remainingTasks;
-      Object.values(tasksForDelete).forEach(
-        (t) => (state.pending[t.id] = { id: t.id, action: 'delete' }),
-      );
+        activeTasks[task.id] = task;
+      });
+
+      state.byId = activeTasks;
+      saveTasksToStorage(state.byId);
+    });
+    builder.addCase(deleteCompleted.rejected, (state) => {
+      state.loading = false;
     });
 
     builder.addCase(fetchAllTasks.pending, (state) => {
@@ -247,7 +203,6 @@ export const {
   removeAllAction,
   startLoadingAction,
   stoptLoadingAction,
-  assignNewIds,
   showActiveAction,
   disconnectTasks,
 } = todosSlice.actions;

@@ -5,27 +5,16 @@ import { RootState } from '../../../store/store';
 import { addError, addSuccess } from '../../messages/store/messageSlice';
 
 import { addTasksAction } from './todoSlice';
-import { saveTasks } from '../api';
-import { generateId } from '../../../utils/stringUtils';
-import { ApiKey } from '../../security/data/types';
+import { getApiKeyFromStorage } from '../../security/services/apiKeySorage';
 
-export const fetchAllTasks = createAsyncThunk<{ tasks: TaskData[] }, void, { rejectValue: null }>(
+const apiKey = getApiKeyFromStorage();
+
+export const fetchAllTasks = createAsyncThunk<{ tasks: TaskData[] }, string, { rejectValue: null }>(
   'tasks/fetchAll',
-  async (_, thunkAPI) => {
+  async (token, thunkAPI) => {
     try {
       //will get this from the api get function
-      const apiKey = (thunkAPI.getState() as RootState).connection.apiKey;
-
-      const response = await api.get('timer/tasks', apiKey?.token);
-
-      if (!response.ok) {
-        // I'm losing the status code with this, need to check if it's still needed
-        const errorMessage =
-          response.status === 404 ? "The URL address doesn't exist" : await response.json();
-        throw new Error(errorMessage);
-      }
-
-      const tasks = (await response.json()) as TaskData[];
+      const tasks = (await api.get('timer/tasks', token)) as TaskData[];
 
       return { tasks };
     } catch (error: any) {
@@ -37,34 +26,7 @@ export const fetchAllTasks = createAsyncThunk<{ tasks: TaskData[] }, void, { rej
   },
 );
 
-// This is the old, will probably delete it
-// export const fetchTasks = createAsyncThunk<
-//   { world: string; tasks: TaskData[] },
-//   string,
-//   { rejectValue: null }
-// >('tasks/fetchTasks', async (world: string, thunkAPI) => {
-//   try {
-//     const apiKey = (thunkAPI.getState() as RootState).worlds.connected[world];
-//     const response = await api.get('timer/tasks', apiKey);
-
-//     if (!response.ok) {
-//       // I'm losing the status code with this, need to check if it's still needed
-//       const errorMessage =
-//         response.status === 404 ? "The URL address doesn't exist" : await response.json();
-//       throw new Error(errorMessage);
-//     }
-
-//     const tasks = (await response.json()) as TaskData[];
-//     return { world, tasks };
-//   } catch (error: any) {
-//     const dispatch = thunkAPI.dispatch;
-//     console.log(error.message);
-//     dispatch(addError(`Error fetching tasks for world  ${world}. ` + error.message));
-//     return thunkAPI.rejectWithValue(null);
-//   }
-// });
-
-//potential bottleneck, need it now for the migration from the old apiKey system, won't need it after that!!!!
+// this is called only when a new connection is created
 export const connectTasks = createAsyncThunk<{ tasks: TaskData[] }, string, { rejectValue: void }>(
   'tasks/savePending',
   async (token: string, thunkAPI) => {
@@ -75,7 +37,7 @@ export const connectTasks = createAsyncThunk<{ tasks: TaskData[] }, string, { re
 
       if (pending.length === 0) return { tasks: [] };
 
-      await saveTasks(pending, token);
+      await api.post('timer/tasks', pending, token);
       thunkAPI.dispatch(addSuccess('You data was successfully saved to the server!'));
 
       return { tasks: pending };
@@ -87,17 +49,16 @@ export const connectTasks = createAsyncThunk<{ tasks: TaskData[] }, string, { re
   },
 );
 
-//temp, will rename to something else
+//temp, will rename to saveTasks
 export const saveTodos = createAsyncThunk<void, { tasks: TaskData[] }, { rejectValue: TaskData[] }>(
   'tasks/saveTasks',
   async ({ tasks }, thunkAPI) => {
     try {
       thunkAPI.dispatch(addTasksAction(tasks));
-      const apiKey = (thunkAPI.getState() as RootState).connection.apiKey;
 
-      if (!apiKey) return;
-
-      await saveTasks(tasks, apiKey.token);
+      if (apiKey) {
+        await api.post('timer/tasks', tasks, apiKey.token);
+      }
     } catch (error: any) {
       console.log(error.message);
       thunkAPI.dispatch(addError('Error sving the tasks to the remote server'));
@@ -106,32 +67,22 @@ export const saveTodos = createAsyncThunk<void, { tasks: TaskData[] }, { rejectV
   },
 );
 
-export const editTask = createAsyncThunk<
-  { task: TaskData },
-  { task: TaskData },
-  { rejectValue: void }
->('tasks/editTask', async ({ task }, thunkAPI) => {
-  try {
-    const apiKey = (thunkAPI.getState() as RootState).worlds.connected[task.world];
+export const editTask = createAsyncThunk<{ task: TaskData }, TaskData, { rejectValue: void }>(
+  'tasks/editTask',
+  async (task, thunkAPI) => {
+    try {
+      if (apiKey) {
+        await api.put('timer/tasks/' + task.id, task, apiKey.token);
+      }
 
-    if (!apiKey) {
       return { task };
+    } catch (error: any) {
+      console.log(error.message);
+      thunkAPI.dispatch(addError(error.message));
+      return thunkAPI.rejectWithValue();
     }
-
-    const response = await api.put('timer/tasks/' + task.id, task, apiKey);
-
-    if (!response.ok) {
-      console.log(await response.json());
-      throw new Error('There was a problem connecting to the server.');
-    }
-
-    return { task };
-  } catch (error: any) {
-    console.log(error.message);
-    thunkAPI.dispatch(addError(error.message));
-    return thunkAPI.rejectWithValue();
-  }
-});
+  },
+);
 
 export const deleteTask = createAsyncThunk<
   string,
@@ -139,16 +90,8 @@ export const deleteTask = createAsyncThunk<
   { rejectValue: string }
 >('tasks/deleteTask', async ({ id, world }, thunkAPI) => {
   try {
-    const apiKey = (thunkAPI.getState() as RootState).worlds.connected[world];
-
-    if (!apiKey) {
-      return id;
-    }
-
-    const response = await api.delete('timer/tasks/' + id, apiKey);
-
-    if (!response.ok) {
-      throw new Error('There was a problem connecting to the server.');
+    if (apiKey) {
+      await api.delete('timer/tasks/' + id, apiKey.token);
     }
 
     return id;
@@ -160,28 +103,14 @@ export const deleteTask = createAsyncThunk<
   }
 });
 
-export const deleteManyTasks = createAsyncThunk<
-  { criteria: string | undefined; world: string },
-  { world: string; apiKey: string; criteria: string | undefined },
-  { rejectValue: { criteria: string | undefined; world: string } }
->('tasks/deleteMany', async ({ world, apiKey, criteria }, thunkAPI) => {
+export const deleteCompleted = createAsyncThunk('tasks/deleteCompleted', async (_, thunkAPI) => {
   try {
-    let byCritetia = criteria ? '/' + criteria : '';
-    const response = await api.delete('timer/tasks/criteria' + byCritetia, apiKey);
-
-    if (!response.ok) {
-      console.log(await response.json());
-      throw new Error('There was a problem with your request data.');
+    if (apiKey) {
+      await api.delete('timer/tasks/delete/completed', apiKey.token);
     }
-
-    console.log(response.status);
-
-    console.log(await response.json());
-
-    return { criteria, world };
   } catch (error: any) {
     console.log(error.message);
     thunkAPI.dispatch(addError(error.message));
-    return thunkAPI.rejectWithValue({ criteria, world });
+    return thunkAPI.rejectWithValue(null);
   }
 });

@@ -3,10 +3,10 @@ import { RootState } from '../../../store/store';
 import { todoTypes } from '../data/constants';
 
 import { Select } from '../../../components/form/Select';
-import { TaskOptionsMenu } from './TaskOptionsMenu';
 import { theme } from '../../../themes';
 import { useAppSelector } from '../../../store/hooks';
 import { showActiveSelector } from '../store/todoSlice';
+import { ListOptionsMenu } from './ListOptionsMenu';
 
 type Props = {
   onWorldChange: (world: string) => void;
@@ -43,7 +43,7 @@ export const TopBar = ({ onWorldChange, onTypeChange }: Props) => {
           <Select options={worldOptions} defaultValue="0" fullWidth onChange={onWorldChange} />
         </div>
 
-        <TaskOptionsMenu />
+        <ListOptionsMenu />
       </div>
     </div>
   );

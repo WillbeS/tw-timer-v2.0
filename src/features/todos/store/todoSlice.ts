@@ -6,6 +6,7 @@ import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage
 import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
 import {
   connectTasks,
+  deleteAll,
   deleteCompleted,
   deleteTask,
   editTask,
@@ -140,6 +141,18 @@ export const todosSlice = createSlice({
       saveTasksToStorage(state.byId);
     });
     builder.addCase(editTask.rejected, (state) => {
+      state.loading = false;
+    });
+
+    builder.addCase(deleteAll.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteAll.fulfilled, (state) => {
+      state.loading = false;
+      state.byId = {};
+      saveTasksToStorage(state.byId);
+    });
+    builder.addCase(deleteAll.rejected, (state) => {
       state.loading = false;
     });
 

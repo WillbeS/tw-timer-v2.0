@@ -13,7 +13,6 @@ export const fetchAllTasks = createAsyncThunk<{ tasks: TaskData[] }, string, { r
   'tasks/fetchAll',
   async (token, thunkAPI) => {
     try {
-      //will get this from the api get function
       const tasks = (await api.get('timer/tasks', token)) as TaskData[];
 
       return { tasks };
@@ -107,6 +106,18 @@ export const deleteCompleted = createAsyncThunk('tasks/deleteCompleted', async (
   try {
     if (apiKey) {
       await api.delete('timer/tasks/delete/completed', apiKey.token);
+    }
+  } catch (error: any) {
+    console.log(error.message);
+    thunkAPI.dispatch(addError(error.message));
+    return thunkAPI.rejectWithValue(null);
+  }
+});
+
+export const deleteAll = createAsyncThunk('tasks/deleteAll', async (_, thunkAPI) => {
+  try {
+    if (apiKey) {
+      await api.delete('timer/tasks', apiKey.token);
     }
   } catch (error: any) {
     console.log(error.message);

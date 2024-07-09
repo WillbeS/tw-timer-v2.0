@@ -10,15 +10,14 @@ import { TaskMessage } from './TaskMessage';
 import { theme } from '../../../themes';
 import { CompletedCheckbox } from './CompletedCheckbox';
 import { useAppDispatch } from '../../../store/hooks';
-import { editTask } from '../store/taskActions';
+import { deleteTask, editTask } from '../store/taskActions';
 
 type Props = {
   todo: TaskData;
-  onDelete: (id: string, world: string) => void;
   onDynamicUpdate: (editedTodo: TaskData) => void;
 };
 
-export const TaskRow = ({ todo, onDelete, onDynamicUpdate }: Props) => {
+export const TaskRow = ({ todo, onDynamicUpdate }: Props) => {
   const dispatch = useAppDispatch();
 
   const todoView = getTodoView(todo);
@@ -36,6 +35,10 @@ export const TaskRow = ({ todo, onDelete, onDynamicUpdate }: Props) => {
     dispatch(editTask(forEdit));
   };
 
+  const handleDelete = (id: string) => {
+    dispatch(deleteTask(id));
+  };
+
   return (
     <div
       className={`flex flex-row justify-between gap-2 items-center px-2 py-3 rounded-md ${theme.bgColors.lightBox} ${theme.textColors.lightBox}`}
@@ -46,10 +49,10 @@ export const TaskRow = ({ todo, onDelete, onDynamicUpdate }: Props) => {
           className="px-1 cursor-pointer px-2 flex items-center"
           onClick={(e) => console.log('Todo details')}
         >
-          <TaskDetails taskView={todoView} />
+          <TaskDetails taskView={todoView} onDelete={handleDelete} />
         </span>
         <span>
-          <TaskMessage todoView={todoView} onEdit={onDynamicUpdate} />-{todo.serverId}
+          <TaskMessage todoView={todoView} onEdit={onDynamicUpdate} />
           {todoView.canUpdate() ? (
             <span
               className="pl-3 pr-2 cursor-pointer text-lg font-bold"

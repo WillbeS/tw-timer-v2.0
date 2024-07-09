@@ -10,9 +10,10 @@ const OpenBtn = () => <span className="pl-2 cursor-pointer">🔎</span>;
 
 type Props = {
   taskView: TodoView;
+  onDelete: (id: string) => void;
 };
 
-export const TaskDetails = ({ taskView }: Props) => {
+export const TaskDetails = ({ taskView, onDelete }: Props) => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
 
   return (
@@ -38,6 +39,15 @@ export const TaskDetails = ({ taskView }: Props) => {
             <MintingDetails viewData={taskView as MintingTodoView} />
           ) : null}
         </div>
+      </div>
+      <div className="border-t border-slate-300 p-2 mt-4 flex justify-end gap-4">
+        {/* <RoundedButton label="Edit" symbol="✐" /> */}
+        <RoundedButton
+          label="Delete"
+          symbol="🗑"
+          bgColor="bg-red-800"
+          onClick={() => onDelete(taskView.getId())}
+        />
       </div>
     </ModalWrapper2>
   );

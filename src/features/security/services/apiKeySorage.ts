@@ -18,18 +18,23 @@ export const removeApiKeyFromStorage = () => {
 export const getApiKeyFromStorage = () => {
   const apiKey = localStorage.getItem(STORAGE_KEY);
 
-  if (!apiKey) {
-    console.log('Searching for old keys!!!');
-    const oldKey = getApiKeyFromOldStorage();
+  //this is to fix that Object.keys bug
+  if (apiKey) {
+    const newKey = JSON.parse(apiKey) as ApiKey;
 
-    if (oldKey) {
-      saveApiKeyToStorage(oldKey);
+    if (newKey.token.length > 10) {
+      return newKey;
     }
-
-    return oldKey;
   }
 
-  return JSON.parse(apiKey) as ApiKey;
+  console.log('Searching for old keys!!!');
+  const oldKey = getApiKeyFromOldStorage();
+
+  if (oldKey) {
+    saveApiKeyToStorage(oldKey);
+  }
+
+  return oldKey;
 };
 
 // This is to support legacy code
@@ -48,7 +53,7 @@ const getApiKeyFromOldStorage = (): ApiKey | undefined => {
 
   if (Object.keys(tokens).length > 0) {
     return {
-      token: Object.keys(tokens)[0],
+      token: Object.values(tokens)[0] as string,
       adminId: undefined,
     };
   }

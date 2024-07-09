@@ -4,6 +4,7 @@ import { MouseEvent } from 'react';
 import { CloseBtn } from './CloseBtn';
 
 import { theme } from '../../themes';
+import { useModalWrapper } from '../../hooks/useModalWrapper';
 
 type Props = {
   heading: string;
@@ -24,6 +25,8 @@ export const ModalWrapper2 = ({
   children,
   openBtn,
 }: Props) => {
+  const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
+
   const handleClose = (e: MouseEvent<HTMLElement>) => {
     onClose();
     e.stopPropagation();

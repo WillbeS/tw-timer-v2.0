@@ -49,6 +49,7 @@ export const disconnecFromServer = createAsyncThunk(
       }
 
       thunkAPI.dispatch(disconnectTasks());
+      thunkAPI.dispatch(addSuccess('Your connection was successfully removed.'));
     } catch (error: any) {
       thunkAPI.dispatch(addError(error.message));
       console.log(error.message);

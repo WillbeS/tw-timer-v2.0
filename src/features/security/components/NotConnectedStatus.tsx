@@ -1,14 +1,10 @@
-import { useAppDispatch } from '../../../store/hooks';
-import { connectToServer } from '../store/connectionActions';
 import { ConnectForm } from './ConnectForm';
 
-export const NotConnectedStatus = () => {
-  const dispatch = useAppDispatch();
+type Props = {
+  onConnect: (token: string) => void;
+};
 
-  const handleConnect = (token: string) => {
-    dispatch(connectToServer({ token }));
-  };
-
+export const NotConnectedStatus = ({ onConnect }: Props) => {
   return (
     <section className="mb-4">
       <h2 className="text:lg md:text-xl font-semibold mb-2">
@@ -24,7 +20,7 @@ export const NotConnectedStatus = () => {
       <p className="text-sm italic">
         If you already have a key paste it below, if you leave it empty it will generate a new key
       </p>
-      <ConnectForm onSubmit={handleConnect} />
+      <ConnectForm onSubmit={onConnect} />
     </section>
   );
 };

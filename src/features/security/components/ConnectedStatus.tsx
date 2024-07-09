@@ -1,28 +1,21 @@
 import { useState } from 'react';
 
-import { useAppDispatch } from '../../../store/hooks';
-import { disconnecFromServer } from '../store/connectionActions';
-
 import { CopyToClipboardBtn } from '../../../components/ui/CopyToClipboardBtn';
 
 type Props = {
   online: boolean;
   token: string;
+  onRemove: () => void;
 };
 
-export const ConnectedStatus = ({ online, token }: Props) => {
+export const ConnectedStatus = ({ online, token, onRemove }: Props) => {
   const [keyIsVisible, setKeyIsVisible] = useState(false);
-  const dispatch = useAppDispatch();
-
-  const handleRemove = () => {
-    dispatch(disconnecFromServer());
-  };
 
   const toggleKeyVisibility = () => {
     setKeyIsVisible((prev) => !prev);
   };
 
-  const statusText = online ? 'online' : 'offline';
+  const statusText = online ? 'connected' : 'not connected';
   const statusTextColor = online ? 'text-green-500' : 'text-red-500';
 
   return (
@@ -37,11 +30,11 @@ export const ConnectedStatus = ({ online, token }: Props) => {
 
       <div className="w-11/12 md:w-3/4 mx-auto">
         <div className="flex gap-3 md:gap-5 text-sm md:text-base py-1">
-          <span className="font-bold">You key</span>
+          <span className="font-bold">Your key</span>
           <span onClick={toggleKeyVisibility} className="cursor-pointer underline text-blue-700">
             {keyIsVisible ? 'Hide' : 'Show'}
           </span>
-          <span onClick={handleRemove} className="cursor-pointer underline text-red-700">
+          <span onClick={onRemove} className="cursor-pointer underline text-red-700">
             Remove
           </span>
         </div>

@@ -3,7 +3,13 @@ import { RootState } from '../../../store/store';
 import { PendingTasks, TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
 
-import { getPendingFromStorage, savePendingToStorage } from '../services/pendingStorage';
+import {
+  getPendingFromStorage,
+  STORAGE_KEY_PENDING,
+  savePendingToStorage,
+  savePendingDelToStorage,
+  savePendingEditToStorage,
+} from '../services/pendingStorage';
 import {
   connectTasks,
   deleteAll,
@@ -20,12 +26,16 @@ type TodosState = {
   byId: TasksById;
   pending: PendingTasks;
   showActive: boolean;
+  pendingDelete: TasksById;
+  pendingEdit: TasksById;
 };
 
 const initialState: TodosState = {
   loading: false,
   byId: getTasksFromStorage(), //these are all, the rest can be derived
-  pending: getPendingFromStorage(), //this can be done better, with ids from the server
+  pending: getPendingFromStorage(), //delete this when safe
+  pendingDelete: getPendingFromStorage(STORAGE_KEY_PENDING.DELETE),
+  pendingEdit: getPendingFromStorage(STORAGE_KEY_PENDING.EDIT),
   showActive: true,
 };
 
@@ -33,9 +43,11 @@ export const todosSlice = createSlice({
   name: 'todos',
   initialState,
   reducers: {
+    // delete when safe
     startLoadingAction: (state) => {
       state.loading = true;
     },
+    //delete when safe
     stoptLoadingAction: (state) => {
       state.loading = false;
     },
@@ -67,6 +79,7 @@ export const todosSlice = createSlice({
       saveTasksToStorage(state.byId);
     },
 
+    //Add action at the end
     disconnectTasks: (state) => {
       const newTasks: TasksById = {};
 
@@ -81,38 +94,18 @@ export const todosSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(deleteTask.pending, (state) => {
-      state.loading = true;
+    builder.addCase(deleteTask.pending, (state, action) => {
+      const id = action.meta.arg;
+
+      state.pendingDelete[id] = { ...state.byId[id] };
+      delete state.byId[id];
+
+      saveTasksToStorage(state.byId);
+      savePendingDelToStorage(state.pendingDelete);
     });
     builder.addCase(deleteTask.fulfilled, (state, action: PayloadAction<string>) => {
-      state.loading = false;
-      const id = action.payload;
-      delete state.byId[id];
-      saveTasksToStorage(state.byId);
-
-      if (state.pending[id] && state.pending[id].action === 'save') {
-        delete state.pending[id];
-        savePendingToStorage(state.pending);
-      }
-    });
-    builder.addCase(deleteTask.rejected, (state, action: PayloadAction<any>) => {
-      state.loading = false;
-      const id = action.payload;
-      console.log(id);
-      console.log('Promise rejected!');
-
-      // First, add to penging for delete
-      // but if it's already there for save, need to remove it as it's not on the server
-      if (state.pending[id] && state.pending[id].action === 'save') {
-        delete state.pending[id];
-      } else {
-        state.pending[id] = { id, action: 'delete' };
-      }
-
-      // Then delete if from state and update the storage
-      delete state.byId[action.payload];
-      saveTasksToStorage(state.byId);
-      savePendingToStorage(state.pending);
+      delete state.pendingDelete[action.payload];
+      savePendingDelToStorage(state.pendingDelete);
     });
 
     builder.addCase(saveTodos.pending, (state) => {
@@ -131,17 +124,22 @@ export const todosSlice = createSlice({
       savePendingToStorage(state.pending);
     });
 
-    builder.addCase(editTask.pending, (state) => {
-      state.loading = true;
+    builder.addCase(editTask.pending, (state, action) => {
+      const task = action.meta.arg;
+
+      state.pendingEdit[task.id] = task;
+      state.byId[task.id] = task;
+
+      saveTasksToStorage(state.byId);
+      savePendingEditToStorage(state.pendingEdit);
     });
     builder.addCase(editTask.fulfilled, (state, action: PayloadAction<{ task: TaskData }>) => {
-      state.loading = false;
       const { task } = action.payload;
       state.byId[task.id] = task;
+      delete state.pendingEdit[task.id];
+
       saveTasksToStorage(state.byId);
-    });
-    builder.addCase(editTask.rejected, (state) => {
-      state.loading = false;
+      savePendingEditToStorage(state.pendingEdit);
     });
 
     builder.addCase(deleteAll.pending, (state) => {
@@ -253,29 +251,5 @@ export const selectTotalCount = (state: RootState) => {
 };
 
 const sortByMs = (todosArr: TaskData[]) => todosArr.sort((a, b) => a.dueMs - b.dueMs);
-
-const getByWorld = (tasks: TaskData[], world: string) => tasks.filter((t) => t.world === world);
-
-const getByCompleted = (tasks: TaskData[], completed: boolean) =>
-  tasks.filter((t) => t.completed === completed);
-
-const deleteTasks = (allTasks: TasksById, criteria: string | undefined, world: string) => {
-  let tasksForDelete = getByWorld(Object.values(allTasks), world);
-  const remainingTasks = { ...allTasks };
-
-  if (criteria) {
-    const completed = criteria === 'completed';
-    tasksForDelete = getByCompleted(tasksForDelete, completed);
-  }
-
-  tasksForDelete.forEach((task) => delete remainingTasks[task.id]);
-
-  saveTasksToStorage(remainingTasks);
-
-  return {
-    remainingTasks,
-    tasksForDelete,
-  };
-};
 
 export default todosSlice.reducer;

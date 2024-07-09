@@ -4,8 +4,7 @@ type Props = {
 };
 
 export const CompletedCheckbox = ({ isCompleted, onToggleCompleted }: Props) => {
-  const notCompletedStyles =
-    'bg-stone-300 hover:bg-stone-400 text-white text-md hover:text-2xl hover:text-slate-600';
+  const notCompletedStyles = 'bg-stone-300 text-white text-md hover:text-2xl hover:text-slate-600';
 
   const completedStyles = 'bg-stone-300 text-slate-600 text-2xl hover:text-md hover:text-white';
 

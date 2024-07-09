@@ -7,7 +7,6 @@ import { formatTime } from '../../../utils/dateTime';
 
 import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
-import { deleteTask } from '../store/taskActions';
 import { useAppDispatch } from '../../../store/hooks';
 import { useAppSelector } from '../../../store/hooks';
 
@@ -27,9 +26,6 @@ export const TaskList = () => {
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
 
-  const connectedWorlds = useAppSelector((state: RootState) => state.worlds.connected);
-  const connectedWorldsCount = Object.keys(connectedWorlds).length;
-
   useEffect(() => {
     if (nextDeadline) {
       const interval = setInterval(() => {
@@ -40,14 +36,7 @@ export const TaskList = () => {
     }
   }, [nextDeadline, nextTodoType]);
 
-  const loadingMessage = `Loading from server. Connected worlds: ${connectedWorldsCount}`;
-
-  const handleDelete = useCallback(
-    async (id: string, world: string) => {
-      dispatch(deleteTask({ id, world }));
-    },
-    [dispatch],
-  );
+  const loadingMessage = 'Loading...';
 
   //console.log('Todo list is rendering');
   return (
@@ -62,7 +51,6 @@ export const TaskList = () => {
           <TaskRow
             key={todo.id}
             todo={todo}
-            onDelete={handleDelete}
             onDynamicUpdate={(updated) => dispatch(dynamicUpdateAction(updated))}
           />
         ))}

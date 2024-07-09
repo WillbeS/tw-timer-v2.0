@@ -83,24 +83,23 @@ export const editTask = createAsyncThunk<{ task: TaskData }, TaskData, { rejectV
   },
 );
 
-export const deleteTask = createAsyncThunk<
-  string,
-  { id: string; world: string },
-  { rejectValue: string }
->('tasks/deleteTask', async ({ id, world }, thunkAPI) => {
-  try {
-    if (apiKey) {
-      await api.delete('timer/tasks/' + id, apiKey.token);
-    }
+export const deleteTask = createAsyncThunk<string, string, { rejectValue: string }>(
+  'tasks/deleteTask',
+  async (id, thunkAPI) => {
+    try {
+      if (apiKey) {
+        await api.delete('timer/tasks/' + id, apiKey.token);
+      }
 
-    return id;
-  } catch (error: any) {
-    const dispatch = thunkAPI.dispatch;
-    console.log(error.message);
-    dispatch(addError(error.message));
-    return thunkAPI.rejectWithValue(id);
-  }
-});
+      return id;
+    } catch (error: any) {
+      const dispatch = thunkAPI.dispatch;
+      console.log(error.message);
+      dispatch(addError(error.message));
+      return thunkAPI.rejectWithValue(id);
+    }
+  },
+);
 
 export const deleteCompleted = createAsyncThunk('tasks/deleteCompleted', async (_, thunkAPI) => {
   try {

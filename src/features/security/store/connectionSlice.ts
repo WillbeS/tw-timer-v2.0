@@ -10,7 +10,7 @@ import { connectToServer, disconnecFromServer } from './connectionActions';
 
 interface ConnectionState {
   loading: boolean;
-  online: boolean;
+  online: boolean; // will delete this
   apiKey: ApiKey | undefined;
 }
 

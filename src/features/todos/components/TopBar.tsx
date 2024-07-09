@@ -7,14 +7,17 @@ import { theme } from '../../../themes';
 import { useAppSelector } from '../../../store/hooks';
 import { showActiveSelector } from '../store/todoSlice';
 import { ListOptionsMenu } from './ListOptionsMenu';
+import { WorldSelect } from '../../worlds/components/WorldSelect';
 
 type Props = {
-  onWorldChange: (world: string) => void;
+  // onWorldChange: (world: string) => void;
   onTypeChange: (type: string) => void;
-  // onSync: () => void;
 };
-export const TopBar = ({ onWorldChange, onTypeChange }: Props) => {
-  const { worlds } = useAppSelector((state: RootState) => state.worlds);
+export const TopBar = ({
+  //onWorldChange,
+  onTypeChange,
+}: Props) => {
+  // const { worlds } = useAppSelector((state: RootState) => state.worlds);
   const showActive = useAppSelector(showActiveSelector);
 
   const typeOptions = Object.values(todoTypes).map((value) => {
@@ -22,10 +25,10 @@ export const TopBar = ({ onWorldChange, onTypeChange }: Props) => {
   });
   typeOptions.unshift({ value: '0', label: 'All Types' });
 
-  const worldOptions = worlds.map((w) => {
-    return { value: w.tag, label: w.name };
-  });
-  worldOptions.unshift({ value: '0', label: 'All Worlds' });
+  // const worldOptions = worlds.map((w) => {
+  //   return { value: w.tag, label: w.name };
+  // });
+  // worldOptions.unshift({ value: '0', label: 'All Worlds' });
 
   return (
     <div
@@ -40,7 +43,8 @@ export const TopBar = ({ onWorldChange, onTypeChange }: Props) => {
           <Select options={typeOptions} defaultValue="0" fullWidth onChange={onTypeChange} />
         </div>
         <div>
-          <Select options={worldOptions} defaultValue="0" fullWidth onChange={onWorldChange} />
+          {/* <Select options={worldOptions} defaultValue="0" fullWidth onChange={onWorldChange} /> */}
+          <WorldSelect />
         </div>
 
         <ListOptionsMenu />

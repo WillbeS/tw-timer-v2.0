@@ -20,6 +20,7 @@ export const HomePage = () => {
     }
   }, [dispatch, online, apiKey]);
 
+  console.log('Rendering the Home page');
   return (
     <>
       <TaskList />

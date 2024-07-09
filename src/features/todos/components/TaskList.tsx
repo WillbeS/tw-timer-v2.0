@@ -9,14 +9,18 @@ import { TaskRow } from './TaskRow';
 import { TopBar } from './TopBar';
 import { useAppDispatch } from '../../../store/hooks';
 import { useAppSelector } from '../../../store/hooks';
+import { worldSelector } from '../../worlds/store/worldSlice';
 
 export const TaskList = () => {
-  const [world, setWorld] = useState('0');
+  // const [world, setWorld] = useState('0');
   const [type, setType] = useState('0');
 
   const dispatch = useAppDispatch();
+  const { selectedWorld } = useAppSelector(worldSelector);
 
-  const todos = useAppSelector((state: RootState) => filteredTasksSelector(state, world, type));
+  const todos = useAppSelector((state: RootState) =>
+    filteredTasksSelector(state, selectedWorld, type),
+  );
 
   const { loading, showActive } = useAppSelector((state: RootState) => state.todos);
   const displayTodos = showActive
@@ -42,7 +46,7 @@ export const TaskList = () => {
   return (
     <>
       <TopBar
-        onWorldChange={(newWorld) => setWorld(newWorld)}
+        // onWorldChange={(newWorld) => setWorld(newWorld)}
         onTypeChange={(newType) => setType(newType)}
       />
       <div className="flex flex-col gap-2 text-sm md:text-lg font-semibold mt-5">

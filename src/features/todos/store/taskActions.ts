@@ -49,22 +49,24 @@ export const connectTasks = createAsyncThunk<{ tasks: TaskData[] }, string, { re
 );
 
 //temp, will rename to saveTasks
-export const saveTodos = createAsyncThunk<void, { tasks: TaskData[] }, { rejectValue: TaskData[] }>(
-  'tasks/saveTasks',
-  async ({ tasks }, thunkAPI) => {
-    try {
-      thunkAPI.dispatch(addTasksAction(tasks));
+export const saveTodos = createAsyncThunk<
+  void,
+  { tasks: TaskData[]; world: string },
+  { rejectValue: TaskData[] }
+>('tasks/saveTasks', async ({ tasks, world }, thunkAPI) => {
+  try {
+    thunkAPI.dispatch(addTasksAction(tasks));
+    console.log(world === '-1');
 
-      if (apiKey) {
-        await api.post('timer/tasks', tasks, apiKey.token);
-      }
-    } catch (error: any) {
-      console.log(error.message);
-      thunkAPI.dispatch(addError('Error sving the tasks to the remote server'));
-      return thunkAPI.rejectWithValue(tasks);
+    if (apiKey) {
+      await api.post(`timer/tasks/${world}`, tasks, apiKey.token);
     }
-  },
-);
+  } catch (error: any) {
+    console.log(error.message);
+    thunkAPI.dispatch(addError('Error sving the tasks to the remote server'));
+    return thunkAPI.rejectWithValue(tasks);
+  }
+});
 
 export const editTask = createAsyncThunk<{ task: TaskData }, TaskData, { rejectValue: void }>(
   'tasks/editTask',

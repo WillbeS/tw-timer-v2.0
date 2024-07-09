@@ -232,6 +232,8 @@ export const filteredTasksSelector = createSelector(
     (state: RootState, world: string, type: string) => type,
   ],
   (tasks, world, type) => {
+    console.log('Running the complex task selector');
+
     let todosArr = Object.values(tasks);
 
     if (world !== '0') {

@@ -29,7 +29,11 @@ const initialState: WorldState = {
 const worldSlice = createSlice({
   name: 'worlds',
   initialState,
-  reducers: {},
+  reducers: {
+    selectWorld: (state, action: PayloadAction<string>) => {
+      state.selectedWorld = action.payload;
+    },
+  },
 
   extraReducers: (builder) => {
     // Fetching worlds
@@ -51,7 +55,7 @@ const worldSlice = createSlice({
   },
 });
 
-export const {} = worldSlice.actions;
+export const { selectWorld } = worldSlice.actions;
 
 export const worldSelector = (state: RootState) => state.worlds;
 

@@ -27,14 +27,14 @@ export const getApiKeyFromStorage = () => {
     }
   }
 
-  console.log('Searching for old keys!!!');
-  const oldKey = getApiKeyFromOldStorage();
+  // console.log('Searching for old keys!!!');
+  // const oldKey = getApiKeyFromOldStorage();
 
-  if (oldKey) {
-    saveApiKeyToStorage(oldKey);
-  }
+  // if (oldKey) {
+  //   saveApiKeyToStorage(oldKey);
+  // }
 
-  return oldKey;
+  // return oldKey;
 };
 
 // This is to support legacy code

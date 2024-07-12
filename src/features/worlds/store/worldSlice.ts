@@ -4,6 +4,7 @@ import { getArrFromStorage, getObjFromStorage } from '../../../services/storageM
 import { WorldData } from '../data/types';
 import { fetchWorlds } from './worldAction';
 import { RootState } from '../../../store/store';
+import { UNSELECTED_WORLD } from '../data/constants';
 
 interface WorldState {
   worlds: WorldData[];
@@ -22,7 +23,7 @@ const initialState: WorldState = {
   connected: getObjFromStorage('connected_worlds'),
   connectedIds: getObjFromStorage('connected_ids'),
   //needs to be implemented
-  selectedWorld: '0',
+  selectedWorld: UNSELECTED_WORLD,
   loading: false,
 };
 

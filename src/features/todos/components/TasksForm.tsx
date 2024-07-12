@@ -6,8 +6,10 @@ import { formatTimeIntoText } from '../../../utils/dateTime';
 import { todoTypes, attackSubtypes } from '../data/constants';
 
 import { ValidationError } from '../../../components/form/ValidationError';
-import { RootState } from '../../../store/store';
+
 import { useAppSelector } from '../../../store/hooks';
+import { worldSelector } from '../../worlds/store/worldSlice';
+import { UNSELECTED_WORLD } from '../../worlds/data/constants';
 
 type Props = {
   onSubmit: (input: AddTasksFormInput) => void;
@@ -15,8 +17,9 @@ type Props = {
 };
 
 export const TasksForm = ({ onSubmit, onCancel }: Props) => {
+  const { worlds, selectedWorld } = useAppSelector(worldSelector);
   const [input, setInput] = useState<AddTasksFormInput>({
-    world: '-1',
+    world: selectedWorld,
     type: todoTypes.REMINDER,
     alarmOffset: '0',
     text: '',
@@ -28,7 +31,7 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
   }
 
   const [errors, setErrors] = useState<AddTasksFormErrors>({});
-  const { worlds } = useAppSelector((state: RootState) => state.worlds);
+
   const todoFormView = new TodoFormView();
 
   const handleSubmit = (e: SyntheticEvent | KeyboardEvent) => {
@@ -74,7 +77,7 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
           onChange={(e) => setInput({ ...input, world: e.target.value })}
           className={getFieldStyle(errors.world)}
         >
-          <option value="-1" disabled hidden>
+          <option value={UNSELECTED_WORLD} disabled hidden>
             Select a world
           </option>
           {Object.values(worlds).map((option, i) => (

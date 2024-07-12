@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { removeAllAction, showActiveAction, showActiveSelector } from '../store/todoSlice';
+import { showActiveAction, showActiveSelector } from '../store/todoSlice';
 
 import { DropdownMenu } from '../../../components/ui/DropdownMenu';
 import { DropdownMenuButton } from '../../../components/ui/DropdownMenuButton';

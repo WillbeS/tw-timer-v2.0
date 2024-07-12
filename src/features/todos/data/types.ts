@@ -22,7 +22,6 @@ export type NewTask = {
   details?: string | undefined;
 };
 
-// need to add the server id and delete by it
 export type TaskData = {
   id: string;
   serverId?: number | undefined;
@@ -37,20 +36,8 @@ export type TaskData = {
   details?: string | undefined;
 };
 
-// do I use this?
-// export type SavedTask = {
-//   id: string;
-// };
-
 export type TasksById = {
   [id: string]: TaskData;
-};
-
-export type PendingTasks = {
-  [id: string]: {
-    id: string;
-    action: string; //this should be enum
-  };
 };
 
 export type AddTasksFormInput = {

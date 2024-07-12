@@ -1,5 +1,6 @@
 import { Select } from '../../../components/form/Select';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { UNSELECTED_WORLD } from '../data/constants';
 import { selectWorld, worldSelector } from '../store/worldSlice';
 
 export const WorldSelect = () => {
@@ -9,7 +10,7 @@ export const WorldSelect = () => {
   const worldOptions = worlds.map((w) => {
     return { value: w.tag, label: w.name };
   });
-  worldOptions.unshift({ value: '0', label: 'All Worlds' });
+  worldOptions.unshift({ value: UNSELECTED_WORLD, label: 'All Worlds' });
 
   return (
     <Select

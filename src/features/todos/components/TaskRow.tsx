@@ -10,7 +10,7 @@ import { TaskMessage } from './TaskMessage';
 import { theme } from '../../../themes';
 import { CompletedCheckbox } from './CompletedCheckbox';
 import { useAppDispatch } from '../../../store/hooks';
-import { deleteTask, editTask } from '../store/taskActions';
+import { deleteTask, toggleCompleted } from '../store/taskActions';
 
 type Props = {
   todo: TaskData;
@@ -30,9 +30,9 @@ export const TaskRow = ({ todo, onDynamicUpdate }: Props) => {
     }
   };
 
-  const toggleCompleted = () => {
+  const onToggleCompleted = () => {
     const forEdit: TaskData = { ...todo, completed: !todo.completed };
-    dispatch(editTask(forEdit));
+    dispatch(toggleCompleted(forEdit));
   };
 
   const handleDelete = (id: string) => {
@@ -74,7 +74,7 @@ export const TaskRow = ({ todo, onDynamicUpdate }: Props) => {
         >
           <DeleteIcon className="w-5 h-5 fill-neutral-500 hover:fill-neutral-600" />
         </span> */}
-        <CompletedCheckbox isCompleted={todo.completed} onToggleCompleted={toggleCompleted} />
+        <CompletedCheckbox isCompleted={todo.completed} onToggleCompleted={onToggleCompleted} />
       </div>
     </div>
   );

@@ -1,10 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { TaskData } from '../data/types';
 import { api } from '../../../api';
-import { RootState } from '../../../store/store';
-import { addError, addSuccess } from '../../messages/store/messageSlice';
 
-import { addTasksAction } from './todoSlice';
+import { addError } from '../../messages/store/messageSlice';
+
 import { getApiKeyFromStorage } from '../../security/services/apiKeySorage';
 
 const apiKey = getApiKeyFromStorage();
@@ -25,42 +24,17 @@ export const fetchAllTasks = createAsyncThunk<{ tasks: TaskData[] }, string, { r
   },
 );
 
-// this is called only when a new connection is created
-export const connectTasks = createAsyncThunk<{ tasks: TaskData[] }, string, { rejectValue: void }>(
-  'tasks/savePending',
-  async (token: string, thunkAPI) => {
-    try {
-      const state = thunkAPI.getState() as RootState;
-      let pending = Object.values(state.todos.byId).filter((task) => !task.serverId);
-      console.log(pending);
-
-      if (pending.length === 0) return { tasks: [] };
-
-      await api.post('timer/tasks', pending, token);
-      thunkAPI.dispatch(addSuccess('You data was successfully saved to the server!'));
-
-      return { tasks: pending };
-    } catch (error: any) {
-      console.log(error.message);
-      thunkAPI.dispatch(addError('Error sving the tasks to the remote server'));
-      return thunkAPI.rejectWithValue();
-    }
-  },
-);
-
-//temp, will rename to saveTasks
-export const saveTodos = createAsyncThunk<
-  void,
+export const saveTasks = createAsyncThunk<
+  TaskData[],
   { tasks: TaskData[]; world: string },
   { rejectValue: TaskData[] }
 >('tasks/saveTasks', async ({ tasks, world }, thunkAPI) => {
   try {
-    thunkAPI.dispatch(addTasksAction(tasks));
-    console.log(world === '-1');
-
     if (apiKey) {
       await api.post(`timer/tasks/${world}`, tasks, apiKey.token);
     }
+
+    return tasks;
   } catch (error: any) {
     console.log(error.message);
     thunkAPI.dispatch(addError('Error sving the tasks to the remote server'));
@@ -68,22 +42,23 @@ export const saveTodos = createAsyncThunk<
   }
 });
 
-export const editTask = createAsyncThunk<{ task: TaskData }, TaskData, { rejectValue: void }>(
-  'tasks/editTask',
-  async (task, thunkAPI) => {
-    try {
-      if (apiKey) {
-        await api.put('timer/tasks/' + task.id, task, apiKey.token);
-      }
-
-      return { task };
-    } catch (error: any) {
-      console.log(error.message);
-      thunkAPI.dispatch(addError(error.message));
-      return thunkAPI.rejectWithValue();
+export const toggleCompleted = createAsyncThunk<
+  { task: TaskData },
+  TaskData,
+  { rejectValue: void }
+>('tasks/toggleCompleted', async (task, thunkAPI) => {
+  try {
+    if (apiKey) {
+      await api.put('timer/tasks/' + task.id, task, apiKey.token);
     }
-  },
-);
+
+    return { task };
+  } catch (error: any) {
+    console.log(error.message);
+    thunkAPI.dispatch(addError(error.message));
+    return thunkAPI.rejectWithValue();
+  }
+});
 
 export const deleteTask = createAsyncThunk<string, string, { rejectValue: string }>(
   'tasks/deleteTask',

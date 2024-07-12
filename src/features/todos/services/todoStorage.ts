@@ -3,16 +3,38 @@ import { TaskData, TasksById } from '../data/types';
 
 const STORAGE_KEY = 'todos';
 
-export const getTasksFromStorage = () => getObjFromStorage(STORAGE_KEY);
+const STORAKE_KEY_TASKS = {
+  active: 'todos',
+  completed: 'completed',
+};
 
-export const saveTasksToStorage = (tasks: TasksById) => {
-  saveToStorage(STORAGE_KEY, tasks);
+export const getTasksFromStorage = () => {
+  const byId: TasksById = getObjFromStorage(STORAKE_KEY_TASKS.active);
+  const completed: TasksById = getObjFromStorage(STORAKE_KEY_TASKS.completed);
+
+  return {
+    byId,
+    completed,
+  };
+};
+
+export const saveTasksToStorage = (
+  tasks: TasksById | null = null,
+  completed: TasksById | null = null,
+) => {
+  if (tasks) {
+    saveToStorage(STORAKE_KEY_TASKS.active, tasks);
+  }
+
+  if (completed) {
+    saveToStorage(STORAKE_KEY_TASKS.completed, completed);
+  }
 };
 
 export const isDuplicate = (newTask: TaskData) => {
-  const tasks: TasksById = getTasksFromStorage();
-  for (const id in tasks) {
-    const task = tasks[id];
+  const { byId } = getTasksFromStorage();
+  for (const id in byId) {
+    const task = byId[id];
     if (
       newTask.message === task.message &&
       newTask.type === task.type &&

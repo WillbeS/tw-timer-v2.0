@@ -12,7 +12,6 @@ import { useAppSelector } from '../../../store/hooks';
 import { worldSelector } from '../../worlds/store/worldSlice';
 
 export const TaskList = () => {
-  // const [world, setWorld] = useState('0');
   const [type, setType] = useState('0');
 
   const dispatch = useAppDispatch();
@@ -22,10 +21,8 @@ export const TaskList = () => {
     filteredTasksSelector(state, selectedWorld, type),
   );
 
-  const { loading, showActive } = useAppSelector((state: RootState) => state.todos);
-  const displayTodos = showActive
-    ? todos.filter((t) => !t.completed)
-    : todos.filter((t) => t.completed);
+  const { loading, showActive, completed } = useAppSelector((state: RootState) => state.todos);
+  const displayTodos = showActive ? todos : completed;
 
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
@@ -51,7 +48,7 @@ export const TaskList = () => {
       />
       <div className="flex flex-col gap-2 text-sm md:text-lg font-semibold mt-5">
         {loading && <div className="text-white text-center">{loadingMessage}</div>}
-        {displayTodos.map((todo) => (
+        {Object.values(displayTodos).map((todo) => (
           <TaskRow
             key={todo.id}
             todo={todo}

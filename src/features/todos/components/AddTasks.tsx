@@ -5,7 +5,7 @@ import { getParser } from '../services/parsers';
 
 import { addError } from '../../messages/store/messageSlice';
 import { isDuplicate } from '../services/todoStorage';
-import { saveTodos } from '../store/taskActions';
+import { saveTasks } from '../store/taskActions';
 import { useAppDispatch } from '../../../store/hooks';
 
 import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
@@ -34,7 +34,7 @@ export const AddTasks = () => {
       const todoParser = getParser(todoInput);
       const newTodos = await todoParser.parse();
       const forSave = newTodos.filter((task) => !isDuplicate(task));
-      dispatch(saveTodos({ tasks: forSave, world: todoInput.world }));
+      dispatch(saveTasks({ tasks: forSave, world: todoInput.world }));
     } catch (error: any) {
       dispatch(addError(error.message));
     } finally {

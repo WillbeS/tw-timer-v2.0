@@ -6,8 +6,8 @@ import { RootState } from '../../../store/store';
 
 import { ApiKey } from '../data/types';
 import { disconnectTasks } from '../../todos/store/todoSlice';
-import { connectTasks } from '../../todos/store/taskActions';
 import { api } from '../../../api';
+import { TaskData } from '../../todos/data/types';
 
 export const connectToServer = createAsyncThunk<
   { token: string; adminId: string | undefined },
@@ -25,7 +25,32 @@ export const connectToServer = createAsyncThunk<
       token = await validateKey(token);
     }
 
-    thunkAPI.dispatch(connectTasks(token));
+    // Save current tasks to the server
+    const state = thunkAPI.getState() as RootState;
+
+    // Merge active and completed tasks
+    const pending = Object.values(state.todos.byId).concat(Object.values(state.todos.completed));
+
+    if (pending.length === 0) return { token, adminId };
+
+    // If there are any, sort them by world and save them separately
+    const byWorld: {
+      [worldKey: string]: TaskData[];
+    } = {};
+
+    pending.forEach((task) => {
+      if (!byWorld[task.world]) {
+        byWorld[task.world] = [];
+      }
+
+      byWorld[task.world].push(task);
+    });
+
+    for (const world in byWorld) {
+      console.log(world);
+      console.log(byWorld[world]);
+      await api.post(`timer/tasks/${world}`, byWorld[world], token);
+    }
 
     thunkAPI.dispatch(addSuccess('Successfully connected to the server!'));
 

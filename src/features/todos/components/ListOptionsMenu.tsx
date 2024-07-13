@@ -1,22 +1,21 @@
 import { useCallback } from 'react';
 
-import { showActiveAction, showActiveSelector } from '../store/todoSlice';
-
 import { DropdownMenu } from '../../../components/ui/DropdownMenu';
 import { DropdownMenuButton } from '../../../components/ui/DropdownMenuButton';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { deleteAll, deleteCompleted } from '../store/taskActions';
+import { showCompletedAction } from '../store/todoSlice';
 
 export const ListOptionsMenu = () => {
   const dispatch = useAppDispatch();
 
   const onShowCompleted = () => {
-    dispatch(showActiveAction(false));
+    dispatch(showCompletedAction(true));
   };
 
   const onShowActive = () => {
-    dispatch(showActiveAction(true));
+    dispatch(showCompletedAction(false));
   };
 
   const onClearCompleted = () => {

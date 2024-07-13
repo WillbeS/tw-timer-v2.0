@@ -8,16 +8,16 @@ import { TaskDetails } from './TaskDetails';
 import { TaskMessage } from './TaskMessage';
 
 import { theme } from '../../../themes';
-import { CompletedCheckbox } from './CompletedCheckbox';
 import { useAppDispatch } from '../../../store/hooks';
-import { deleteTask, toggleCompleted } from '../store/taskActions';
+import { deleteTask } from '../store/taskActions';
 
 type Props = {
   todo: TaskData;
   onDynamicUpdate: (editedTodo: TaskData) => void;
+  onToggleCompleted: (task: TaskData) => void;
 };
 
-export const TaskRow = ({ todo, onDynamicUpdate }: Props) => {
+export const Task = ({ todo, onDynamicUpdate, onToggleCompleted }: Props) => {
   const dispatch = useAppDispatch();
 
   const todoView = getTodoView(todo);
@@ -30,14 +30,13 @@ export const TaskRow = ({ todo, onDynamicUpdate }: Props) => {
     }
   };
 
-  const onToggleCompleted = () => {
-    const forEdit: TaskData = { ...todo, completed: !todo.completed };
-    dispatch(toggleCompleted(forEdit));
-  };
-
   const handleDelete = (id: string) => {
     dispatch(deleteTask(id));
   };
+
+  const notCompletedStyles = 'bg-stone-300 text-white text-md hover:text-2xl hover:text-green-600';
+
+  const completedStyles = 'bg-stone-300 text-slate-600 text-2xl hover:text-md hover:text-white';
 
   return (
     <div
@@ -74,7 +73,16 @@ export const TaskRow = ({ todo, onDynamicUpdate }: Props) => {
         >
           <DeleteIcon className="w-5 h-5 fill-neutral-500 hover:fill-neutral-600" />
         </span> */}
-        <CompletedCheckbox isCompleted={todo.completed} onToggleCompleted={onToggleCompleted} />
+        {/* <CompletedCheckbox isCompleted={todo.completed} onToggleCompleted={onToggleCompleted} /> */}
+
+        <div
+          onClick={() => onToggleCompleted(todo)}
+          className={`w-6 h-6 rounded-xl cursor-pointer flex justify-center items-center ${
+            todo.completed ? completedStyles : notCompletedStyles
+          }`}
+        >
+          <span>✔</span>
+        </div>
       </div>
     </div>
   );

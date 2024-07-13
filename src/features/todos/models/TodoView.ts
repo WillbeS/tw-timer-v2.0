@@ -2,6 +2,7 @@ import { TaskData } from '../data/types';
 import { TodoParser } from '../services/parsers';
 import { formatDate, formatTimeIntoText } from '../../../utils/dateTime';
 import { truncate } from '../../../utils/stringUtils';
+import { UNSELECTED_WORLD } from '../../worlds/data/constants';
 
 export class TodoView {
   protected todo: TaskData;
@@ -69,7 +70,7 @@ export class TodoView {
   }
 
   public getWorld() {
-    return this.todo.world !== '-1' ? this.todo.world : 'N/A';
+    return this.todo.world !== UNSELECTED_WORLD ? this.todo.world : 'N/A';
   }
 
   public getDueDate() {

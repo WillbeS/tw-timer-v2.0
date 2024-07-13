@@ -5,37 +5,28 @@ import { todoTypes } from '../data/constants';
 import { Select } from '../../../components/form/Select';
 import { theme } from '../../../themes';
 import { useAppSelector } from '../../../store/hooks';
-import { showActiveSelector } from '../store/todoSlice';
+
 import { ListOptionsMenu } from './ListOptionsMenu';
 import { WorldSelect } from '../../worlds/components/WorldSelect';
+import { todosSelector } from '../store/todoSlice';
 
 type Props = {
-  // onWorldChange: (world: string) => void;
   onTypeChange: (type: string) => void;
 };
-export const TopBar = ({
-  //onWorldChange,
-  onTypeChange,
-}: Props) => {
-  // const { worlds } = useAppSelector((state: RootState) => state.worlds);
-  const showActive = useAppSelector(showActiveSelector);
+export const TopBar = ({ onTypeChange }: Props) => {
+  const { showCompleted } = useAppSelector(todosSelector);
 
   const typeOptions = Object.values(todoTypes).map((value) => {
     return { value, label: value };
   });
   typeOptions.unshift({ value: '0', label: 'All Types' });
 
-  // const worldOptions = worlds.map((w) => {
-  //   return { value: w.tag, label: w.name };
-  // });
-  // worldOptions.unshift({ value: '0', label: 'All Worlds' });
-
   return (
     <div
       className={`mt-6 py-3 border-b ${theme.borderColors.feature} flex justify-end md:justify-between`}
     >
       <div className="hidden md:block text-md md:text-lg font-semibold ">
-        {showActive ? 'Tasks' : 'Completed'}
+        {showCompleted ? 'Completed' : 'Tasks'}
       </div>
 
       <div className="flex gap-2 scale-x-90 md:scale-x-100">
@@ -43,7 +34,6 @@ export const TopBar = ({
           <Select options={typeOptions} defaultValue="0" fullWidth onChange={onTypeChange} />
         </div>
         <div>
-          {/* <Select options={worldOptions} defaultValue="0" fullWidth onChange={onWorldChange} /> */}
           <WorldSelect />
         </div>
 

@@ -17,7 +17,7 @@ type TodosState = {
   loading: boolean;
   byId: TasksById;
   completed: TasksById;
-  showActive: boolean;
+  showCompleted: boolean;
 };
 
 const { byId, completed } = getTasksFromStorage();
@@ -26,7 +26,7 @@ const initialState: TodosState = {
   loading: false,
   byId,
   completed,
-  showActive: true,
+  showCompleted: false,
 };
 
 export const todosSlice = createSlice({
@@ -41,8 +41,8 @@ export const todosSlice = createSlice({
       state.loading = false;
     },
 
-    showActiveAction: (state, action: PayloadAction<boolean>) => {
-      state.showActive = action.payload;
+    showCompletedAction: (state, action: PayloadAction<boolean>) => {
+      state.showCompleted = action.payload;
     },
 
     dynamicUpdateAction: (state, action: PayloadAction<TaskData>) => {
@@ -132,13 +132,13 @@ export const {
   dynamicUpdateAction,
   startLoadingAction,
   stoptLoadingAction,
-  showActiveAction,
+  showCompletedAction,
   disconnectTasks,
 } = todosSlice.actions;
 
-export const taskSelector = (state: RootState) => state.todos.byId;
+export const todosSelector = (state: RootState) => state.todos;
 
-export const showActiveSelector = (state: RootState) => state.todos.showActive;
+export const taskSelector = (state: RootState) => state.todos.byId;
 
 export const filteredTasksSelector = createSelector(
   [

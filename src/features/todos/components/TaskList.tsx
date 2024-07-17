@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { RootState } from '../../../store/store';
 import { dynamicUpdateAction, filteredTasksSelector, todosSelector } from '../store/todoSlice';
@@ -8,24 +8,17 @@ import { formatTime } from '../../../utils/dateTime';
 import { TopBar } from './TopBar';
 import { useAppDispatch } from '../../../store/hooks';
 import { useAppSelector } from '../../../store/hooks';
-import { worldSelector } from '../../worlds/store/worldSlice';
+
 import { Task } from './Task';
 import { TaskData } from '../data/types';
 import { toggleCompleted } from '../store/taskActions';
 import { CompletedTask } from './CompletedTask';
 
 export const TaskList = () => {
-  const [type, setType] = useState('0');
-
   const dispatch = useAppDispatch();
-  const { selectedWorld } = useAppSelector(worldSelector);
+  const { loading, showCompleted } = useAppSelector(todosSelector);
 
-  const todos = useAppSelector((state: RootState) =>
-    filteredTasksSelector(state, selectedWorld, type),
-  );
-
-  const { loading, showCompleted, completed } = useAppSelector(todosSelector);
-  const displayTodos = showCompleted ? completed : todos;
+  const todos = useAppSelector((state: RootState) => filteredTasksSelector(state));
 
   const nextDeadline = todos.length > 0 ? todos[0].dueMs : null;
   const nextTodoType = todos.length > 0 ? todos[0].type : null;
@@ -50,13 +43,10 @@ export const TaskList = () => {
   //console.log('Todo list is rendering');
   return (
     <>
-      <TopBar
-        // onWorldChange={(newWorld) => setWorld(newWorld)}
-        onTypeChange={(newType) => setType(newType)}
-      />
+      <TopBar />
       <div className="flex flex-col gap-2 text-sm md:text-lg font-semibold mt-5">
         {loading && <div className="text-white text-center">{loadingMessage}</div>}
-        {Object.values(displayTodos).map((todo) => {
+        {Object.values(todos).map((todo) => {
           if (showCompleted) {
             return (
               <CompletedTask

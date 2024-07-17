@@ -9,11 +9,9 @@ import { useAppSelector } from '../../../store/hooks';
 import { ListOptionsMenu } from './ListOptionsMenu';
 import { WorldSelect } from '../../worlds/components/WorldSelect';
 import { todosSelector } from '../store/todoSlice';
+import { TypeSelect } from './TypeSelect';
 
-type Props = {
-  onTypeChange: (type: string) => void;
-};
-export const TopBar = ({ onTypeChange }: Props) => {
+export const TopBar = () => {
   const { showCompleted } = useAppSelector(todosSelector);
 
   const typeOptions = Object.values(todoTypes).map((value) => {
@@ -30,13 +28,8 @@ export const TopBar = ({ onTypeChange }: Props) => {
       </div>
 
       <div className="flex gap-2 scale-x-90 md:scale-x-100">
-        <div>
-          <Select options={typeOptions} defaultValue="0" fullWidth onChange={onTypeChange} />
-        </div>
-        <div>
-          <WorldSelect />
-        </div>
-
+        <TypeSelect />
+        <WorldSelect />
         <ListOptionsMenu />
       </div>
     </div>

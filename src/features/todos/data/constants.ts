@@ -1,4 +1,5 @@
 export const WH_CAPACITY = 700000; // Will be set by the user later
+export const UNSELECTED_TYPE = '0';
 
 //assume that this amount is already there
 export const WH_BUFFER = {

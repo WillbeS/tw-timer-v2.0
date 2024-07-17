@@ -1,4 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSelector, createSlice, isAction, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 import { TaskData, TasksById } from '../data/types';
 import { getTasksFromStorage, saveTasksToStorage } from '../services/todoStorage';
@@ -12,12 +12,16 @@ import {
   toggleCompleted,
 } from './taskActions';
 import { generateId } from '../../../utils/stringUtils';
+import { UNSELECTED_TYPE } from '../data/constants';
+import { resourceUsage } from 'process';
+import { UNSELECTED_WORLD } from '../../worlds/data/constants';
 
 type TodosState = {
   loading: boolean;
   byId: TasksById;
   completed: TasksById;
   showCompleted: boolean;
+  selectedType: string;
 };
 
 const { byId, completed } = getTasksFromStorage();
@@ -27,6 +31,7 @@ const initialState: TodosState = {
   byId,
   completed,
   showCompleted: false,
+  selectedType: UNSELECTED_TYPE,
 };
 
 export const todosSlice = createSlice({
@@ -51,11 +56,14 @@ export const todosSlice = createSlice({
       saveTasksToStorage(state.byId);
     },
 
-    //Add action at the end
     disconnectTasks: (state) => {
       state.byId = changeIds(state.byId);
       state.completed = changeIds(state.completed);
       saveTasksToStorage(state.byId, state.completed);
+    },
+
+    selectType: (state, action: PayloadAction<string>) => {
+      state.selectedType = action.payload;
     },
   },
 
@@ -68,14 +76,19 @@ export const todosSlice = createSlice({
       (state, action: PayloadAction<{ tasks: TaskData[] }>) => {
         state.loading = false;
         const { tasks } = action.payload;
+        const completed: TasksById = {};
+        const byId: TasksById = {};
 
         tasks.forEach((t) => {
           if (t.completed) {
-            state.completed[t.id] = t;
+            completed[t.id] = t;
           } else {
-            state.byId[t.id] = t;
+            byId[t.id] = t;
           }
         });
+
+        state.byId = byId;
+        state.completed = completed;
 
         saveTasksToStorage(state.byId, state.completed);
       },
@@ -134,6 +147,7 @@ export const {
   stoptLoadingAction,
   showCompletedAction,
   disconnectTasks,
+  selectType,
 } = todosSlice.actions;
 
 export const todosSelector = (state: RootState) => state.todos;
@@ -141,36 +155,47 @@ export const todosSelector = (state: RootState) => state.todos;
 export const taskSelector = (state: RootState) => state.todos.byId;
 
 export const filteredTasksSelector = createSelector(
-  [
-    // First input selector extracts items from the state
-    taskSelector,
-    // Second input selector forwards the world argument
-    (state: RootState, world: string) => world,
-    // Third input selector forwards the type argument
-    (state: RootState, world: string, type: string) => type,
-  ],
-  (tasks, world, type) => {
-    console.log('Running the complex task selector');
+  (state: RootState) => state,
+  (state) => {
+    const tasks = getFilteredTasks(state);
 
-    let todosArr = Object.values(tasks);
-
-    if (world !== '0') {
-      todosArr = todosArr.filter((t) => t.world === world);
+    if (state.todos.showCompleted) {
+      return sortByMsDesc(tasks);
     }
 
-    if (type !== '0') {
-      todosArr = todosArr.filter((t) => t.type === type);
-    }
-
-    return Object.values(sortByMs(todosArr));
+    return sortByMs(tasks);
   },
 );
 
 export const selectTotalCount = (state: RootState) => {
-  return Object.keys(state.todos.byId).length;
+  return getFilteredTasks(state).length;
+};
+
+export default todosSlice.reducer;
+
+//////////////////////////////////////////////////////////////////////////
+///helpers
+//////////////////////////////////////////////////////////////////////////
+
+const getFilteredTasks = (state: RootState) => {
+  let selected = state.todos.showCompleted
+    ? Object.values(state.todos.completed)
+    : Object.values(state.todos.byId);
+
+  if (state.todos.selectedType !== UNSELECTED_TYPE) {
+    selected = selected.filter((t) => t.type === state.todos.selectedType);
+  }
+
+  if (state.worlds.selectedWorld !== UNSELECTED_WORLD) {
+    selected = selected.filter((t) => t.world === state.worlds.selectedWorld);
+  }
+
+  return selected;
 };
 
 const sortByMs = (todosArr: TaskData[]) => todosArr.sort((a, b) => a.dueMs - b.dueMs);
+
+const sortByMsDesc = (todosArr: TaskData[]) => todosArr.sort((a, b) => b.dueMs - a.dueMs);
 
 const changeIds = (tasks: TasksById) => {
   const newTasks: TasksById = {};
@@ -182,5 +207,3 @@ const changeIds = (tasks: TasksById) => {
 
   return newTasks;
 };
-
-export default todosSlice.reducer;

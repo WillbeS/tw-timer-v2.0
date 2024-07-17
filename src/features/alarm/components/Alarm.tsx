@@ -13,7 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 // TODO - refactor this at all cost!!!
 export const Alarm = () => {
   const dispatch = useAppDispatch();
-  const todos: TaskData[] = Object.values(useAppSelector(taskSelector)).filter((t) => !t.completed);
+  const todos: TaskData[] = Object.values(useAppSelector(taskSelector));
   const timer: Worker = useMemo(
     () => new Worker(new URL('../workers/alarmTimer.ts', import.meta.url)),
     [],

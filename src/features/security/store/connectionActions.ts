@@ -47,8 +47,6 @@ export const connectToServer = createAsyncThunk<
     });
 
     for (const world in byWorld) {
-      console.log(world);
-      console.log(byWorld[world]);
       await api.post(`timer/tasks/${world}`, byWorld[world], token);
     }
 

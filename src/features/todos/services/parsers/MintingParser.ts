@@ -16,11 +16,11 @@ export class MintingParser extends TodoParser {
         name: 'ST',
         value: /(Desktop\sversion|Server\stime:)\s*(\d\d:\d\d:\d\d)\s(\d\d\/\d\d\/\d{4})/,
       },
-      {
-        name: todoTypes.MINTING,
-        value:
-          /.+?\((\d\d\d\|\d\d\d)\)\sK\d\d\s((\d*\.*\d+\s){3})(today|tommorrow)\sat\s(\d\d:\d\d)\s(\d{1,2}:\d\d:\d\d)*/g,
-      },
+      // {
+      //   name: todoTypes.MINTING,
+      //   value:
+      //     /.+?\((\d\d\d\|\d\d\d)\)\sK\d\d\s((\d*\.*\d+\s){3})(today|tommorrow)\sat\s(\d\d:\d\d)\s(\d{1,2}:\d\d:\d\d)*/g,
+      // },
     ];
   }
 

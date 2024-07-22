@@ -115,36 +115,36 @@ export const todosFormHelpData: ModalHelpData = {
       },
     ],
   },
-  [todoTypes.MINTING]: {
-    heading: 'Minting Type Help',
-    content: [
-      {
-        heading: 'Type: minting',
-        content:
-          'This task is created from all the transports incoming to your minting village and it triggers the alarm some time before the WH is full. It can be updated manually or automatically (you can choose how from the Settings)',
-      },
-      {
-        heading: 'Adding the task',
-        content:
-          "Go to Market --> Transports, select the whole page (it's important to select the Server time or the transport times will not be correct) and copy/paste it below.",
-      },
-      {
-        heading: 'Default data',
-        content:
-          'In order to be able to calculate the next overflow time some data has to be present. The WH capacity and some buffer resources that are assumed to be present in the WH at all time (you can set those from the Settings as well)',
-      },
-      {
-        heading: 'Manual update',
-        content:
-          "If you've chosen to update it manually, you will get an update button next to it. Clicking it will assume that the WH has been emptied (reset to its buffer resources) and will recalculate the next overflow time.",
-      },
-      {
-        heading: 'Automatic update',
-        content:
-          "With the automatic update the task will assume that you've minted when the alarm was triggered and will reset and recalculate the next overflow without waiting for an action from you",
-      },
-    ],
-  },
+  // [todoTypes.MINTING]: {
+  //   heading: 'Minting Type Help',
+  //   content: [
+  //     {
+  //       heading: 'Type: minting',
+  //       content:
+  //         'This task is created from all the transports incoming to your minting village and it triggers the alarm some time before the WH is full. It can be updated manually or automatically (you can choose how from the Settings)',
+  //     },
+  //     {
+  //       heading: 'Adding the task',
+  //       content:
+  //         "Go to Market --> Transports, select the whole page (it's important to select the Server time or the transport times will not be correct) and copy/paste it below.",
+  //     },
+  //     {
+  //       heading: 'Default data',
+  //       content:
+  //         'In order to be able to calculate the next overflow time some data has to be present. The WH capacity and some buffer resources that are assumed to be present in the WH at all time (you can set those from the Settings as well)',
+  //     },
+  //     {
+  //       heading: 'Manual update',
+  //       content:
+  //         "If you've chosen to update it manually, you will get an update button next to it. Clicking it will assume that the WH has been emptied (reset to its buffer resources) and will recalculate the next overflow time.",
+  //     },
+  //     {
+  //       heading: 'Automatic update',
+  //       content:
+  //         "With the automatic update the task will assume that you've minted when the alarm was triggered and will reset and recalculate the next overflow without waiting for an action from you",
+  //     },
+  //   ],
+  // },
   alarmOffset: {
     heading: 'Alarm Offset Help',
     content: [

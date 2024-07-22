@@ -7,7 +7,7 @@ export class TodoFormView {
     [todoTypes.DODGE]: '420',
     [todoTypes.ATTACK]: '90',
     [todoTypes.SNIPE]: '60',
-    [todoTypes.MINTING]: '30',
+    // [todoTypes.MINTING]: '30',
     [todoTypes.REMINDER]: '0',
   };
 
@@ -56,7 +56,11 @@ export class TodoFormView {
 
   private validateWorld(world: string, type: string) {
     // Todo - validation
-    if (world === '-1' && type !== todoTypes.REMINDER && type !== todoTypes.MINTING) {
+    if (
+      world === '-1' &&
+      type !== todoTypes.REMINDER
+      // && type !== todoTypes.MINTING
+    ) {
       this.addError('world', 'You need to select a word for this type of task');
     }
   }

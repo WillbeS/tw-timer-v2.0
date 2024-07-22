@@ -9,7 +9,7 @@ export enum TaskTypes {
   Attack = 'attack',
   Snipe = 'snipe',
   Dodge = 'dodge',
-  Minting = 'minting',
+  // Minting = 'minting',
   Reminder = 'reminder',
 }
 

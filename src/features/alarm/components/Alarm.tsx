@@ -30,16 +30,16 @@ export const Alarm = () => {
       timer.onmessage = (e: MessageEvent<TaskData>) => {
         alarmSound.play();
 
-        const todo = e.data;
+        // const todo = e.data;
 
-        if (todo && todo.type === todoTypes.MINTING) {
-          const todoView = getTodoView(todo);
-          const edited = todoView.update();
+        // if (todo && todo.type === todoTypes.MINTING) {
+        //   const todoView = getTodoView(todo);
+        //   const edited = todoView.update();
 
-          if (edited) {
-            dispatch(dynamicUpdateAction(edited));
-          }
-        }
+        //   if (edited) {
+        //     dispatch(dynamicUpdateAction(edited));
+        //   }
+        // }
       };
     }
   }, [timer, dispatch]);

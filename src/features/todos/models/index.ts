@@ -11,7 +11,7 @@ export interface View {
 // Add all new views here
 export const todoViews: View = {
   general: TodoView,
-  [todoTypes.MINTING]: MintingTodoView,
+  // [todoTypes.MINTING]: MintingTodoView,
   [todoTypes.DODGE]: DodgeTodoView,
 };
 

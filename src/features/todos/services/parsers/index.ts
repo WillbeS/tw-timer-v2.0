@@ -17,7 +17,7 @@ export const parsers: Parser = {
   [todoTypes.DODGE]: DodgeParser,
   [todoTypes.ATTACK]: AttackParser,
   [todoTypes.SNIPE]: SnipeParser,
-  [todoTypes.MINTING]: MintingParser,
+  // [todoTypes.MINTING]: MintingParser,
 };
 
 const getParser = (input: AddTasksFormInput): TodoParser => {

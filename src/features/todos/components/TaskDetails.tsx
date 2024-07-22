@@ -35,9 +35,9 @@ export const TaskDetails = ({ taskView, onDelete }: Props) => {
             );
           })}
 
-          {taskView.getType() === todoTypes.MINTING ? (
+          {/* {taskView.getType() === todoTypes.MINTING ? (
             <MintingDetails viewData={taskView as MintingTodoView} />
-          ) : null}
+          ) : null} */}
         </div>
       </div>
       <div className="border-t border-slate-300 p-2 mt-4 flex justify-end gap-4">

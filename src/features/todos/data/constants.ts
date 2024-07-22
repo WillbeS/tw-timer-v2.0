@@ -12,7 +12,7 @@ export const todoTypes = {
   ATTACK: 'attack',
   SNIPE: 'snipe',
   DODGE: 'dodge',
-  MINTING: 'minting',
+  // MINTING: 'minting',
   REMINDER: 'reminder',
 };
 

@@ -1,8 +1,6 @@
 import { getObjFromStorage, saveToStorage } from '../../../services/storageManager';
 import { TaskData, TasksById } from '../data/types';
 
-const STORAGE_KEY = 'todos';
-
 const STORAKE_KEY_TASKS = {
   active: 'todos',
   completed: 'completed',

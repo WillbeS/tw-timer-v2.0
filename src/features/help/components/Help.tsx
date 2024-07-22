@@ -1,7 +1,7 @@
 export const Help = () => {
   const subHeadingStyles = 'text-xl font-semibold mb-1';
   return (
-    <div className="px-2 py-3 rounded-md">
+    <div>
       <section className="mb-4">
         <h2 className={subHeadingStyles}>What is TW Timer</h2>
         <p>

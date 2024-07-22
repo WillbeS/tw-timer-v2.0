@@ -4,7 +4,7 @@ import { getArrFromStorage, getObjFromStorage } from '../../../services/storageM
 import { WorldData } from '../data/types';
 import { fetchWorlds } from './worldAction';
 import { RootState } from '../../../store/store';
-import { UNSELECTED_WORLD } from '../data/constants';
+import { UNSELECTED_WORLD, STORAGE_KEY_WORLDS } from '../data/constants';
 
 interface WorldState {
   worlds: WorldData[];
@@ -19,10 +19,9 @@ interface WorldState {
 }
 
 const initialState: WorldState = {
-  worlds: getArrFromStorage('tw_worlds'),
-  connected: getObjFromStorage('connected_worlds'),
-  connectedIds: getObjFromStorage('connected_ids'),
-  //needs to be implemented
+  worlds: getArrFromStorage(STORAGE_KEY_WORLDS),
+  connected: getObjFromStorage('connected_worlds'), //delete when safe
+  connectedIds: getObjFromStorage('connected_ids'), //delete when safe
   selectedWorld: UNSELECTED_WORLD,
   loading: false,
 };
@@ -47,7 +46,7 @@ const worldSlice = createSlice({
     });
     builder.addCase(fetchWorlds.rejected, (state, action: PayloadAction<any>) => {
       state.loading = false;
-      const localWorlds: WorldData[] = getArrFromStorage('tw_worlds');
+      const localWorlds: WorldData[] = getArrFromStorage(STORAGE_KEY_WORLDS);
       state.worlds = localWorlds ? localWorlds : [];
 
       //to log on backend later

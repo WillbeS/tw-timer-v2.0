@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 import { HomePage, ErrorPage } from './pages/';
+import { HelpPage } from './pages/HelpPage';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,10 @@ const router = createBrowserRouter([
       {
         path: '/twtimer',
         element: <HomePage />,
+      },
+      {
+        path: '/help',
+        element: <HelpPage />,
       },
     ],
   },

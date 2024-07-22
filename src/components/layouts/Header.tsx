@@ -2,10 +2,10 @@ import { ReactComponent as AlarmIcon } from '../../assets/img/alarm-clock.svg';
 import { useNavigate } from 'react-router-dom';
 
 import { RoundedButton } from '../ui/RoundedButton';
-import { HelpWrapper } from '../../features/help/components/HelpWrapper';
 
 import { theme } from '../../themes';
 import { RemoteConnection } from '../../features/security/components/RemoteConnection';
+import { Settings } from '../../features/settings/components/Settings';
 
 export function Header() {
   const navigate = useNavigate();
@@ -24,10 +24,11 @@ export function Header() {
       </h1>
       {/* Buttons */}
       <div className="flex gap-3">
-        <RoundedButton label="Settings" symbol="⚙" onClick={() => console.log('Settings button')} />
-        {/* <RoundedButton label="Help" symbol="?" onClick={() => navigate('/help')} /> */}
-        <HelpWrapper />
+        {/* <RoundedButton label="Settings" symbol="⚙" onClick={() => console.log('Settings button')} /> */}
+        <Settings />
         <RemoteConnection />
+        <RoundedButton label="Help" symbol="?" onClick={() => navigate('/help')} />
+        {/* <HelpWrapper /> */}
       </div>
     </header>
   );

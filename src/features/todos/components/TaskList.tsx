@@ -13,6 +13,8 @@ import { Task } from './Task';
 import { TaskData } from '../data/types';
 import { toggleCompleted } from '../store/taskActions';
 import { CompletedTask } from './CompletedTask';
+import { Spinner } from '../../../components/ui/Spinner';
+import { theme } from '../../../themes';
 
 export const TaskList = () => {
   const dispatch = useAppDispatch();
@@ -38,14 +40,20 @@ export const TaskList = () => {
     dispatch(toggleCompleted(forEdit));
   };
 
-  const loadingMessage = 'Loading...';
+  // const loadingMessage = 'Loading...';
 
   //console.log('Todo list is rendering');
   return (
     <>
       <TopBar />
+
       <div className="flex flex-col gap-2 text-sm md:text-lg font-semibold mt-5">
-        {loading && <div className="text-white text-center">{loadingMessage}</div>}
+        {/* {loading && <div className="text-white text-center">{loadingMessage}</div>} */}
+        {loading && (
+          <div className="flex justify-center mb-3">
+            <Spinner fillColor={theme.fillColors.button} />
+          </div>
+        )}
         {Object.values(todos).map((todo) => {
           if (showCompleted) {
             return (

@@ -18,3 +18,17 @@ export const textColors = {
   feature: 'text-white',
   lightBox: 'text-stone-700',
 };
+
+export const colors = {
+  main: 'amber-800',
+  lightBox: 'orange-100',
+  button: 'yellow-700',
+  feature: 'amber-900',
+};
+
+export const fillColors = {
+  main: 'fill-amber-800',
+  lightBox: 'fill-orange-100',
+  button: 'fill-yellow-700',
+  feature: 'fill-amber-900',
+};

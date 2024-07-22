@@ -34,10 +34,10 @@ export const messageSlice = createSlice({
     },
 
     // this is actuallly not very convinient
-    addMessage: (state, action: PayloadAction<{ message: string; type: MessageTypes }>) => {
-      const { message, type } = action.payload;
-      state[type].push(message);
-    },
+    // addMessage: (state, action: PayloadAction<{ message: string; type: MessageTypes }>) => {
+    //   const { message, type } = action.payload;
+    //   state[type].push(message);
+    // },
 
     clearMessages: (state, action: PayloadAction<MessageTypes>) => {
       const type = action.payload;
@@ -46,7 +46,13 @@ export const messageSlice = createSlice({
   },
 });
 
-export const { addMessage, addSuccess, addWarning, addError, addInfo, clearMessages } =
-  messageSlice.actions;
+export const {
+  // addMessage,
+  addSuccess,
+  addWarning,
+  addError,
+  addInfo,
+  clearMessages,
+} = messageSlice.actions;
 
 export default messageSlice.reducer;

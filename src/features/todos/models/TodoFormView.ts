@@ -2,6 +2,7 @@ import { todoTypes, attackSubtypes } from '../data/constants';
 import { AddTasksFormInput, AddTasksFormErrors } from '../data/types';
 
 export class TodoFormView {
+  //this should come from the settings
   private offsetByType = {
     [todoTypes.DODGE]: '420',
     [todoTypes.ATTACK]: '90',

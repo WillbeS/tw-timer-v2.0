@@ -1,0 +1,59 @@
+import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
+import { useModalWrapper } from '../../../hooks/useModalWrapper';
+import { RoundedButton } from '../../../components/ui/RoundedButton';
+import { theme } from '../../../themes';
+import { useAppSelector } from '../../../store/hooks';
+import { settingsSelector } from '../store/settingsSlice';
+import { SyntheticEvent, useState } from 'react';
+import { AlarmOffsetForm } from './AlarmOffsetForm';
+
+export const Settings = () => {
+  const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
+  const settings = useAppSelector(settingsSelector);
+  console.log(settings);
+
+  const [alarmOffsetSettings, setAlarmOffsetSettings] = useState({ ...settings.alarmOffset });
+
+  const subHeadingStyles = `py-3 text-md font-semibold border-t ${theme.borderColors.headerBottom}`;
+  const inputStyles =
+    'rounded-md border border-stone-200 focus:outline-none px-4 py-1 text-sm md:text-base bg-white bg-opacity-40';
+
+  const OpenBtn = () => <RoundedButton label="Settings" symbol="⚙" onClick={onOpenModal} />;
+
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    console.log(alarmOffsetSettings);
+  };
+
+  return (
+    <ModalWrapper2
+      heading="Settings"
+      isOpen={modalOpened}
+      onOpen={onOpenModal}
+      onClose={onCloseModal}
+      openBtn={<OpenBtn />}
+    >
+      <div className="p-4">
+        <form className="w-full md:w-3/4 mx-auto" onSubmit={handleSubmit}>
+          <h2 className={subHeadingStyles}>Alarm Offset (in seconds)</h2>
+          <AlarmOffsetForm
+            inputStyles={inputStyles}
+            alarmOffsetSettings={alarmOffsetSettings}
+            onChangeSettings={(newSettings) => setAlarmOffsetSettings(newSettings)}
+          />
+
+          <div
+            className={`flex flex-row justify-end gap-2 py-4 mt-4 border-t ${theme.borderColors.headerBottom}`}
+          >
+            <button
+              type="submit"
+              className="h-8 p-1 px-3 font-semibold bg-yellow-800 text-stone-100 rounded-md"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </ModalWrapper2>
+  );
+};

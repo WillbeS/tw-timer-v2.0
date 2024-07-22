@@ -6,6 +6,7 @@ import { Help } from './Help';
 
 const OpenBtn = () => <RoundedButton label="Help" symbol="?" onClick={console.log} />;
 
+//delete when safe
 export const HelpWrapper = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
 

@@ -5,6 +5,14 @@ export enum MessageTypes {
   Error = 'error',
 }
 
+export enum TaskTypes {
+  Attack = 'attack',
+  Snipe = 'snipe',
+  Dodge = 'dodge',
+  Minting = 'minting',
+  Reminder = 'reminder',
+}
+
 export type VillageData = {
   [key: string]: string;
   bonus: string;

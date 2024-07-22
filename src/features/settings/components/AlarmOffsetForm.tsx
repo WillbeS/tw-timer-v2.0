@@ -1,6 +1,5 @@
-import { SyntheticEvent, useState } from 'react';
+import { useState } from 'react';
 import { TaskTypes } from '../../../data/types';
-import { ALARM_OFFSET_DEFAULT_VALUES } from '../data/constants';
 import { AlarmOffsetSettings } from '../data/types';
 
 type Props = {

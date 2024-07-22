@@ -2,10 +2,11 @@ import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { RoundedButton } from '../../../components/ui/RoundedButton';
 import { theme } from '../../../themes';
-import { useAppSelector } from '../../../store/hooks';
-import { settingsSelector } from '../store/settingsSlice';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { settingsSelector, updateSettings } from '../store/settingsSlice';
 import { SyntheticEvent, useState } from 'react';
 import { AlarmOffsetForm } from './AlarmOffsetForm';
+import { addSuccess } from '../../messages/store/messageSlice';
 
 export const Settings = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
@@ -13,17 +14,25 @@ export const Settings = () => {
   console.log(settings);
 
   const [alarmOffsetSettings, setAlarmOffsetSettings] = useState({ ...settings.alarmOffset });
+  const dispatch = useAppDispatch();
+
+  const handleSubmit = (e: SyntheticEvent) => {
+    e.preventDefault();
+    const newSettings = {
+      alarmOffset: alarmOffsetSettings,
+    };
+
+    console.log(alarmOffsetSettings);
+    dispatch(updateSettings(newSettings));
+    dispatch(addSuccess('Your settings were successfully saved.'));
+    onCloseModal();
+  };
 
   const subHeadingStyles = `py-3 text-md font-semibold border-t ${theme.borderColors.headerBottom}`;
   const inputStyles =
     'rounded-md border border-stone-200 focus:outline-none px-4 py-1 text-sm md:text-base bg-white bg-opacity-40';
 
   const OpenBtn = () => <RoundedButton label="Settings" symbol="⚙" onClick={onOpenModal} />;
-
-  const handleSubmit = (e: SyntheticEvent) => {
-    e.preventDefault();
-    console.log(alarmOffsetSettings);
-  };
 
   return (
     <ModalWrapper2

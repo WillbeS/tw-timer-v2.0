@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 import { RootState } from '../../../store/store';
-import { getSettingsFromStorage } from '../services/settingsStorage';
+import { getSettingsFromStorage, saveSettingsToStorage } from '../services/settingsStorage';
 import { AppSettings } from '../data/types';
 
 const initialState: AppSettings = getSettingsFromStorage();
@@ -9,12 +9,15 @@ const initialState: AppSettings = getSettingsFromStorage();
 const settingsSlice = createSlice({
   name: 'settings',
   initialState,
-  reducers: {},
-
-  extraReducers: (builder) => {},
+  reducers: {
+    updateSettings: (state, action: PayloadAction<AppSettings>) => {
+      state = action.payload;
+      saveSettingsToStorage(action.payload);
+    },
+  },
 });
 
-export const {} = settingsSlice.actions;
+export const { updateSettings } = settingsSlice.actions;
 
 export const settingsSelector = (state: RootState) => state.settings;
 

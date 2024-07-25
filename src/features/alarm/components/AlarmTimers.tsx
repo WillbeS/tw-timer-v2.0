@@ -20,8 +20,6 @@ for (let i = 30; i <= 300; i += 15) {
   });
 }
 
-console.log(tests);
-
 export const AlarmTimer = () => {
   const [timers, setTimers] = useState(tests);
   const [pastTimers, setPastTimers] = useState<Test[]>([]);

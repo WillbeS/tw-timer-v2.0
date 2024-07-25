@@ -10,6 +10,8 @@ import { ValidationError } from '../../../components/form/ValidationError';
 import { useAppSelector } from '../../../store/hooks';
 import { worldSelector } from '../../worlds/store/worldSlice';
 import { UNSELECTED_WORLD } from '../../worlds/data/constants';
+import { settingsSelector } from '../../settings/store/settingsSlice';
+import { TaskTypes } from '../../../data/types';
 
 type Props = {
   onSubmit: (input: AddTasksFormInput) => void;
@@ -18,10 +20,14 @@ type Props = {
 
 export const TasksForm = ({ onSubmit, onCancel }: Props) => {
   const { worlds, selectedWorld } = useAppSelector(worldSelector);
+  const { alarmOffset } = useAppSelector(settingsSelector);
+
+  console.log('Task form is rendering');
+  const todoFormView = new TodoFormView(alarmOffset);
   const [input, setInput] = useState<AddTasksFormInput>({
     world: selectedWorld,
     type: todoTypes.REMINDER,
-    alarmOffset: '0',
+    alarmOffset: alarmOffset[TaskTypes.Reminder],
     text: '',
     subtype: undefined,
   });
@@ -31,8 +37,6 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
   }
 
   const [errors, setErrors] = useState<AddTasksFormErrors>({});
-
-  const todoFormView = new TodoFormView();
 
   const handleSubmit = (e: SyntheticEvent | KeyboardEvent) => {
     e.preventDefault();
@@ -100,7 +104,7 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
             setInput({
               ...input,
               type: e.target.value,
-              alarmOffset: todoFormView.getOffset(e.target.value),
+              alarmOffset: todoFormView.getOffset(e.target.value as TaskTypes),
             });
             // setSelectedType(e.target.value);
           }}
@@ -127,7 +131,6 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
               setInput({
                 ...input,
                 subtype: e.target.value,
-                alarmOffset: todoFormView.getOffset(input.type, e.target.value),
               });
             }}
             className={getFieldStyle(errors.type)}

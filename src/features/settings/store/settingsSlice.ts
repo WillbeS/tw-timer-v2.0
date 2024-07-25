@@ -11,7 +11,8 @@ const settingsSlice = createSlice({
   initialState,
   reducers: {
     updateSettings: (state, action: PayloadAction<AppSettings>) => {
-      state = action.payload;
+      const { alarmOffset } = action.payload;
+      state.alarmOffset = alarmOffset;
       saveSettingsToStorage(action.payload);
     },
   },

@@ -11,7 +11,7 @@ import { addSuccess } from '../../messages/store/messageSlice';
 export const Settings = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
   const settings = useAppSelector(settingsSelector);
-  console.log(settings);
+  //console.log(settings);
 
   const [alarmOffsetSettings, setAlarmOffsetSettings] = useState({ ...settings.alarmOffset });
   const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ export const Settings = () => {
     onCloseModal();
   };
 
-  const subHeadingStyles = `py-3 text-md font-semibold border-t ${theme.borderColors.headerBottom}`;
+  const subHeadingStyles = `py-3 text-md font-semibold mt-5 border-t ${theme.borderColors.feature}`;
   const inputStyles =
     'rounded-md border border-stone-200 focus:outline-none px-4 py-1 text-sm md:text-base bg-white bg-opacity-40';
 
@@ -44,15 +44,22 @@ export const Settings = () => {
     >
       <div className="p-4">
         <form className="w-full md:w-3/4 mx-auto" onSubmit={handleSubmit}>
-          <h2 className={subHeadingStyles}>Alarm Offset (in seconds)</h2>
+          <h2 className={subHeadingStyles}>Default Alarm Offset (in seconds)</h2>
           <AlarmOffsetForm
             inputStyles={inputStyles}
             alarmOffsetSettings={alarmOffsetSettings}
             onChangeSettings={(newSettings) => setAlarmOffsetSettings(newSettings)}
           />
 
+          {/* <h2 className={subHeadingStyles}>Alarm Sound</h2>
+          <AlarmOffsetForm
+            inputStyles={inputStyles}
+            alarmOffsetSettings={alarmOffsetSettings}
+            onChangeSettings={(newSettings) => setAlarmOffsetSettings(newSettings)}
+          /> */}
+
           <div
-            className={`flex flex-row justify-end gap-2 py-4 mt-4 border-t ${theme.borderColors.headerBottom}`}
+            className={`flex flex-row justify-end gap-2 py-4 mt-4 border-t ${theme.borderColors.feature}`}
           >
             <button
               type="submit"

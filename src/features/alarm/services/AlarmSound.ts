@@ -6,6 +6,7 @@ class AlarmSound {
   private _isOn: boolean;
 
   constructor() {
+    console.log('AlarmSound class constructed');
     let soundFile; //may be needed for later with settings
     soundFile = require(`../../../assets/media/${sounds.BEEP}`);
     this._alarmSound = new Audio(soundFile);

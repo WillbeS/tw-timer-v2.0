@@ -37,6 +37,12 @@ export const getApiKeyFromStorage = () => {
   // return oldKey;
 };
 
+export const isConnected = (): boolean => {
+  const key = getApiKeyFromStorage();
+
+  return key ? true : false;
+};
+
 // This is to support legacy code
 const getApiKeyFromOldStorage = (): ApiKey | undefined => {
   const adminIds = getAdminIds();

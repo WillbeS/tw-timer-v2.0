@@ -5,7 +5,7 @@ let allTimes: { id: string; dueMs: number }[] = [];
 const todosById: { [id: string]: TaskData } = {};
 
 // This should run only once for the entire app
-console.log('Setting up an interval');
+//console.log('Setting up an interval');
 setInterval(() => {
   for (const todo of allTimes) {
     if (Math.round((new Date().getTime() - todo.dueMs) / 1000) === 0) {

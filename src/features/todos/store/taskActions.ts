@@ -6,8 +6,6 @@ import { addError } from '../../messages/store/messageSlice';
 
 import { getApiKeyFromStorage } from '../../security/services/apiKeySorage';
 
-const apiKey = getApiKeyFromStorage();
-
 export const fetchAllTasks = createAsyncThunk<{ tasks: TaskData[] }, string, { rejectValue: null }>(
   'tasks/fetchAll',
   async (token, thunkAPI) => {
@@ -30,6 +28,8 @@ export const saveTasks = createAsyncThunk<
   { rejectValue: TaskData[] }
 >('tasks/saveTasks', async ({ tasks, world }, thunkAPI) => {
   try {
+    const apiKey = getApiKeyFromStorage();
+
     if (apiKey) {
       await api.post(`timer/tasks/${world}`, tasks, apiKey.token);
     }
@@ -48,6 +48,8 @@ export const toggleCompleted = createAsyncThunk<
   { rejectValue: void }
 >('tasks/toggleCompleted', async (task, thunkAPI) => {
   try {
+    const apiKey = getApiKeyFromStorage();
+
     if (apiKey) {
       await api.put('timer/tasks/' + task.id, task, apiKey.token);
     }
@@ -64,6 +66,8 @@ export const deleteTask = createAsyncThunk<string, string, { rejectValue: string
   'tasks/deleteTask',
   async (id, thunkAPI) => {
     try {
+      const apiKey = getApiKeyFromStorage();
+
       if (apiKey) {
         await api.delete('timer/tasks/' + id, apiKey.token);
       }
@@ -80,6 +84,8 @@ export const deleteTask = createAsyncThunk<string, string, { rejectValue: string
 
 export const deleteCompleted = createAsyncThunk('tasks/deleteCompleted', async (_, thunkAPI) => {
   try {
+    const apiKey = getApiKeyFromStorage();
+
     if (apiKey) {
       await api.delete('timer/tasks/delete/completed', apiKey.token);
     }
@@ -92,6 +98,8 @@ export const deleteCompleted = createAsyncThunk('tasks/deleteCompleted', async (
 
 export const deleteAll = createAsyncThunk('tasks/deleteAll', async (_, thunkAPI) => {
   try {
+    const apiKey = getApiKeyFromStorage();
+
     if (apiKey) {
       await api.delete('timer/tasks', apiKey.token);
     }

@@ -3,25 +3,21 @@ import { useState } from 'react';
 import { CopyToClipboardBtn } from '../../../components/ui/CopyToClipboardBtn';
 
 type Props = {
-  online: boolean;
   token: string;
   onRemove: () => void;
 };
 
-export const ConnectedStatus = ({ online, token, onRemove }: Props) => {
+export const ConnectedStatus = ({ token, onRemove }: Props) => {
   const [keyIsVisible, setKeyIsVisible] = useState(false);
 
   const toggleKeyVisibility = () => {
     setKeyIsVisible((prev) => !prev);
   };
 
-  const statusText = online ? 'connected' : 'not connected';
-  const statusTextColor = online ? 'text-green-500' : 'text-red-500';
-
   return (
     <section className="mb-4">
       <h2 className="text:md md:text-xl font-semibold mb-2">
-        Status: <span className={statusTextColor}>{statusText}</span>
+        Status: <span className="text-green-500">connected</span>
       </h2>
       <p className="text-sm italic">
         Your tasks will be saved on the server. Use the assosiated key to give access to another

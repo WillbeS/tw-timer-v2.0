@@ -26,9 +26,11 @@ export function Header() {
       <div className="flex gap-3">
         {/* <RoundedButton label="Settings" symbol="⚙" onClick={() => console.log('Settings button')} /> */}
         <Settings />
-        <RemoteConnection />
+
         <RoundedButton label="Help" symbol="?" onClick={() => navigate('/help')} />
         {/* <HelpWrapper /> */}
+
+        <RemoteConnection />
       </div>
     </header>
   );

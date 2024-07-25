@@ -5,20 +5,3 @@ export const sounds = {
   VIB: 'vibration.mp3',
   BEEP: 'beep.wav',
 };
-
-// I dodn't need these any more!!!
-// export const amberTheme = {
-//   bgColor: 'bg-amber-800',
-//   headerBorder: 'border-yellow-900',
-//   taksBgColor: 'bg-orange-100',
-// };
-
-// export const stoneTheme = {
-//   bgColor: 'bg-stone-800',
-//   headerBorder: 'border-stone-700',
-//   taksBgColor: 'bg-stone-100',
-// };
-
-//export const defaultTheme = amberTheme;
-// export const defaultTheme = stoneTheme;
-/////////////////////////////////////////

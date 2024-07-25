@@ -35,7 +35,7 @@ export const RemoteConnection = () => {
     >
       <div className="px-2 py-3 rounded-md">
         {apiKey ? (
-          <ConnectedStatus online={online} token={apiKey.token} onRemove={deleteConnection} />
+          <ConnectedStatus token={apiKey.token} onRemove={deleteConnection} />
         ) : (
           <NotConnectedStatus onConnect={addConnection} />
         )}

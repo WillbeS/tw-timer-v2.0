@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ApiKey } from '../data/types';
 import {
   getApiKeyFromStorage,
+  isConnected,
   removeApiKeyFromStorage,
   saveApiKeyToStorage,
 } from '../services/apiKeySorage';
@@ -16,7 +17,7 @@ interface ConnectionState {
 
 const initialState: ConnectionState = {
   loading: false,
-  online: true,
+  online: isConnected(),
   apiKey: getApiKeyFromStorage(),
 };
 

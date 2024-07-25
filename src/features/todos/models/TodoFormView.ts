@@ -1,28 +1,25 @@
+import { TaskTypes } from '../../../data/types';
+import { AlarmOffsetSettings } from '../../settings/data/types';
 import { todoTypes, attackSubtypes } from '../data/constants';
 import { AddTasksFormInput, AddTasksFormErrors } from '../data/types';
 
 export class TodoFormView {
   //this should come from the settings
-  private offsetByType = {
-    [todoTypes.DODGE]: '420',
-    [todoTypes.ATTACK]: '90',
-    [todoTypes.SNIPE]: '60',
-    // [todoTypes.MINTING]: '30',
-    [todoTypes.REMINDER]: '0',
-  };
+  // private offsetByType = {
+  //   [todoTypes.DODGE]: '420',
+  //   [todoTypes.ATTACK]: '90',
+  //   [todoTypes.SNIPE]: '60',
+  //   // [todoTypes.MINTING]: '30',
+  //   [todoTypes.REMINDER]: '0',
+  // };
 
-  private offsetBySubtype = {
-    [attackSubtypes.CLEAR_NUKE]: '90',
-    [attackSubtypes.CAT_NUKE]: '90',
-    [attackSubtypes.ANTI_SNIPE]: '150',
-    [attackSubtypes.NOBLE_NUKE]: '90',
-    [attackSubtypes.SPLIT_NOBLE_TRAIN]: '150',
-    [attackSubtypes.NOBLE_TRAIN]: '120',
-    [attackSubtypes.FANG]: '90',
-    [attackSubtypes.TIMED_FAKE]: '60',
-  };
+  private defaultOffsetValues: AlarmOffsetSettings;
 
   protected _errors: AddTasksFormErrors = {};
+
+  public constructor(defaultOffset: AlarmOffsetSettings) {
+    this.defaultOffsetValues = defaultOffset;
+  }
 
   public isValid(todoInput: AddTasksFormInput): boolean {
     this.validateType(todoInput.type);
@@ -37,17 +34,13 @@ export class TodoFormView {
     return Object.keys(this.errors).length === 0;
   }
 
-  public getOffset(type: string, subtype?: string) {
-    if (subtype) {
-      return this.offsetBySubtype[subtype];
-    }
-
-    return this.offsetByType[type] ?? '0';
+  public getOffset(type: TaskTypes) {
+    return this.defaultOffsetValues[type];
   }
 
   // This may become unneeded, should check on cleanup!!!
-  public getOffsetByType(type: string) {
-    return this.offsetByType[type] ?? '0';
+  public getOffsetByType(type: TaskTypes) {
+    return this.defaultOffsetValues[type];
   }
 
   public get errors(): AddTasksFormErrors {

@@ -60,6 +60,7 @@ export const Task = ({ todo, onDynamicUpdate, onToggleCompleted }: Props) => {
               ⟳
             </span>
           ) : null}
+          {todoView.getId()}
         </span>
       </div>
       <div className="flex gap-2 md:gap-6 justify-end items-center pr-0 md:pr-3">

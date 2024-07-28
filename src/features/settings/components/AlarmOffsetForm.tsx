@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { TaskTypes } from '../../../data/types';
 import { AlarmOffsetSettings } from '../data/types';
 
@@ -9,11 +8,9 @@ type Props = {
 };
 
 export const AlarmOffsetForm = ({ inputStyles, alarmOffsetSettings, onChangeSettings }: Props) => {
-  const [inputValues, setInputValues] = useState<AlarmOffsetSettings>({ ...alarmOffsetSettings });
-
   const onInputChange = (e: any, taskType: TaskTypes) => {
     const newValues = { ...alarmOffsetSettings, [taskType]: e.target.value };
-    setInputValues(newValues);
+
     onChangeSettings(newValues);
   };
 
@@ -27,7 +24,7 @@ export const AlarmOffsetForm = ({ inputStyles, alarmOffsetSettings, onChangeSett
             <input
               type="number"
               name={type}
-              value={inputValues[taskType]}
+              value={alarmOffsetSettings[taskType]}
               className={`${inputStyles} w-2/6`}
               onChange={(e) => onInputChange(e, taskType)}
             />

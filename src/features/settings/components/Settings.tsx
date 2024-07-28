@@ -7,24 +7,28 @@ import { settingsSelector, updateSettings } from '../store/settingsSlice';
 import { SyntheticEvent, useState } from 'react';
 import { AlarmOffsetForm } from './AlarmOffsetForm';
 import { addSuccess } from '../../messages/store/messageSlice';
+import { AlarmSoundForm } from './AlarmSoundForm';
 
 export const Settings = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
-  const settings = useAppSelector(settingsSelector);
+  const { alarmOffset, alarmSoundFile } = useAppSelector(settingsSelector);
   //console.log(settings);
 
-  const [alarmOffsetSettings, setAlarmOffsetSettings] = useState({ ...settings.alarmOffset });
+  const [alarmOffsetSettings, setAlarmOffsetSettings] = useState({ ...alarmOffset });
+  const [alarmSoundSettings, setAlarmSoundSettings] = useState(alarmSoundFile);
+
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     const newSettings = {
       alarmOffset: alarmOffsetSettings,
+      alarmSoundFile: alarmSoundSettings,
     };
 
     console.log(alarmOffsetSettings);
     dispatch(updateSettings(newSettings));
-    dispatch(addSuccess('Your settings were successfully saved.'));
+    dispatch(addSuccess('Your new settings were successfully saved.'));
     onCloseModal();
   };
 
@@ -44,19 +48,19 @@ export const Settings = () => {
     >
       <div className="p-4">
         <form className="w-full md:w-3/4 mx-auto" onSubmit={handleSubmit}>
-          <h2 className={subHeadingStyles}>Default Alarm Offset (in seconds)</h2>
+          <h2 className={subHeadingStyles}>Default Alarm Offset (play sound N seconds early)</h2>
           <AlarmOffsetForm
             inputStyles={inputStyles}
             alarmOffsetSettings={alarmOffsetSettings}
             onChangeSettings={(newSettings) => setAlarmOffsetSettings(newSettings)}
           />
 
-          {/* <h2 className={subHeadingStyles}>Alarm Sound</h2>
-          <AlarmOffsetForm
+          <h2 className={subHeadingStyles}>Alarm Sound</h2>
+          <AlarmSoundForm
             inputStyles={inputStyles}
-            alarmOffsetSettings={alarmOffsetSettings}
-            onChangeSettings={(newSettings) => setAlarmOffsetSettings(newSettings)}
-          /> */}
+            alarmSoundSettings={alarmSoundSettings}
+            onChangeSettings={(newSettings) => setAlarmSoundSettings(newSettings)}
+          />
 
           <div
             className={`flex flex-row justify-end gap-2 py-4 mt-4 border-t ${theme.borderColors.feature}`}

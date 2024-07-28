@@ -1,23 +1,24 @@
 import { getObjFromStorage, saveToStorage } from '../../../services/storageManager';
-import { ALARM_OFFSET_DEFAULT_VALUES } from '../data/constants';
+import { ALARM_OFFSET_DEFAULT_VALUES, ALARM_SOUND_DEFAULT } from '../data/constants';
 import { AppSettings } from '../data/types';
 
-const STORAKE_KEY_SETTINGS = 'settings';
+const STORAKE_KEY_SETTTNGS = 'settings';
 
 const defaultSettings: AppSettings = {
   alarmOffset: ALARM_OFFSET_DEFAULT_VALUES,
+  alarmSoundFile: ALARM_SOUND_DEFAULT,
 };
 
 export const getSettingsFromStorage = (): AppSettings => {
-  const storageSettings: AppSettings = getObjFromStorage(STORAKE_KEY_SETTINGS);
+  let storageSettings: AppSettings = getObjFromStorage(STORAKE_KEY_SETTTNGS);
 
-  if (Object.keys(storageSettings).length > 0) {
-    return storageSettings;
+  if (Object.keys(storageSettings).length < Object.keys(defaultSettings).length) {
+    storageSettings = defaultSettings;
   }
 
-  return defaultSettings;
+  return storageSettings;
 };
 
 export const saveSettingsToStorage = (settings: object) => {
-  saveToStorage(STORAKE_KEY_SETTINGS, settings);
+  saveToStorage(STORAKE_KEY_SETTTNGS, settings);
 };

@@ -1,4 +1,4 @@
-import { sounds } from '../../../data/constants';
+import { getSettingsFromStorage } from '../../settings/services/settingsStorage';
 
 // Later the sound file and loop interval will be determined by settings
 class AlarmSound {
@@ -7,8 +7,8 @@ class AlarmSound {
 
   constructor() {
     console.log('AlarmSound class constructed');
-    let soundFile; //may be needed for later with settings
-    soundFile = require(`../../../assets/media/${sounds.BEEP}`);
+    const { alarmSoundFile } = getSettingsFromStorage();
+    const soundFile = require(`../../../assets/media/${alarmSoundFile}`);
     this._alarmSound = new Audio(soundFile);
     this._isOn = false;
   }

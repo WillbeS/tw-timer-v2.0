@@ -1,39 +1,32 @@
-import { useState } from 'react';
-import { TaskTypes } from '../../../data/types';
-import { AlarmOffsetSettings } from '../data/types';
+import { Select } from '../../../components/form/Select';
+import { theme } from '../../../themes';
+import { ALARM_SOUNDS } from '../data/constants';
 
 type Props = {
   inputStyles: string;
-  alarmOffsetSettings: AlarmOffsetSettings;
-  onChangeSettings: (newSettings: AlarmOffsetSettings) => void;
+  alarmSoundSettings: string;
+  onChangeSettings: (newSettings: string) => void;
 };
 
-export const AlarmSoundForm = ({ inputStyles, alarmOffsetSettings, onChangeSettings }: Props) => {
-  const [inputValues, setInputValues] = useState<AlarmOffsetSettings>({ ...alarmOffsetSettings });
-
-  const onInputChange = (e: any, taskType: TaskTypes) => {
-    const newValues = { ...alarmOffsetSettings, [taskType]: e.target.value };
-    setInputValues(newValues);
-    onChangeSettings(newValues);
+export const AlarmSoundForm = ({ inputStyles, alarmSoundSettings, onChangeSettings }: Props) => {
+  const onInputChange = (newValue: string) => {
+    onChangeSettings(newValue);
   };
 
+  const soundOptions = Object.keys(ALARM_SOUNDS).map((key) => {
+    return { label: key, value: ALARM_SOUNDS[key] };
+  });
+
   return (
-    <>
-      {Object.keys(alarmOffsetSettings).map((type, i) => {
-        const taskType = type as TaskTypes;
-        return (
-          <div className="mb-1" key={i}>
-            <div className="mr-4 w-3/6 inline-block">{type}</div>
-            <input
-              type="number"
-              name={type}
-              value={inputValues[taskType]}
-              className={`${inputStyles} w-2/6`}
-              onChange={(e) => onInputChange(e, taskType)}
-            />
-          </div>
-        );
-      })}
-    </>
+    <div className="md:w-2/3 flex justify-end">
+      <Select
+        options={soundOptions}
+        defaultValue={alarmSoundSettings}
+        fullWidth
+        onChange={(selected) => onInputChange(selected)}
+        bgColor="bg-white"
+        textColor={theme.textColors.lightBox}
+      />
+    </div>
   );
 };

@@ -4,7 +4,12 @@ import { RootState } from '../../../store/store';
 import { getSettingsFromStorage, saveSettingsToStorage } from '../services/settingsStorage';
 import { AppSettings } from '../data/types';
 
-const initialState: AppSettings = getSettingsFromStorage();
+const { alarmOffset, alarmSoundFile } = getSettingsFromStorage();
+
+const initialState: AppSettings = {
+  alarmOffset,
+  alarmSoundFile,
+};
 
 const settingsSlice = createSlice({
   name: 'settings',

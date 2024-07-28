@@ -1,5 +1,6 @@
 import { Select } from '../../../components/form/Select';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { theme } from '../../../themes';
 import { todoTypes } from '../data/constants';
 import { UNSELECTED_TYPE } from '../data/constants';
 import { selectType, todosSelector } from '../store/todoSlice';
@@ -19,6 +20,9 @@ export const TypeSelect = () => {
       defaultValue={selectedType}
       fullWidth
       onChange={(selected) => dispatch(selectType(selected))}
+      borderColor={theme.borderColors.button}
+      bgColor={theme.bgColors.button}
+      textColor={theme.textColors.button}
     />
   );
 };

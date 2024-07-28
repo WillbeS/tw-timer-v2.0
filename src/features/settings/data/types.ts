@@ -4,6 +4,7 @@ export type AlarmOffsetSettings = {
   [key in TaskTypes]: string;
 };
 
-export interface AppSettings {
+export type AppSettings = {
   alarmOffset: AlarmOffsetSettings;
-}
+  alarmSoundFile: string;
+};

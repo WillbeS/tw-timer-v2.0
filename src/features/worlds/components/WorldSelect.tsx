@@ -1,5 +1,6 @@
 import { Select } from '../../../components/form/Select';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { theme } from '../../../themes';
 import { UNSELECTED_WORLD } from '../data/constants';
 import { selectWorld, worldSelector } from '../store/worldSlice';
 
@@ -18,6 +19,9 @@ export const WorldSelect = () => {
       defaultValue={selectedWorld}
       fullWidth
       onChange={(selected) => dispatch(selectWorld(selected))}
+      borderColor={theme.borderColors.button}
+      bgColor={theme.bgColors.button}
+      textColor={theme.textColors.button}
     />
   );
 };

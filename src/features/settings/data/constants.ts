@@ -8,3 +8,10 @@ export const ALARM_OFFSET_DEFAULT_VALUES: AlarmOffsetSettings = {
   // [TaskTypes.Minting]: '30',
   [TaskTypes.Reminder]: '0',
 };
+
+export const ALARM_SOUNDS: { [key: string]: string } = {
+  Beep: 'beep.wav',
+  Vibration: 'vibration.mp3',
+};
+
+export const ALARM_SOUND_DEFAULT = ALARM_SOUNDS.Beep;

@@ -12,7 +12,7 @@ export function Header() {
 
   return (
     <header
-      className={`flex items-center justify-between py-4 border-b ${theme.borderColors.headerBottom}`}
+      className={`flex items-center justify-between py-4 border-b ${theme.borderColors.main}`}
     >
       <h1 className="flex cursor-pointer" onClick={() => navigate('')}>
         <span>

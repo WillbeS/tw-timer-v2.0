@@ -4,12 +4,15 @@ import reportWebVitals from './reportWebVitals';
 import Routes from './Routes';
 
 import './assets/css/index.css';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
-    <Routes />
-    {/* <TestDesignPage /> */}
+    <Provider store={store}>
+      <Routes />
+    </Provider>
   </React.StrictMode>,
 );
 

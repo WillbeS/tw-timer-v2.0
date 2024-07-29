@@ -25,3 +25,9 @@ Status codes and response body:
 GET - 200 - the resource
 POST - 201 - empty response body
 DELETE/PUT/PATCH - 204, empty response body
+
+---
+
+How to reload the page
+
+window.location.reload();

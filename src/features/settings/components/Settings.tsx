@@ -8,31 +8,35 @@ import { SyntheticEvent, useState } from 'react';
 import { AlarmOffsetForm } from './AlarmOffsetForm';
 import { addSuccess } from '../../messages/store/messageSlice';
 import { AlarmSoundForm } from './AlarmSoundForm';
+import { ColorThemePicker } from '../../themes';
 
 export const Settings = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
-  const { alarmOffset, alarmSoundFile } = useAppSelector(settingsSelector);
+  const { alarmOffset, alarmSoundFile, colorTheme } = useAppSelector(settingsSelector);
   //console.log(settings);
 
   const [alarmOffsetSettings, setAlarmOffsetSettings] = useState({ ...alarmOffset });
   const [alarmSoundSettings, setAlarmSoundSettings] = useState(alarmSoundFile);
+  const [colorThemeSettings, setColorThemeSettings] = useState(colorTheme);
 
   const dispatch = useAppDispatch();
 
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
+
     const newSettings = {
       alarmOffset: alarmOffsetSettings,
       alarmSoundFile: alarmSoundSettings,
+      colorTheme: colorThemeSettings,
     };
 
-    console.log(alarmOffsetSettings);
     dispatch(updateSettings(newSettings));
     dispatch(addSuccess('Your new settings were successfully saved.'));
     onCloseModal();
   };
 
-  const subHeadingStyles = `py-3 text-md font-semibold mt-5 border-t ${theme.borderColors.feature}`;
+  const heading2Styles = `text-lg font-bold uppercase py-3 mt-5 border-t ${theme.borderColors.button}`;
+  const heading3Styles = `py-2 text-md font-semibold border-t ${theme.borderColors.feature}`;
   const inputStyles =
     'rounded-md border border-stone-200 focus:outline-none px-4 py-1 text-sm md:text-base bg-white bg-opacity-40';
 
@@ -48,18 +52,25 @@ export const Settings = () => {
     >
       <div className="p-4">
         <form className="w-full md:w-3/4 mx-auto" onSubmit={handleSubmit}>
-          <h2 className={subHeadingStyles}>Default Alarm Offset (play sound N seconds early)</h2>
+          <h2 className={heading2Styles}>Alarm</h2>
+          <h3 className={heading3Styles}>Default Offset (play sound N seconds early)</h3>
           <AlarmOffsetForm
             inputStyles={inputStyles}
             alarmOffsetSettings={alarmOffsetSettings}
             onChangeSettings={(newSettings) => setAlarmOffsetSettings(newSettings)}
           />
 
-          <h2 className={subHeadingStyles}>Alarm Sound</h2>
+          <h3 className={heading3Styles}>Sound</h3>
           <AlarmSoundForm
-            inputStyles={inputStyles}
             alarmSoundSettings={alarmSoundSettings}
             onChangeSettings={(newSettings) => setAlarmSoundSettings(newSettings)}
+          />
+
+          <h2 className={heading2Styles}>Theme</h2>
+          <h3 className={heading3Styles}>Color Themes</h3>
+          <ColorThemePicker
+            colorThemeSettings={colorThemeSettings}
+            onChangeTheme={(newSettings) => setColorThemeSettings(newSettings)}
           />
 
           <div

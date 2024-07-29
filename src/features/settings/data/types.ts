@@ -7,4 +7,5 @@ export type AlarmOffsetSettings = {
 export type AppSettings = {
   alarmOffset: AlarmOffsetSettings;
   alarmSoundFile: string;
+  colorTheme: string;
 };

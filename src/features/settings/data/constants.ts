@@ -1,6 +1,12 @@
 import { TaskTypes } from '../../../data/types';
 import { AlarmOffsetSettings } from './types';
 
+export const THEMES = {
+  BLUE: 'Blue',
+  TW: 'TW',
+  SLATE: 'Slate',
+};
+
 export const ALARM_OFFSET_DEFAULT_VALUES: AlarmOffsetSettings = {
   [TaskTypes.Dodge]: '420',
   [TaskTypes.Attack]: '90',
@@ -15,3 +21,11 @@ export const ALARM_SOUNDS: { [key: string]: string } = {
 };
 
 export const ALARM_SOUND_DEFAULT = ALARM_SOUNDS.Beep;
+
+export const SUPPORTED_THEMES = {
+  BROWN: 'brown',
+  BLUE: 'blue',
+  SLATE: 'slate',
+};
+
+export const COLOR_THEME_DEFAULT = SUPPORTED_THEMES.BROWN;

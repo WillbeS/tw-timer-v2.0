@@ -1,3 +1,5 @@
+import { ColorTheme } from './ColorTheme';
+
 export const bgColors = {
   main: 'bg-slate-500',
   lightBox: 'bg-stone-100',
@@ -6,9 +8,10 @@ export const bgColors = {
 };
 
 export const borderColors = {
-  headerBottom: 'border-slate-800',
+  main: 'border-slate-800',
   button: 'border-slate-800',
-  feature: ' border-stone-200',
+  feature: 'border-stone-200',
+  lightBox: 'border-stone-100',
 };
 
 export const textColors = {
@@ -19,16 +22,16 @@ export const textColors = {
   lightBox: 'text-stone-700',
 };
 
-export const colors = {
-  main: 'slate-500',
-  lightBox: 'stone-100',
-  button: 'slate-400',
-  feature: 'slate-700',
-};
-
 export const fillColors = {
   main: 'fill-slate-500',
   lightBox: 'fill-stone-100',
   button: 'fill-slate-400',
   feature: 'fill-slate-700',
+};
+
+export const slate: ColorTheme = {
+  bgColors,
+  borderColors,
+  textColors,
+  fillColors,
 };

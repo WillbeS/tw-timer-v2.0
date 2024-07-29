@@ -6,6 +6,7 @@ import worldReducer from '../features/worlds/store/worldSlice';
 import messageReducer from '../features/messages/store/messageSlice';
 import connectionReducer from '../features/security/store/connectionSlice';
 import settingsReducer from '../features/settings/store/settingsSlice';
+import themesReducer from '../features/themes/store/themeSlice';
 
 export const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ export const store = configureStore({
     messages: messageReducer,
     connection: connectionReducer,
     settings: settingsReducer,
+    themes: themesReducer,
   },
 });
 

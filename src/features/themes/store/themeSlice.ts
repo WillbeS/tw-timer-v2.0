@@ -1,10 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 
-import { ColorTheme } from '../../../themes/ColorTheme';
-import { allThemes } from '../../../themes';
-
 import { getSettingsFromStorage } from '../../settings/services/settingsStorage';
+import { allThemes } from '../data/constants';
+import { ColorTheme } from '../data/ColorTheme';
 
 interface ThemeState {
   theme: ColorTheme;

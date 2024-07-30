@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { RoundedButton } from '../ui/RoundedButton';
 
-import { theme } from '../../themes';
 import { RemoteConnection } from '../../features/security/components/RemoteConnection';
 import { Settings } from '../../features/settings/components/Settings';
+import { useAppSelector } from '../../store/hooks';
+import { themeSelector } from '../../features/themes/store/themeSlice';
 
 export function Header() {
   const navigate = useNavigate();
+  const { theme } = useAppSelector(themeSelector);
 
   return (
     <header

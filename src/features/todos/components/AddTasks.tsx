@@ -6,27 +6,17 @@ import { getParser } from '../services/parsers';
 import { addError } from '../../messages/store/messageSlice';
 import { isDuplicate } from '../services/todoStorage';
 import { saveTasks } from '../store/taskActions';
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { TasksForm } from './TasksForm';
-
-import { theme } from '../../../themes';
-
-const OpenBtn = () => (
-  <div
-    aria-label="Add"
-    area-role="button"
-    className={`text-center rounded-md p-2 md:py-4 md:px-5 lg:w-4/6 mx-auto ${theme.bgColors.feature} border ${theme.borderColors.feature} border-dashed cursor-pointer mt-2 font-semibold ${theme.textColors.feature}`}
-  >
-    Add Tasks
-  </div>
-);
+import { themeSelector } from '../../themes/store/themeSlice';
 
 export const AddTasks = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
   const dispatch = useAppDispatch();
+  const { theme } = useAppSelector(themeSelector);
 
   const onSubmit = async (todoInput: AddTasksFormInput) => {
     try {
@@ -42,6 +32,16 @@ export const AddTasks = () => {
       onCloseModal();
     }
   };
+
+  const OpenBtn = () => (
+    <div
+      aria-label="Add"
+      area-role="button"
+      className={`text-center rounded-md p-2 md:py-4 md:px-5 lg:w-4/6 mx-auto ${theme.bgColors.feature} border ${theme.borderColors.feature} border-dashed cursor-pointer mt-2 font-semibold ${theme.textColors.feature}`}
+    >
+      Add Tasks
+    </div>
+  );
 
   return (
     <ModalWrapper2

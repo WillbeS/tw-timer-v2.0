@@ -1,19 +1,14 @@
-import { selectTotalCount, todosSelector } from '../store/todoSlice';
+import { selectTotalCount } from '../store/todoSlice';
 
 import { AddTasks } from './AddTasks';
 import { Alarm } from '../../alarm';
 
-import { theme } from '../../../themes';
 import { useAppSelector } from '../../../store/hooks';
-// import { worldSelector } from '../../worlds/store/worldSlice';
-// import { UNSELECTED_TYPE } from '../data/constants';
+import { themeSelector } from '../../themes/store/themeSlice';
 
 export const TopContent = () => {
   const totalCount = useAppSelector(selectTotalCount);
-  // const { selectedWorld } = useAppSelector(worldSelector);
-  // const { selectedType } = useAppSelector(todosSelector);
-
-  // const type = selectedType !== UNSELECTED_TYPE ? selectedType : 'all types';
+  const { theme } = useAppSelector(themeSelector);
 
   return (
     <>

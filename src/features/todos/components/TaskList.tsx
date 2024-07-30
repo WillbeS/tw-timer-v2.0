@@ -14,9 +14,10 @@ import { TaskData } from '../data/types';
 import { toggleCompleted } from '../store/taskActions';
 import { CompletedTask } from './CompletedTask';
 import { Spinner } from '../../../components/ui/Spinner';
-import { theme } from '../../../themes';
+import { themeSelector } from '../../themes/store/themeSlice';
 
 export const TaskList = () => {
+  const { theme } = useAppSelector(themeSelector);
   const dispatch = useAppDispatch();
   const { loading, showCompleted } = useAppSelector(todosSelector);
 

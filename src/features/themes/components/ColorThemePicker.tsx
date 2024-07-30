@@ -1,10 +1,9 @@
 import { useAppDispatch } from '../../../store/hooks';
-import { allThemes } from '../../../themes';
+import { allThemes } from '../data/constants';
 import { selectTheme } from '../store/themeSlice';
 import { ColorThemeBtn } from './ColorThemeBtn';
 
 type Props = {
-  colorThemeSettings: string;
   onChangeTheme: (newThemeName: string) => void;
 };
 

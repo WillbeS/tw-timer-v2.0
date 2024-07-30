@@ -13,7 +13,7 @@ function App() {
 
   // console.log('App is rendering');
   return (
-    <ErrorBoundary>
+    <ErrorBoundary theme={theme}>
       <div
         className={`relative min-h-screen px-3 lg:px-6 ${theme.bgColors.main} ${theme.textColors.main}`}
       >

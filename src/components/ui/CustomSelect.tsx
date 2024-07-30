@@ -2,8 +2,8 @@
 import { useState, useRef } from 'react';
 import { ReactComponent as DownArrow } from '../../assets/img/down-arrow.svg';
 import { ReactComponent as UpArrow } from '../../assets/img/up-arrow.svg';
-
-import { theme } from '../../themes';
+import { useAppSelector } from '../../store/hooks';
+import { themeSelector } from '../../features/themes/store/themeSlice';
 
 type Option = {
   value: string;
@@ -27,6 +27,7 @@ export const CustomSelect = ({
   txtColor,
   borderColor = 'yellow-800',
 }: Props) => {
+  const { theme } = useAppSelector(themeSelector);
   const [isOpen, setisOpen] = useState(false);
   defaultOption = defaultOption ? defaultOption : options[0];
   const [selected, setSelected] = useState<Option>(defaultOption);

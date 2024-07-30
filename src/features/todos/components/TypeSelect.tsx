@@ -1,12 +1,14 @@
 import { Select } from '../../../components/form/Select';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { theme } from '../../../themes';
+import { themeSelector } from '../../themes/store/themeSlice';
+
 import { todoTypes } from '../data/constants';
 import { UNSELECTED_TYPE } from '../data/constants';
 import { selectType, todosSelector } from '../store/todoSlice';
 
 export const TypeSelect = () => {
   const dispatch = useAppDispatch();
+  const { theme } = useAppSelector(themeSelector);
   const { selectedType } = useAppSelector(todosSelector);
 
   const typeOptions = Object.values(todoTypes).map((value) => {

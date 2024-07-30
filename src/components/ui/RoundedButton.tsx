@@ -1,4 +1,5 @@
-import { theme } from '../../themes';
+import { themeSelector } from '../../features/themes/store/themeSlice';
+import { useAppSelector } from '../../store/hooks';
 
 type Props = {
   label: string;
@@ -9,6 +10,7 @@ type Props = {
 };
 
 export const RoundedButton = ({ label, onClick, symbol, bgColor, txtColor }: Props) => {
+  const { theme } = useAppSelector(themeSelector);
   const handleClick = () => {
     if (onClick) {
       onClick();

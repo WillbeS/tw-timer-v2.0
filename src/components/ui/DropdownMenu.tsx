@@ -1,12 +1,13 @@
 import { useState, useRef } from 'react';
-
-import { theme } from '../../themes';
+import { useAppSelector } from '../../store/hooks';
+import { themeSelector } from '../../features/themes/store/themeSlice';
 
 type Props = {
   children: React.ReactNode;
 };
 
 export const DropdownMenu = ({ children }: Props) => {
+  const { theme } = useAppSelector(themeSelector);
   const [isOpen, setisOpen] = useState(false);
   const catMenu = useRef<HTMLDivElement>(null);
 

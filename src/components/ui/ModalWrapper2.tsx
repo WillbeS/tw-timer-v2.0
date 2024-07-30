@@ -1,10 +1,9 @@
 // Used in all components
 import { MouseEvent } from 'react';
-
 import { CloseBtn } from './CloseBtn';
-
-import { theme } from '../../themes';
 import { useModalWrapper } from '../../hooks/useModalWrapper';
+import { useAppSelector } from '../../store/hooks';
+import { themeSelector } from '../../features/themes/store/themeSlice';
 
 type Props = {
   heading: string;
@@ -25,7 +24,7 @@ export const ModalWrapper2 = ({
   children,
   openBtn,
 }: Props) => {
-  const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
+  const { theme } = useAppSelector(themeSelector);
 
   const handleClose = (e: MouseEvent<HTMLElement>) => {
     onClose();

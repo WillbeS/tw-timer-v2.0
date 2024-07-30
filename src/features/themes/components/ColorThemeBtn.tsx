@@ -1,4 +1,4 @@
-import { ColorTheme } from '../../../themes/ColorTheme';
+import { ColorTheme } from '../data/ColorTheme';
 
 type Props = {
   theme: ColorTheme;

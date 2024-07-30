@@ -7,9 +7,9 @@ import { CountdownTimer } from '../../alarm/components/CountdownTimer';
 import { TaskDetails } from './TaskDetails';
 import { TaskMessage } from './TaskMessage';
 
-import { theme } from '../../../themes';
-import { useAppDispatch } from '../../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { deleteTask } from '../store/taskActions';
+import { themeSelector } from '../../themes/store/themeSlice';
 
 type Props = {
   todo: TaskData;
@@ -18,6 +18,7 @@ type Props = {
 };
 
 export const Task = ({ todo, onDynamicUpdate, onToggleCompleted }: Props) => {
+  const { theme } = useAppSelector(themeSelector);
   const dispatch = useAppDispatch();
 
   const todoView = getTodoView(todo);

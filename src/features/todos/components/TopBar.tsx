@@ -1,17 +1,14 @@
-import { RootState } from '../../../store/store';
-
 import { todoTypes } from '../data/constants';
-
-import { Select } from '../../../components/form/Select';
-import { theme } from '../../../themes';
 import { useAppSelector } from '../../../store/hooks';
 
 import { ListOptionsMenu } from './ListOptionsMenu';
 import { WorldSelect } from '../../worlds/components/WorldSelect';
 import { todosSelector } from '../store/todoSlice';
 import { TypeSelect } from './TypeSelect';
+import { themeSelector } from '../../themes/store/themeSlice';
 
 export const TopBar = () => {
+  const { theme } = useAppSelector(themeSelector);
   const { showCompleted } = useAppSelector(todosSelector);
 
   const typeOptions = Object.values(todoTypes).map((value) => {

@@ -1,10 +1,11 @@
 import { Select } from '../../../components/form/Select';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { theme } from '../../../themes';
+import { themeSelector } from '../../themes/store/themeSlice';
 import { UNSELECTED_WORLD } from '../data/constants';
 import { selectWorld, worldSelector } from '../store/worldSlice';
 
 export const WorldSelect = () => {
+  const { theme } = useAppSelector(themeSelector);
   const { worlds, selectedWorld } = useAppSelector(worldSelector);
   const dispatch = useAppDispatch();
 

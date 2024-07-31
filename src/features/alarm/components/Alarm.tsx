@@ -11,9 +11,11 @@ import alarmSound from '../services/AlarmSounds';
 import { SwitchBtn2 } from '../../../components/ui/SwitchBtn2';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { settingsSelector } from '../../settings/store/settingsSlice';
+import { themeSelector } from '../../themes/store/themeSlice';
 
 // TODO - refactor this at all cost!!!
 export const Alarm = () => {
+  const { theme } = useAppSelector(themeSelector);
   const dispatch = useAppDispatch();
   const todos: TaskData[] = Object.values(useAppSelector(taskSelector));
   const timer: Worker = useMemo(
@@ -54,7 +56,7 @@ export const Alarm = () => {
 
   return (
     <span className="inline-flex items-center ml-auto">
-      <span className="text-md font-bold mr-2">Alarm</span>
+      <span className={`text-md font-bold mr-2 ${theme.textColors.feature}`}>Alarm</span>
       <SwitchBtn2 onToggle={handleToggle} />
     </span>
   );

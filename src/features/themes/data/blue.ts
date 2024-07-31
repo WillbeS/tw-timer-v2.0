@@ -3,15 +3,15 @@ import { ColorTheme } from './ColorTheme';
 export const bgColors = {
   main: 'bg-sky-700',
   lightBox: 'bg-slate-100',
-  button: 'bg-sky-800',
-  feature: 'bg-blue-500',
+  button: 'bg-willbeblue-400',
+  feature: 'bg-willbeblue-600',
 };
 
 export const borderColors = {
   main: 'border-sky-800',
   lightBox: 'border-slate-100',
-  button: 'border-blue-500',
-  feature: ' border-slate-200',
+  button: 'border-willbeblue-500',
+  feature: 'border-black-100',
 };
 
 export const textColors = {

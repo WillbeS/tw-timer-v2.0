@@ -1,35 +1,35 @@
 import { ColorTheme } from './ColorTheme';
 
 export const bgColors = {
-  main: 'bg-slate-500',
+  main: 'bg-tw-light',
   lightBox: 'bg-stone-100',
-  button: 'bg-slate-400',
-  feature: 'bg-slate-700',
+  button: 'bg-tw-brown',
+  feature: 'bg-tw-greenblue',
 };
 
 export const borderColors = {
   main: 'border-slate-800',
   button: 'border-slate-800',
-  feature: 'border-stone-200',
+  feature: 'border-tw-brown',
   lightBox: 'border-stone-100',
 };
 
 export const textColors = {
-  main: 'text-white',
-  logo: 'text-white',
+  main: 'text-tw-black',
+  logo: 'text-tw-black',
   button: 'text-white',
   feature: 'text-white',
   lightBox: 'text-stone-700',
 };
 
 export const fillColors = {
-  main: 'fill-slate-500',
+  main: 'fill-tw-black',
   lightBox: 'fill-stone-100',
   button: 'fill-slate-400',
   feature: 'fill-slate-700',
 };
 
-export const slate: ColorTheme = {
+export const tw: ColorTheme = {
   bgColors,
   borderColors,
   textColors,

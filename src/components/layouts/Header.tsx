@@ -18,7 +18,7 @@ export function Header() {
     >
       <h1 className="flex cursor-pointer" onClick={() => navigate('')}>
         <span>
-          <AlarmIcon className="w-7" />
+          <AlarmIcon className={`w-7 ${theme.fillColors.main}`} />
         </span>
         <span className={`text-lg md:text-xl ${theme.textColors.logo} font-bold ml-2`}>
           TW Timer

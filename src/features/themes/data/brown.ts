@@ -1,3 +1,4 @@
+// TW - https://coolors.co/palette/8d9585-804e3e-e9dbb9-1f0806-d4c8b2-c09464-f2e4c0-d1b987-c3a66f-564d3d
 import { ColorTheme } from './ColorTheme';
 
 const bgColors = {
@@ -22,15 +23,8 @@ const textColors = {
   logo: 'text-white',
 };
 
-const colors = {
-  main: 'amber-800',
-  lightBox: 'orange-100',
-  button: 'yellow-700',
-  feature: 'amber-900',
-};
-
 const fillColors = {
-  main: 'fill-amber-800',
+  main: 'fill-white',
   lightBox: 'fill-orange-100',
   button: 'fill-yellow-700',
   feature: 'fill-amber-900',

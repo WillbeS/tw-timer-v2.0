@@ -12,8 +12,6 @@ export const Settings = () => {
   const { theme } = useAppSelector(themeSelector);
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
 
-  console.log('Render the settings component');
-
   const dispatch = useAppDispatch();
 
   const heading2Styles = `text-lg font-bold uppercase py-3 mt-5 border-t ${theme.borderColors.button}`;

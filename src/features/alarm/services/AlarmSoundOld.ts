@@ -8,6 +8,8 @@ class AlarmSound {
   constructor() {
     console.log('AlarmSound class constructed');
     const { alarmSoundFile } = getSettingsFromStorage();
+    const url = `../../../assets/media/${alarmSoundFile}`;
+    console.log(url);
     const soundFile = require(`../../../assets/media/${alarmSoundFile}`);
     this._alarmSound = new Audio(soundFile);
     this._isOn = false;

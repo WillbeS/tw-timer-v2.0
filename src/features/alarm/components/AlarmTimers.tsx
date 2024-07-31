@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import alarmSound from '../services/AlarmSound';
+import alarmSound from '../services/AlarmSounds';
 import { formatTime } from '../../../utils/dateTime';
 
 //I may need this for quick tests so qon't delele it yet

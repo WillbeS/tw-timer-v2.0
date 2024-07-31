@@ -3,6 +3,7 @@ import { RootState } from '../../../store/store';
 
 const initialState = {
   isOn: false,
+  soundFile: 'beep.wav', //todo replace with reasl stuff
 };
 
 // Looks like I won't need this after all but will keep it for now

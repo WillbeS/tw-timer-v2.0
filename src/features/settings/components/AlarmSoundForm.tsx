@@ -1,8 +1,10 @@
+import { useEffect } from 'react';
 import { Select } from '../../../components/form/Select';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { themeSelector } from '../../themes/store/themeSlice';
 import { ALARM_SOUNDS } from '../data/constants';
 import { settingsSelector, updateAlarmSoundSettings } from '../store/settingsSlice';
+import alarmSound from '../../alarm/services/AlarmSounds';
 
 export const AlarmSoundForm = () => {
   const { theme } = useAppSelector(themeSelector);
@@ -10,9 +12,17 @@ export const AlarmSoundForm = () => {
 
   const { alarmSoundFile } = useAppSelector(settingsSelector);
 
+  const loadSound = (fileName: string) => {
+    const soundFile = require(`../../../assets/media/${fileName}`);
+    return new Audio(soundFile);
+  };
+
   const onInputChange = (newValue: string) => {
     dispatch(updateAlarmSoundSettings(newValue));
-    // todo - play sound
+
+    const newSound = loadSound(newValue);
+    newSound.play();
+    alarmSound.setAudo(newSound);
   };
 
   const soundOptions = Object.keys(ALARM_SOUNDS).map((key) => {

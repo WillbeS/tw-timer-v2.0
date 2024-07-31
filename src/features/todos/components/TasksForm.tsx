@@ -22,7 +22,6 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
   const { worlds, selectedWorld } = useAppSelector(worldSelector);
   const { alarmOffset } = useAppSelector(settingsSelector);
 
-  console.log('Task form is rendering');
   const todoFormView = new TodoFormView(alarmOffset);
   const [input, setInput] = useState<AddTasksFormInput>({
     world: selectedWorld,

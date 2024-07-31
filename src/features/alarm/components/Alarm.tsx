@@ -6,9 +6,11 @@ import { todoTypes } from '../../todos/data/constants';
 import { dynamicUpdateAction } from '../../todos/store/todoSlice';
 import { getTodoView } from '../../todos/models';
 
-import alarmSound from '../services/AlarmSound';
+// import alarmSound from '../services/AlarmSound';
+import alarmSound from '../services/AlarmSounds';
 import { SwitchBtn2 } from '../../../components/ui/SwitchBtn2';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { settingsSelector } from '../../settings/store/settingsSlice';
 
 // TODO - refactor this at all cost!!!
 export const Alarm = () => {

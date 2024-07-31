@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 // import { selectIsOn } from '../store/alarmSlice';
 import { useCountdown } from '../hooks/useCountdown';
 import { formatTime } from '../../../utils/dateTime';
-import alarmSound from '../services/AlarmSound';
+import alarmSound from '../services/AlarmSounds';
 import { TodoView } from '../../todos/models/TodoView';
 
 type Props = {

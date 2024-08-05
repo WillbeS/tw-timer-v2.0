@@ -11,7 +11,7 @@ export const borderColors = {
   main: 'border-slate-800',
   button: 'border-slate-800',
   feature: 'border-tw-brown',
-  lightBox: 'border-stone-100',
+  lightBox: 'border-stone-300',
 };
 
 export const textColors = {

@@ -9,7 +9,7 @@ export const bgColors = {
 
 export const borderColors = {
   main: 'border-sky-800',
-  lightBox: 'border-slate-100',
+  lightBox: 'border-stone-300',
   button: 'border-willbeblue-500',
   feature: 'border-black-100',
 };

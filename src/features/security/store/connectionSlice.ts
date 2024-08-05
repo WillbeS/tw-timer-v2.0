@@ -7,8 +7,9 @@ import {
   saveApiKeyToStorage,
 } from '../services/apiKeySorage';
 import { RootState } from '../../../store/store';
-import { connectToServer, disconnecFromServer } from './connectionActions';
+import { connectToServer, deleteApiKey } from './connectionActions';
 
+//The admin id needs to be separate!!!
 interface ConnectionState {
   loading: boolean;
   online: boolean; // will delete this
@@ -24,7 +25,12 @@ const initialState: ConnectionState = {
 const connectionSlice = createSlice({
   name: 'connection',
   initialState,
-  reducers: {},
+  reducers: {
+    disconnectFromServer: (state) => {
+      state.apiKey = undefined;
+      removeApiKeyFromStorage();
+    },
+  },
 
   extraReducers: (builder) => {
     builder.addCase(connectToServer.pending, (state) => {
@@ -43,23 +49,19 @@ const connectionSlice = createSlice({
       state.loading = false;
     });
 
-    builder.addCase(disconnecFromServer.pending, (state) => {
+    builder.addCase(deleteApiKey.pending, (state) => {
       state.loading = true;
     });
-    builder.addCase(disconnecFromServer.fulfilled, (state) => {
+    builder.addCase(deleteApiKey.fulfilled, (state) => {
       state.loading = false;
-      state.apiKey = undefined;
-      removeApiKeyFromStorage();
     });
-    builder.addCase(disconnecFromServer.rejected, (state) => {
+    builder.addCase(deleteApiKey.rejected, (state) => {
       state.loading = false;
     });
   },
 });
 
-// export const {
-//   //todo, add actions
-// } = connectionSlice.actions;
+export const { disconnectFromServer } = connectionSlice.actions;
 
 export const connectionSelector = (state: RootState) => state.connection;
 

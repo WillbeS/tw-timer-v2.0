@@ -2,8 +2,9 @@ import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 import { RoundedButton } from '../../../components/ui/RoundedButton';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { connectToServer, disconnecFromServer } from '../store/connectionActions';
-import { connectionSelector } from '../store/connectionSlice';
+import { disconnectTasks } from '../../todos/store/todoSlice';
+import { connectToServer, deleteApiKey } from '../store/connectionActions';
+import { connectionSelector, disconnectFromServer } from '../store/connectionSlice';
 import { ConnectedStatus } from './ConnectedStatus';
 import { NotConnectedStatus } from './NotConnectedStatus';
 
@@ -13,15 +14,21 @@ export const RemoteConnection = () => {
 
   const OpenBtn = () => <RoundedButton label="Connect" symbol="♻" onClick={onOpenModal} />;
 
-  const { online, apiKey } = useAppSelector(connectionSelector);
+  const { apiKey } = useAppSelector(connectionSelector);
 
   const addConnection = (token: string) => {
     dispatch(connectToServer({ token }));
     onCloseModal();
   };
 
-  const deleteConnection = () => {
-    dispatch(disconnecFromServer());
+  const deleteConnection = (token: string, deleteForever: boolean) => {
+    dispatch(disconnectFromServer());
+    dispatch(disconnectTasks());
+
+    if (deleteForever) {
+      dispatch(deleteApiKey({ token }));
+    }
+
     onCloseModal();
   };
 
@@ -35,7 +42,7 @@ export const RemoteConnection = () => {
     >
       <div className="px-2 py-3 rounded-md">
         {apiKey ? (
-          <ConnectedStatus token={apiKey.token} onRemove={deleteConnection} />
+          <ConnectedStatus apiKey={apiKey} onRemove={deleteConnection} />
         ) : (
           <NotConnectedStatus onConnect={addConnection} />
         )}

@@ -42,13 +42,22 @@ const makeRequest = async (method: string, endpoint: string, body: unknown, key?
       : await getResponse(method, endpoint, key);
 
     if (response.status === 404) {
-      console.log('Status code: ' + response.status);
       throw new Error('404 Not found');
+    }
+
+    if (response.status === 401) {
+      throw new Error('Access denied - invalid key!');
+    }
+
+    // In order for the real json response message to be shown the status code must not be 500
+    if (response.status === 500) {
+      throw new Error('Server error, please try again later.');
     }
 
     if (!response.ok) {
       const errorMessage = await response.json();
       console.log(errorMessage + '; status code: ' + response.status);
+
       throw new Error(errorMessage);
     }
 

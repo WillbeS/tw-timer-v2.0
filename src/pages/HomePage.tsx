@@ -7,6 +7,7 @@ import { Welcome, isFirstVisit } from '../features/welcome';
 import { fetchWorlds } from '../features/worlds/store/worldAction';
 import { fetchAllTasks } from '../features/todos/store/taskActions';
 import { connectionSelector } from '../features/security/store/connectionSlice';
+import { Button } from '../components/utils/Button';
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -23,6 +24,7 @@ export const HomePage = () => {
   console.log('Rendering the Home page');
   return (
     <>
+      <Button onClick={() => console.log('Clicked!!!')}>Button</Button>
       <TaskList />
       {isFirstVisit() ? <Welcome /> : null}
       {/* <TaskList /> */}

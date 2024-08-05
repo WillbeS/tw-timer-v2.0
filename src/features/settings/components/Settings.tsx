@@ -15,7 +15,7 @@ export const Settings = () => {
   const dispatch = useAppDispatch();
 
   const heading2Styles = `text-lg font-bold uppercase py-3 mt-5 border-t ${theme.borderColors.button}`;
-  const heading3Styles = `py-2 text-md font-semibold border-t ${theme.borderColors.feature}`;
+  const heading3Styles = `py-2 text-md font-semibold border-t ${theme.borderColors.lightBox}`;
   const inputStyles =
     'rounded-md border border-stone-200 focus:outline-none px-4 py-1 text-sm md:text-base bg-white bg-opacity-40';
 

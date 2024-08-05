@@ -5,7 +5,6 @@ import { addError, addSuccess } from '../../messages/store/messageSlice';
 import { RootState } from '../../../store/store';
 
 import { ApiKey } from '../data/types';
-import { disconnectTasks } from '../../todos/store/todoSlice';
 import { api } from '../../../api';
 import { TaskData } from '../../todos/data/types';
 
@@ -59,24 +58,19 @@ export const connectToServer = createAsyncThunk<
   }
 });
 
-export const disconnecFromServer = createAsyncThunk(
-  'connection/disconnect',
-  async (_, thunkAPI) => {
+// The admin id will no longer be used, will deltel it entirely later
+export const deleteApiKey = createAsyncThunk<{}, { token: string }, { rejectValue: void }>(
+  'connection/deleteApiKey',
+  async ({ token }, thunkAPI) => {
     try {
-      const { connection }: RootState = thunkAPI.getState() as RootState;
+      await api.delete('key', `${token}`);
 
-      const { token, adminId } = connection.apiKey as ApiKey;
-
-      if (adminId) {
-        await api.delete('key', `${token}${adminId}`);
-      }
-
-      thunkAPI.dispatch(disconnectTasks());
-      thunkAPI.dispatch(addSuccess('Your connection was successfully removed.'));
+      // thunkAPI.dispatch(disconnectTasks());
+      thunkAPI.dispatch(addSuccess('Your api key was successfully deleted.'));
     } catch (error: any) {
       thunkAPI.dispatch(addError(error.message));
       console.log(error.message);
-      return thunkAPI.rejectWithValue(null);
+      return thunkAPI.rejectWithValue();
     }
   },
 );

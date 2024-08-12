@@ -1,18 +1,10 @@
 import { TaskTypes } from '../../../data/types';
 import { AlarmOffsetSettings } from '../../settings/data/types';
-import { todoTypes, attackSubtypes } from '../data/constants';
+import { UNSELECTED_WORLD } from '../../worlds/data/constants';
+import { todoTypes } from '../data/constants';
 import { AddTasksFormInput, AddTasksFormErrors } from '../data/types';
 
 export class TodoFormView {
-  //this should come from the settings
-  // private offsetByType = {
-  //   [todoTypes.DODGE]: '420',
-  //   [todoTypes.ATTACK]: '90',
-  //   [todoTypes.SNIPE]: '60',
-  //   // [todoTypes.MINTING]: '30',
-  //   [todoTypes.REMINDER]: '0',
-  // };
-
   private defaultOffsetValues: AlarmOffsetSettings;
 
   protected _errors: AddTasksFormErrors = {};
@@ -28,7 +20,7 @@ export class TodoFormView {
     this.validateText(todoInput.text);
 
     if (todoInput.subtype) {
-      this.validateType(todoInput.subtype);
+      this.validateSubtype(todoInput.subtype);
     }
 
     return Object.keys(this.errors).length === 0;
@@ -48,9 +40,11 @@ export class TodoFormView {
   }
 
   private validateWorld(world: string, type: string) {
+    console.log(world);
+    console.log(type);
     // Todo - validation
     if (
-      world === '-1' &&
+      world === UNSELECTED_WORLD &&
       type !== todoTypes.REMINDER
       // && type !== todoTypes.MINTING
     ) {

@@ -6,17 +6,15 @@ import { getParser } from '../services/parsers';
 import { addError } from '../../messages/store/messageSlice';
 import { isDuplicate } from '../services/todoStorage';
 import { saveTasks } from '../store/taskActions';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { useAppDispatch } from '../../../store/hooks';
 
-import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
-import { useModalWrapper } from '../../../hooks/useModalWrapper';
 import { TasksForm } from './TasksForm';
-import { themeSelector } from '../../themes/store/themeSlice';
+import { AddButton, BasicModal } from '../../../components/theme';
+import { useModal } from '../../../components/theme/hooks/useModal';
 
 export const AddTasks = () => {
-  const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
+  const { modalOpened, onOpenModal, onCloseModal } = useModal();
   const dispatch = useAppDispatch();
-  const { theme } = useAppSelector(themeSelector);
 
   const onSubmit = async (todoInput: AddTasksFormInput) => {
     try {
@@ -33,25 +31,15 @@ export const AddTasks = () => {
     }
   };
 
-  const OpenBtn = () => (
-    <div
-      aria-label="Add"
-      area-role="button"
-      className={`text-center rounded-md p-2 md:py-4 md:px-5 lg:w-4/6 mx-auto ${theme.bgColors.feature} border ${theme.borderColors.feature} border-dashed cursor-pointer mt-2 font-semibold ${theme.textColors.feature}`}
-    >
-      Add Tasks
-    </div>
-  );
-
   return (
-    <ModalWrapper2
-      heading="Add Tasks"
+    <BasicModal
+      openBtn={<AddButton label="Add Tasks" />}
       isOpen={modalOpened}
       onOpen={onOpenModal}
       onClose={onCloseModal}
-      openBtn={<OpenBtn />}
+      heading="Add Tasks"
     >
       <TasksForm onSubmit={onSubmit} onCancel={onCloseModal} />
-    </ModalWrapper2>
+    </BasicModal>
   );
 };

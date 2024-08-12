@@ -52,6 +52,7 @@ export type AddTasksFormErrors = {
   [key: string]: string | undefined;
   world?: string | undefined;
   type?: string | undefined;
+  subtype?: string | undefined;
   alarmOffset?: string | undefined;
   text?: string | undefined;
 };

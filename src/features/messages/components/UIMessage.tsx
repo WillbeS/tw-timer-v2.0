@@ -1,8 +1,9 @@
 import { clearMessages } from '../store/messageSlice';
-import { ToastMessage } from '../../../components/ui/ToastMessage';
+
 import { RootState } from '../../../store/store';
 import { MessageTypes } from '../../../data/types';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
+import { AppAlert } from '../../../components/theme';
 
 export const UIMessage = () => {
   const dispatch = useAppDispatch();
@@ -22,11 +23,12 @@ export const UIMessage = () => {
   if (!message || !messageType) return null;
 
   return (
-    <ToastMessage
+    <AppAlert
       type={messageType}
       onClose={() => dispatch(clearMessages(messageType as MessageTypes))}
+      duration={3000}
     >
       {message}
-    </ToastMessage>
+    </AppAlert>
   );
 };

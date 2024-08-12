@@ -1,48 +1,40 @@
-import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
-import { useModalWrapper } from '../../../hooks/useModalWrapper';
-import { RoundedButton } from '../../../components/ui/RoundedButton';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { updateColorThemeSettings } from '../store/settingsSlice';
 import { AlarmOffsetForm } from './AlarmOffsetForm';
 import { AlarmSoundForm } from './AlarmSoundForm';
 import { ColorThemePicker } from '../../themes';
 import { themeSelector } from '../../themes/store/themeSlice';
+import { MenuButton } from '../../../components/theme/MenuButton';
+import { SettingsIcon } from '../../../components/utils/icons/SettingsIcon';
+import { BaseModal } from '../../../components/theme/BaseModal';
+import { Heading2 } from '../../../components/utils/Heading2';
+import { Heading3 } from '../../../components/utils/Heading3';
 
 export const Settings = () => {
   const { theme } = useAppSelector(themeSelector);
-  const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
 
   const dispatch = useAppDispatch();
 
-  const heading2Styles = `text-lg font-bold uppercase py-3 mt-5 border-t ${theme.borderColors.button}`;
-  const heading3Styles = `py-2 text-md font-semibold border-t ${theme.borderColors.lightBox}`;
   const inputStyles =
     'rounded-md border border-stone-200 focus:outline-none px-4 py-1 text-sm md:text-base bg-white bg-opacity-40';
 
-  const OpenBtn = () => <RoundedButton label="Settings" symbol="⚙" onClick={onOpenModal} />;
+  const OpenBtn = () => <MenuButton icon={<SettingsIcon />}>Settings</MenuButton>;
 
   return (
-    <ModalWrapper2
-      heading="Settings"
-      isOpen={modalOpened}
-      onOpen={onOpenModal}
-      onClose={onCloseModal}
-      openBtn={<OpenBtn />}
-    >
-      <div className="p-4 w-full md:w-3/4 mx-auto">
-        <h2 className={heading2Styles}>Alarm</h2>
-        <h3 className={heading3Styles}>Default Offset (play sound N seconds early)</h3>
-        <AlarmOffsetForm inputStyles={inputStyles} />
+    <BaseModal heading="Settings" openBtn={<OpenBtn />}>
+      <Heading2 uppercase>Alarm</Heading2>
+      <Heading3>Default Offset (play sound N seconds early)</Heading3>
 
-        <h3 className={heading3Styles}>Sound</h3>
-        <AlarmSoundForm />
-
-        <h2 className={heading2Styles}>Theme</h2>
-        <h3 className={heading3Styles}>Color Themes</h3>
-        <ColorThemePicker
-          onChangeTheme={(newSettings) => dispatch(updateColorThemeSettings(newSettings))}
-        />
-      </div>
-    </ModalWrapper2>
+      <AlarmOffsetForm inputStyles={inputStyles} />
+      <hr />
+      <Heading3>Sound</Heading3>
+      <AlarmSoundForm />
+      <hr />
+      <Heading2 uppercase>Theme</Heading2>
+      <Heading3>Color Themes</Heading3>
+      <ColorThemePicker
+        onChangeTheme={(newSettings) => dispatch(updateColorThemeSettings(newSettings))}
+      />
+    </BaseModal>
   );
 };

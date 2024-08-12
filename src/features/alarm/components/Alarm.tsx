@@ -12,6 +12,7 @@ import { SwitchBtn2 } from '../../../components/ui/SwitchBtn2';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { settingsSelector } from '../../settings/store/settingsSlice';
 import { themeSelector } from '../../themes/store/themeSlice';
+import { ToggleSwitch } from '../../../components/utils/ToggleSwitch';
 
 // TODO - refactor this at all cost!!!
 export const Alarm = () => {
@@ -55,9 +56,10 @@ export const Alarm = () => {
   // console.log('Alarm is rendering');
 
   return (
-    <span className="inline-flex items-center ml-auto">
-      <span className={`text-md font-bold mr-2 ${theme.textColors.feature}`}>Alarm</span>
-      <SwitchBtn2 onToggle={handleToggle} />
-    </span>
+    // <span className="inline-flex items-center ml-auto">
+    //   <span className={`text-md font-bold mr-2 ${theme.textColors.feature}`}>Alarm</span>
+    //   <SwitchBtn2 onToggle={handleToggle} />
+    // </span>
+    <ToggleSwitch label="Alarm" onToggle={handleToggle} labelColor={theme.textColors.feature} />
   );
 };

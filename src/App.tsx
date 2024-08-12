@@ -5,18 +5,15 @@ import ErrorBoundary from './components/ErrorBoundary';
 
 import { TopContent } from './features/todos/components/TopContent';
 import { UIMessage } from './features/messages/components/UIMessage';
-import { useAppSelector } from './store/hooks';
-import { themeSelector } from './features/themes/store/themeSlice';
+
+import { MainContainer } from './components/theme/MainContainer';
 
 function App() {
-  const { theme } = useAppSelector(themeSelector);
-
   // console.log('App is rendering');
+
   return (
-    <ErrorBoundary theme={theme}>
-      <div
-        className={`relative min-h-screen px-3 lg:px-6 ${theme.bgColors.main} ${theme.textColors.main}`}
-      >
+    <ErrorBoundary>
+      <MainContainer>
         <UIMessage />
         <div className="md:w-10/12 lg:w-8/12 mx-auto">
           <Header />
@@ -25,7 +22,7 @@ function App() {
             <Outlet />
           </main>
         </div>
-      </div>
+      </MainContainer>
     </ErrorBoundary>
   );
 }

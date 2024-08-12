@@ -1,22 +1,40 @@
 interface BasicColors {
+  primary: string;
+  primaryOpposite: string;
+}
+
+interface OldColors {
   main: string;
   lightBox: string;
   button: string;
   feature: string;
 }
 
-interface TextColors extends BasicColors {
+interface StateColors {
+  info: string;
+  success: string;
+  warning: string;
+  danger: string;
+}
+
+interface ExtendedColors {}
+
+interface TextColors extends BasicColors, OldColors, StateColors {
   logo: string;
 }
+
+type BgColors = BasicColors & OldColors & StateColors;
 
 export interface ColorTheme {
   // colors: BasicColors;
 
-  bgColors: BasicColors;
+  bgColors: BgColors;
 
-  borderColors: BasicColors;
+  borderColors: OldColors;
 
   textColors: TextColors;
 
-  fillColors: BasicColors;
+  fillColors: OldColors;
+
+  hoverColors: BasicColors;
 }

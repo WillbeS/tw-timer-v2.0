@@ -5,20 +5,20 @@ import { AddTasksFormInput, AddTasksFormErrors } from '../data/types';
 import { formatTimeIntoText } from '../../../utils/dateTime';
 import { todoTypes, attackSubtypes } from '../data/constants';
 
-import { ValidationError } from '../../../components/form/ValidationError';
-
 import { useAppSelector } from '../../../store/hooks';
 import { worldSelector } from '../../worlds/store/worldSlice';
 import { UNSELECTED_WORLD } from '../../worlds/data/constants';
 import { settingsSelector } from '../../settings/store/settingsSlice';
 import { TaskTypes } from '../../../data/types';
+import { Input, Select, Textarea } from '../../../components/utils/form';
+import { PrimaryButton, CancelButton } from '../../../components/theme';
 
-type Props = {
-  onSubmit: (input: AddTasksFormInput) => void;
-  onCancel: () => void;
+export type ModalFormProps = {
+  onSubmit?: (input: AddTasksFormInput) => void;
+  onCancel?: () => void;
 };
 
-export const TasksForm = ({ onSubmit, onCancel }: Props) => {
+export const TasksForm = ({ onSubmit, onCancel }: ModalFormProps) => {
   const { worlds, selectedWorld } = useAppSelector(worldSelector);
   const { alarmOffset } = useAppSelector(settingsSelector);
 
@@ -55,138 +55,98 @@ export const TasksForm = ({ onSubmit, onCancel }: Props) => {
     handleSubmit(e);
   };
 
-  const fieldDivStyle = 'flex flex-col mb-5 bg-transparent';
-  const labelStyle = 'text-sm px-2 flex flex-row gap-2';
-
-  function getFieldStyle(fieldError: string | undefined) {
-    return `rounded-md border border-stone-200 focus:outline-none px-4 py-1 text-sm md:text-base bg-white bg-opacity-40 ${
-      fieldError ? 'border-red-500' : ''
-    }`;
-  }
-
   if (input.type === todoTypes.ATTACK) {
     console.log('Will add option to choose subtype!');
   }
 
   return (
-    <form className="w-full md:w-3/4 mx-auto" noValidate onSubmit={handleSubmit}>
-      <div className={fieldDivStyle}>
-        <label className={labelStyle} htmlFor="world">
-          <span> Select a world </span>
-        </label>
-        <select
-          id="world"
-          value={input.world}
-          onChange={(e) => setInput({ ...input, world: e.target.value })}
-          className={getFieldStyle(errors.world)}
-        >
-          <option value={UNSELECTED_WORLD} disabled hidden>
-            Select a world
-          </option>
-          {Object.values(worlds).map((option, i) => (
-            <option key={i} value={option.tag}>
-              {option.name}
+    <form className={`max-w-sm mx-auto`} noValidate onSubmit={handleSubmit}>
+      <div className="grid gap-4 mb-4 grid-cols-2">
+        <div className="col-span-2">
+          <Select
+            label="Select a world"
+            value={input.world}
+            onChange={(e) => setInput({ ...input, world: e.target.value })}
+            validationError={errors.world}
+          >
+            <option value={UNSELECTED_WORLD} disabled hidden>
+              Select a world
             </option>
-          ))}
-        </select>
-        <ValidationError fieldError={errors.world} />
-      </div>
+            {Object.values(worlds).map((option, i) => (
+              <option key={i} value={option.tag}>
+                {option.name}
+              </option>
+            ))}
+          </Select>
+        </div>
 
-      <div className={fieldDivStyle}>
-        <label className={labelStyle} htmlFor="type">
-          <span> Select a type </span>
-        </label>
-        <select
-          id="type"
-          value={input.type}
-          onChange={(e) => {
-            setInput({
-              ...input,
-              type: e.target.value,
-              alarmOffset: todoFormView.getOffset(e.target.value as TaskTypes),
-            });
-            // setSelectedType(e.target.value);
-          }}
-          className={getFieldStyle(errors.type)}
-        >
-          {Object.values(todoTypes).map((value, i) => (
-            <option key={i} value={value}>
-              {value}
-            </option>
-          ))}
-        </select>
-        <ValidationError fieldError={errors.type} />
-      </div>
-
-      {input.type === todoTypes.ATTACK ? (
-        <div className={fieldDivStyle}>
-          <label className={labelStyle} htmlFor="subtype">
-            <span>Select attack type</span>
-          </label>
-          <select
-            id="subtype"
-            value={input.subtype}
+        <div className="col-span-2">
+          <Select
+            label="Select a type"
+            value={input.type}
             onChange={(e) => {
               setInput({
                 ...input,
-                subtype: e.target.value,
+                type: e.target.value,
+                alarmOffset: todoFormView.getOffset(e.target.value as TaskTypes),
               });
             }}
-            className={getFieldStyle(errors.type)}
+            validationError={errors.type}
           >
-            {Object.values(attackSubtypes).map((value, i) => (
+            {Object.values(todoTypes).map((value, i) => (
               <option key={i} value={value}>
                 {value}
               </option>
             ))}
-          </select>
-          <ValidationError fieldError={errors.type} />
+          </Select>
         </div>
-      ) : null}
 
-      <div className={fieldDivStyle}>
-        <label className={labelStyle} htmlFor="alarmOffset">
-          {`Alarm offset (play ${formatTimeIntoText(Number(input.alarmOffset))} early)`}
-        </label>
-        <input
-          type="number"
-          id="alarmOffset"
-          value={input.alarmOffset}
-          onChange={(e) => setInput({ ...input, alarmOffset: e.target.value })}
-          className={getFieldStyle(errors.alarmOffset)}
-        />
-        <ValidationError fieldError={errors.alarmOffset} />
+        {input.type === todoTypes.ATTACK && (
+          <div className="col-span-2">
+            <Select
+              label="Select attack type"
+              value={input.subtype}
+              onChange={(e) => {
+                setInput({
+                  ...input,
+                  subtype: e.target.value,
+                });
+              }}
+              validationError={errors.subtype}
+            >
+              {Object.values(attackSubtypes).map((value, i) => (
+                <option key={i} value={value}>
+                  {value}
+                </option>
+              ))}
+            </Select>
+          </div>
+        )}
+
+        <div className="col-span-2">
+          <Input
+            type="number"
+            label={`Alarm offset (play ${formatTimeIntoText(Number(input.alarmOffset))} early)`}
+            value={input.alarmOffset}
+            onChange={(e) => setInput({ ...input, alarmOffset: e.target.value })}
+            validationError={errors.alarmOffset}
+          />
+        </div>
+
+        <div className="col-span-2">
+          <Textarea
+            label="Parse from text or type a reminder"
+            value={input.text}
+            rows={10}
+            onKeyDown={onKeyPress}
+            onChange={(e) => setInput({ ...input, text: e.target.value })}
+            validationError={errors.text}
+          />
+        </div>
       </div>
-
-      <div className={fieldDivStyle}>
-        <label className={labelStyle} htmlFor="text">
-          <span>Parse from text or type a reminder</span>
-        </label>
-        <textarea
-          id="text"
-          rows={10}
-          onKeyDown={onKeyPress}
-          onChange={(e) => setInput({ ...input, text: e.target.value })}
-          className={getFieldStyle(errors.text)}
-        />
-        <ValidationError fieldError={errors.text} />
-      </div>
-
-      <div className="flex flex-row justify-end gap-2">
-        <button
-          type="submit"
-          className="h-8 p-1 px-3 font-semibold bg-yellow-800 text-stone-100 rounded-md"
-        >
-          Save
-        </button>
-
-        <button
-          type="button"
-          className="h-8 p-1 px-3 font-semibold bg-stone-500 text-stone-100 rounded-md"
-          onClick={onCancel}
-        >
-          Cancel
-        </button>
+      <div className="flex justify-end gap-2">
+        <PrimaryButton type="submit">Save</PrimaryButton>
+        <CancelButton onClick={onCancel}>Cancel</CancelButton>
       </div>
     </form>
   );

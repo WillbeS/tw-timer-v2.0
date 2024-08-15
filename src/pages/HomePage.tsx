@@ -7,6 +7,7 @@ import { Welcome, isFirstVisit } from '../features/welcome';
 import { fetchWorlds } from '../features/worlds/store/worldAction';
 import { fetchAllTasks } from '../features/todos/store/taskActions';
 import { connectionSelector } from '../features/security/store/connectionSlice';
+import { DropdownMenu } from '../components/utils/DropdownMenu';
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();

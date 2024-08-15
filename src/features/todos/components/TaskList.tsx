@@ -2,22 +2,19 @@ import { useEffect } from 'react';
 
 import { RootState } from '../../../store/store';
 import { dynamicUpdateAction, filteredTasksSelector, todosSelector } from '../store/todoSlice';
-
-import { formatTime } from '../../../utils/dateTime';
-
-import { TopBar } from './TopBar';
+import { toggleCompleted } from '../store/taskActions';
 import { useAppDispatch } from '../../../store/hooks';
 import { useAppSelector } from '../../../store/hooks';
+import { formatTime } from '../../../utils/dateTime';
 
-import { Task } from './Task';
 import { TaskData } from '../data/types';
-import { toggleCompleted } from '../store/taskActions';
+
 import { CompletedTask } from './CompletedTask';
-import { Spinner } from '../../../components/ui/Spinner';
-import { themeSelector } from '../../themes/store/themeSlice';
+import { TopBar } from './TopBar';
+import { Task } from './Task';
+import { AppSpinner } from '../../../components/theme';
 
 export const TaskList = () => {
-  const { theme } = useAppSelector(themeSelector);
   const dispatch = useAppDispatch();
   const { loading, showCompleted } = useAppSelector(todosSelector);
 
@@ -41,18 +38,15 @@ export const TaskList = () => {
     dispatch(toggleCompleted(forEdit));
   };
 
-  // const loadingMessage = 'Loading...';
-
   //console.log('Todo list is rendering');
   return (
     <>
       <TopBar />
 
       <div className="flex flex-col gap-2 text-sm md:text-lg font-semibold mt-5">
-        {/* {loading && <div className="text-white text-center">{loadingMessage}</div>} */}
         {loading && (
           <div className="flex justify-center mb-3">
-            <Spinner fillColor={theme.fillColors.button} />
+            <AppSpinner />
           </div>
         )}
         {Object.values(todos).map((todo) => {

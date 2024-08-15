@@ -1,11 +1,9 @@
-import { useCallback } from 'react';
-
-import { DropdownMenu } from '../../../components/ui/DropdownMenu';
-import { DropdownMenuButton } from '../../../components/ui/DropdownMenuButton';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-
+import { useAppDispatch } from '../../../store/hooks';
 import { deleteAll, deleteCompleted } from '../store/taskActions';
 import { showCompletedAction } from '../store/todoSlice';
+
+import { TopBarOptions } from '../../../components/theme';
+import { DropdownMenuButton } from '../../../components/ui/DropdownMenuButton';
 
 export const ListOptionsMenu = () => {
   const dispatch = useAppDispatch();
@@ -27,11 +25,11 @@ export const ListOptionsMenu = () => {
   };
 
   return (
-    <DropdownMenu>
+    <TopBarOptions>
       <DropdownMenuButton label="Active tasks" symbol="⏰" onClick={onShowActive} />
       <DropdownMenuButton label="Completed tasks" symbol="✔" onClick={onShowCompleted} />
       <DropdownMenuButton label="Clear completed" symbol="🗑" onClick={onClearCompleted} />
       <DropdownMenuButton label="Clear all" symbol="🗑" onClick={onClearAll} />
-    </DropdownMenu>
+    </TopBarOptions>
   );
 };

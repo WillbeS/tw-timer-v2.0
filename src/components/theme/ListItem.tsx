@@ -1,15 +1,15 @@
 import { themeSelector } from '../../features/themes/store/themeSlice';
 import { useAppSelector } from '../../store/hooks';
 
-interface MainContainerProps {
+interface ListItemProps {
   children: React.ReactNode;
 }
-
-export const MainContainer = ({ children }: MainContainerProps) => {
+export const ListItem = ({ children }: ListItemProps) => {
   const { theme } = useAppSelector(themeSelector);
+
   return (
     <div
-      className={`relative min-h-screen px-3 lg:px-6 ${theme.bgColors.main} ${theme.textColors.main}`}
+      className={`flex flex-row justify-between gap-2 items-center px-2 py-3 rounded-md ${theme.bg.list} ${theme.text.list}`}
     >
       {children}
     </div>

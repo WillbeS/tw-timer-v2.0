@@ -5,5 +5,5 @@ import { Spinner } from '../utils/Spinner';
 export const AppSpinner = () => {
   const { theme } = useAppSelector(themeSelector);
 
-  return <Spinner fillColor={theme.fillColors.button} textColor={theme.textColors.primary} />;
+  return <Spinner fillColor={theme.fill.main} textColor={theme.text.main} />;
 };

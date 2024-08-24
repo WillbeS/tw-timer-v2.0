@@ -1,7 +1,7 @@
-import { TopBarSelect } from '../../../components/theme';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { UNSELECTED_WORLD } from '../data/constants';
 import { selectWorld, worldSelector } from '../store/worldSlice';
+import { UNSELECTED_WORLD } from '../data/constants';
+import { TopBarSelect } from '../../../components/theme/layout';
 
 export const WorldSelect = () => {
   const { worlds, selectedWorld } = useAppSelector(worldSelector);

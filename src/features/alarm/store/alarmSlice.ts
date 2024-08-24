@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from '../../../store/store';
 
 const initialState = {
-  isOn: false,
+  isOn: false, // I'm not using this right now
   soundFile: 'beep.wav', //todo replace with reasl stuff
 };
 

@@ -1,7 +1,7 @@
 import { MessageTypes } from '../../data/types';
 import { themeSelector } from '../../features/themes/store/themeSlice';
 import { useAppSelector } from '../../store/hooks';
-import { Alert, AlertProps } from '../utils/Alert';
+import { Alert } from '../utils/Alert';
 
 interface AppAlertProps {
   type?: MessageTypes.Success | MessageTypes.Info | MessageTypes.Warning | MessageTypes.Error;
@@ -19,17 +19,17 @@ export const AppAlert = ({
 
   //todo - make these theme colors
   const bgColor = {
-    [MessageTypes.Success]: theme.bgColors.success,
-    [MessageTypes.Info]: theme.bgColors.info,
-    [MessageTypes.Warning]: theme.bgColors.warning,
-    [MessageTypes.Error]: theme.bgColors.danger,
+    [MessageTypes.Success]: theme.bg.msgSuccess,
+    [MessageTypes.Info]: theme.bg.msgInfo,
+    [MessageTypes.Warning]: theme.bg.msgWarning,
+    [MessageTypes.Error]: theme.bg.msgError,
   };
 
   const textColor = {
-    [MessageTypes.Success]: theme.textColors.success,
-    [MessageTypes.Info]: theme.textColors.info,
-    [MessageTypes.Warning]: theme.textColors.warning,
-    [MessageTypes.Error]: theme.textColors.danger,
+    [MessageTypes.Success]: theme.text.msgSuccess,
+    [MessageTypes.Info]: theme.text.msgInfo,
+    [MessageTypes.Warning]: theme.text.msgWarning,
+    [MessageTypes.Error]: theme.text.msgError,
   };
 
   return (

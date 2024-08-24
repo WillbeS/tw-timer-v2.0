@@ -3,6 +3,7 @@ import { ValidationError } from './ValidationError';
 interface InputProps {
   type?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
   label?: string;
   value: string;
   size?: 'small' | 'base' | 'large';
@@ -16,6 +17,7 @@ interface InputProps {
 export const Input = ({
   type = 'text',
   onChange,
+  onBlur,
   label,
   value,
   size = 'base',
@@ -38,6 +40,7 @@ export const Input = ({
         type={type}
         value={value}
         onChange={onChange}
+        onBlur={onBlur}
         className={`${bgColor} border ${borderColor} ${textColor} rounded-lg focus:outline-none block w-full ${sizeStyles[size]}`}
         placeholder={placeholder}
       />

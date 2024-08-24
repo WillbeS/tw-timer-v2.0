@@ -4,6 +4,7 @@ type Props = {
   bgColor?: string;
   bgHoverColor?: string;
   textColor?: string;
+  textHoverColor?: string;
   borderColor?: string;
   focusRing?: string;
   size?: string;
@@ -17,6 +18,7 @@ export const Button = ({
   bgColor = 'bg-blue-700',
   bgHoverColor = 'hover:bg-blue-800',
   textColor = 'text-white',
+  textHoverColor = 'hover:text-white',
   borderColor,
   size = 'base',
   onClick,
@@ -43,7 +45,7 @@ export const Button = ({
     <button
       onClick={handleClick}
       type={type}
-      className={`${getSizeStyles()} font-medium text-center ${textColor} ${bgColor} rounded-lg ${bgHoverColor} flex items-center gap-1 focus:outline-none ${
+      className={`${getSizeStyles()} font-medium text-center ${textColor} ${textHoverColor} ${bgColor} rounded-lg ${bgHoverColor} flex items-center gap-1 focus:outline-none ${
         borderColor && 'border ' + borderColor
       }`}
     >

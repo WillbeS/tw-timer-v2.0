@@ -7,7 +7,7 @@ import { Welcome, isFirstVisit } from '../features/welcome';
 import { fetchWorlds } from '../features/worlds/store/worldAction';
 import { fetchAllTasks } from '../features/todos/store/taskActions';
 import { connectionSelector } from '../features/security/store/connectionSlice';
-import { DropdownMenu } from '../components/utils/DropdownMenu';
+// import { WorldData } from '../data/types';
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
@@ -22,7 +22,16 @@ export const HomePage = () => {
   }, [dispatch, online, apiKey]);
 
   console.log('Rendering the Home page');
-  //ErrorBoundary test
+  // ErrorBoundary test
+
+  // Cache related error
+  // const worlds: WorldData[] = JSON.parse(localStorage.getItem('tw_worlds') ?? '[]');
+  // if (worlds.length > 0) {
+  //   const name: string = worlds[10].name;
+  //   console.log(name.toUpperCase());
+  // }
+
+  // Other error
   // const arr = ['1', '2'];
   // console.log(arr[5].length);
   return (

@@ -44,6 +44,8 @@ export const BaseModal = ({
   //   );
   // };
 
+  // console.log('Base modal is rendering', heading);
+
   return (
     <Modal
       openBtn={openBtn}
@@ -52,8 +54,8 @@ export const BaseModal = ({
       onClose={onCloseModal}
       heading={heading}
       footer={footer}
-      bgColor={theme.bgColors.lightBox}
-      textColor={theme.textColors.lightBox}
+      bgColor={theme.bg.modal}
+      textColor={theme.text.modal}
     >
       {children}
     </Modal>

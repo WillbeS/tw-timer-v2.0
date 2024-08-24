@@ -1,6 +1,7 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 
-import { MainContainer } from './theme/MainContainer';
+import { HR, MainContainer } from './theme/layout';
+import { PrimaryButton } from './theme';
 
 interface Props {
   children?: ReactNode;
@@ -31,7 +32,19 @@ class ErrorBoundary extends Component<Props, State> {
         <MainContainer>
           <div className="pt-52 m-auto flex flex-col gap-3 text-center">
             <p className="text-xl">Sorry, there's been an error. Please try again later!</p>
-            <p className="text-sm p-4">If the error persists clear your cache and try again.</p>
+            <p className="text-base p-4">If the error persists you may try clearing your cache.</p>
+            <HR />
+            <span className="w-fit mx-auto">
+              <PrimaryButton
+                size="large"
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.reload();
+                }}
+              >
+                Clear Cash
+              </PrimaryButton>
+            </span>
           </div>
         </MainContainer>
       );

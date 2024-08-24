@@ -13,7 +13,6 @@ import {
 } from './taskActions';
 import { generateId } from '../../../utils/stringUtils';
 import { UNSELECTED_TYPE } from '../data/constants';
-import { resourceUsage } from 'process';
 import { UNSELECTED_WORLD } from '../../worlds/data/constants';
 
 type TodosState = {

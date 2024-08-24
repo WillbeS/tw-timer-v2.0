@@ -31,3 +31,32 @@ DELETE/PUT/PATCH - 204, empty response body
 How to reload the page
 
 window.location.reload();
+
+---
+
+color theme names:
+
+by layout
+
+1. main container - background, text, hover (logo, top bar label, spiner)
+2. header - text, background/hover, border (buttons)
+3. feature content - text, background
+4. feature button - text, background, border, hover
+5. top bar - border, background, text, hover (buttons)
+6. list - background, text, text disabled, text link, hover link
+7. modal - background, text
+8. app message - background, text
+
+bg - 1, 2, 3, 4, 5, 6, 7, 8
+text - 1, 2, 3, 4, 5, 6, 7, 8
+hover bg - 2, 4, 5
+hover text - 1, 6
+border - 2, 4, 5
+fill - 1, need to check!!!
+
+From current scheme:
+
+main - main container
+button/primary - header
+light box - modal, list
+feature - both content and button

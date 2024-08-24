@@ -16,9 +16,9 @@ export const PrimaryButton = ({ type = 'button', size = 'base', children, onClic
     <Button
       type={type}
       size={size}
-      bgColor={theme.bgColors.primary}
-      bgHoverColor={theme.hoverColors.primary}
-      textColor={theme.textColors.primary}
+      bgColor={theme.bg.topBar}
+      bgHoverColor={theme.hoverBg.topBar}
+      textColor={theme.text.topBar}
       onClick={onClick}
     >
       {children}

@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import { CopyToClipboardBtn } from '../../../components/ui/CopyToClipboardBtn';
 import { ApiKey } from '../data/types';
+import { Heading2, Heading3, HR, Section } from '../../../components/theme/layout';
+import { KeyIcon } from '../../../components/utils/icons/KeyIcon';
 
 type Props = {
   apiKey: ApiKey;
@@ -17,18 +19,24 @@ export const ConnectedStatus = ({ apiKey, onRemove }: Props) => {
   };
 
   return (
-    <section className="mb-4">
-      <h2 className="text:md md:text-xl font-semibold mb-2">
+    <Section>
+      <Heading2>
         Status: <span className="text-green-500">connected</span>
-      </h2>
-      <p className="text-sm italic">
+      </Heading2>
+      <p className="text-sm">
         Your tasks will be saved on the server. Use the assosiated key to give access to another
-        device/player you want to share them with.
+        device/co player that you want to share them with.{' '}
+        <span className="font-semibold">
+          Make sure you trust whoever you give this key as they will have full access to your tasks.
+        </span>
       </p>
 
-      <div className="w-11/12 md:w-3/4 mx-auto">
-        <div className="flex gap-3 md:gap-5 text-sm md:text-base py-1">
-          <span className="font-bold">Your key</span>
+      <HR />
+
+      <Heading3>Your Key</Heading3>
+      <div className="md:w-11/12 mx-auto">
+        <div className="flex gap-4 md:gap-7 text-sm md:text-base py-2 mb-4">
+          <KeyIcon />
           <span onClick={toggleKeyVisibility} className="cursor-pointer underline text-blue-700">
             {keyIsVisible ? 'Hide' : 'Show'}
           </span>
@@ -39,19 +47,9 @@ export const ConnectedStatus = ({ apiKey, onRemove }: Props) => {
             Remove
           </span>
         </div>
-        <div className="flex items-center mb-4">
-          <input
-            checked={deleteChecked}
-            type="checkbox"
-            className="w-4 h-4 rounded border border-stone-200 focus:outline-none"
-            onChange={() => setDeleteChecked(!deleteChecked)}
-          />
-          <label className="ms-2 text-sm font-medium text-gray-700 dark:text-gray-500">
-            on remove, delete the key forever
-          </label>
-        </div>
+
         {keyIsVisible && (
-          <div className="relative">
+          <div className="relative mb-4">
             <CopyToClipboardBtn textToCopy={apiKey.token} />
             <textarea
               readOnly
@@ -60,7 +58,19 @@ export const ConnectedStatus = ({ apiKey, onRemove }: Props) => {
             />
           </div>
         )}
+
+        <div className="flex items-center mb-4">
+          <input
+            checked={deleteChecked}
+            type="checkbox"
+            className="w-4 h-4 rounded border border-stone-200 focus:outline-none"
+            onChange={() => setDeleteChecked(!deleteChecked)}
+          />
+          <label className="ms-2 text-sm font-medium text-gray-600/80">
+            on remove, delete the key forever
+          </label>
+        </div>
       </div>
-    </section>
+    </Section>
   );
 };

@@ -1,5 +1,26 @@
 import { REMOTE_URL } from '../data/constants'; //may rename it to BASE_URL
 
+// from the book, not using it right now but may be worth implementing later;
+// by annotating the variable type we don't need to specify any other types!!!!
+const checkedFetch: typeof fetch = async (input, init) => {
+  const response = await fetch(input, init);
+  if (!response.ok) {
+    throw new Error(`Request failed: ${response.status}`);
+  }
+  return response;
+};
+
+async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> {
+  const response = await checkedFetch(...args);
+  const num = Number(await response.text());
+  if (isNaN(num)) {
+    throw new Error(`Response was not a number.`);
+  }
+  return num;
+}
+
+//////////////////////////////////////////////////////////////////////
+
 const makeHeaders = (key?: string) => {
   const requestHeaders: HeadersInit = new Headers();
   requestHeaders.set('Accept', 'application/json');

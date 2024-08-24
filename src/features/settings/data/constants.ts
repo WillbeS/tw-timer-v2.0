@@ -25,8 +25,9 @@ export const ALARM_SOUND_DEFAULT = ALARM_SOUNDS.Beep;
 
 export const SUPPORTED_THEMES = {
   BROWN: 'brown',
-  // DARK: 'dark',
-  // TW: 'tw',
+  DARK: 'dark',
+  TW: 'tw',
+  // TW_GRADIENT: 'twGradient',
 };
 
 export const COLOR_THEME_DEFAULT = SUPPORTED_THEMES.BROWN;

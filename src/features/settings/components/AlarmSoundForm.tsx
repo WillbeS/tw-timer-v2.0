@@ -1,13 +1,11 @@
-import { useEffect } from 'react';
-import { Select } from '../../../components/form/Select';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { themeSelector } from '../../themes/store/themeSlice';
+
 import { ALARM_SOUNDS } from '../data/constants';
 import { settingsSelector, updateAlarmSoundSettings } from '../store/settingsSlice';
 import alarmSound from '../../alarm/services/AlarmSounds';
+import { Select } from '../../../components/utils/form';
 
 export const AlarmSoundForm = () => {
-  const { theme } = useAppSelector(themeSelector);
   const dispatch = useAppDispatch();
 
   const { alarmSoundFile } = useAppSelector(settingsSelector);
@@ -25,20 +23,23 @@ export const AlarmSoundForm = () => {
     alarmSound.setAudo(newSound);
   };
 
-  const soundOptions = Object.keys(ALARM_SOUNDS).map((key) => {
-    return { label: key, value: ALARM_SOUNDS[key] };
-  });
-
   return (
-    <div className="md:w-2/3 ml-auto">
-      <Select
-        options={soundOptions}
-        defaultValue={alarmSoundFile}
-        fullWidth
-        onChange={(selected) => onInputChange(selected)}
-        bgColor="bg-white"
-        textColor={theme.textColors.lightBox}
-      />
+    <div className="grid gap-4 mb-4 grid-cols-2">
+      <div className="col-span-2">
+        <Select
+          value={alarmSoundFile}
+          onChange={(e) => onInputChange(e.target.value)}
+          label="Default sound for all types"
+        >
+          {Object.keys(ALARM_SOUNDS).map((key) => {
+            return (
+              <option key={key} value={ALARM_SOUNDS[key]}>
+                {key}
+              </option>
+            );
+          })}
+        </Select>
+      </div>
     </div>
   );
 };

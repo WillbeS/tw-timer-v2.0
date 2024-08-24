@@ -16,7 +16,7 @@ export const CancelButton = ({ size = 'base', children, onClick }: Props) => {
       size={size}
       bgColor="bg-transparent"
       bgHoverColor="hover:bg-black/20"
-      textColor={theme.textColors.lightBox}
+      textColor={theme.text.modal}
       borderColor="border-black/20"
       onClick={onClick}
     >

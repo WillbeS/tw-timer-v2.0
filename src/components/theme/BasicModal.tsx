@@ -32,8 +32,8 @@ export const BasicModal = ({
       onClose={onClose}
       heading={heading}
       footer={footer}
-      bgColor={theme.bgColors.lightBox}
-      textColor={theme.textColors.lightBox}
+      bgColor={theme.bg.modal}
+      textColor={theme.text.modal}
     >
       {children}
     </Modal>

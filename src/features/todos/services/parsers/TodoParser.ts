@@ -72,7 +72,7 @@ export abstract class TodoParser {
 
     if (!coords) return;
 
-    const villages: VillageData[] = await getVillages(world, coords.filter(this.onlyUnique));
+    const villages = await getVillages(world, coords.filter(this.onlyUnique));
     villages.forEach((village: VillageData) => {
       this.villages[`${village.x}|${village.y}`] = village;
     });

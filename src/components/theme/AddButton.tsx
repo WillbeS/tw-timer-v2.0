@@ -11,7 +11,7 @@ export const AddButton = ({ label = 'Add' }: AddButtonProps) => {
     <div
       aria-label="Add"
       area-role="button"
-      className={`flex justify-center items-center gap-2 rounded-md p-2 md:py-4 md:px-5 lg:w-4/6 mx-auto ${theme.bgColors.feature} border ${theme.borderColors.feature} border-dashed cursor-pointer mt-2 font-semibold ${theme.textColors.feature}`}
+      className={`flex justify-center items-center gap-2 rounded-md p-2 md:py-4 md:px-5 lg:w-4/6 mx-auto ${theme.bg.featureButton} border ${theme.border.featureButton} border-dashed cursor-pointer mt-2 font-semibold ${theme.text.featureButton} ${theme.hoverBg.featureButton} ${theme.hoverText.featureButton}`}
     >
       <span>
         <svg

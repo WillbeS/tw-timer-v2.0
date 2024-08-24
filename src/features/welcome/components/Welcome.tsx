@@ -1,23 +1,25 @@
 import { setAsVisited } from '../srvices/storage';
-import { Alert } from '../../../components/ui/Alert';
+import { Help } from '../../help/components/Help';
+import { ClosableContentBox, HR } from '../../../components/theme/layout';
+import { InfoIcon } from '../../../components/utils/icons/InfoIcon';
 
 export const Welcome = () => {
   const reloadPage = () => {
     console.log('needs to reload the home page');
-    setAsVisited();
+    setAsVisited(); //need this, removed for testing!!!
   };
 
   return (
-    <Alert type="information" heading="Welcome!" closable={true} onClose={reloadPage}>
-      <p className="my-3 text-xl">
-        This is a helper tool for the online game Tribal Wars. Its main purpose is to help with
-        various timed tasks, like scheduled attack launches, dodging, etc.
-      </p>
-
-      <p className="my-3 text-xl">
-        Start adding tasks by clicking on the "Add Tasks" button or check the help menu for more
-        details
-      </p>
-    </Alert>
+    <ClosableContentBox heading="TW Timer - Help" onClose={reloadPage}>
+      <div className="flex gap-1 text-base italic font-semibold opacity-70">
+        <InfoIcon />
+        <span>
+          You are seeing this content because this is your first visit. After closing this window
+          you can open it again from the Help button in the main menu.
+        </span>
+      </div>
+      <HR />
+      <Help />
+    </ClosableContentBox>
   );
 };

@@ -38,7 +38,7 @@ export const TaskList = () => {
     dispatch(toggleCompleted(forEdit));
   };
 
-  //console.log('Todo list is rendering');
+  // console.log('Todo list is rendering');
   return (
     <>
       <TopBar />

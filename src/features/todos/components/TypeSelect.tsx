@@ -1,6 +1,6 @@
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { selectType, todosSelector } from '../store/todoSlice';
-import { TopBarSelect } from '../../../components/theme';
+import { TopBarSelect } from '../../../components/theme/layout';
 
 import { todoTypes } from '../data/constants';
 import { UNSELECTED_TYPE } from '../data/constants';

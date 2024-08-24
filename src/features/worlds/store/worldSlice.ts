@@ -1,5 +1,9 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import { getArrFromStorage, getObjFromStorage } from '../../../services/storageManager';
+import {
+  getArrFromStorage,
+  getObjFromStorage,
+  saveToStorage,
+} from '../../../services/storageManager';
 
 import { WorldData } from '../data/types';
 import { fetchWorlds } from './worldAction';
@@ -43,6 +47,7 @@ const worldSlice = createSlice({
     builder.addCase(fetchWorlds.fulfilled, (state, action: PayloadAction<WorldData[]>) => {
       state.loading = false;
       state.worlds = action.payload;
+      saveToStorage(STORAGE_KEY_WORLDS, state.worlds);
     });
     builder.addCase(fetchWorlds.rejected, (state, action: PayloadAction<any>) => {
       state.loading = false;

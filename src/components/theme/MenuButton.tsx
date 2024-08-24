@@ -15,9 +15,10 @@ export const MenuButton = ({ icon, children, onClick }: Props) => {
     <IconButton
       size="base"
       icon={icon}
-      bgColor={theme.bgColors.primary}
-      bgHoverColor={theme.hoverColors.primary}
-      textColor={theme.textColors.primary}
+      bgColor={theme.bg.header}
+      bgHoverColor={theme.hoverBg.header}
+      textColor={theme.text.header}
+      textHoverColor={theme.hoverText.header}
       onClick={onClick}
     >
       {children}

@@ -51,7 +51,7 @@ export const DropdownMenu = ({
   // document.addEventListener('mousedown', closeOpenMenus);
 
   return (
-    <div ref={catMenu} onClick={toggleOpen} className="relative">
+    <div ref={catMenu} onClick={toggleOpen} className="relative w-fit">
       {toggleBtn ? (
         toggleBtn
       ) : (

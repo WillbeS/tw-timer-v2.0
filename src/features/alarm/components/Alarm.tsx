@@ -1,22 +1,14 @@
 import { useEffect, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { taskSelector } from '../../todos/store/todoSlice';
 import { TaskData } from '../../todos/data/types';
-import { todoTypes } from '../../todos/data/constants';
 
-import { dynamicUpdateAction } from '../../todos/store/todoSlice';
-import { getTodoView } from '../../todos/models';
-
-// import alarmSound from '../services/AlarmSound';
 import alarmSound from '../services/AlarmSounds';
-import { SwitchBtn2 } from '../../../components/ui/SwitchBtn2';
-import { useAppDispatch, useAppSelector } from '../../../store/hooks';
-import { settingsSelector } from '../../settings/store/settingsSlice';
-import { themeSelector } from '../../themes/store/themeSlice';
-import { ToggleSwitch } from '../../../components/utils/ToggleSwitch';
+
+import { FeatureToggleSwitch } from '../../../components/theme';
 
 // TODO - refactor this at all cost!!!
 export const Alarm = () => {
-  const { theme } = useAppSelector(themeSelector);
   const dispatch = useAppDispatch();
   const todos: TaskData[] = Object.values(useAppSelector(taskSelector));
   const timer: Worker = useMemo(
@@ -55,11 +47,5 @@ export const Alarm = () => {
 
   // console.log('Alarm is rendering');
 
-  return (
-    // <span className="inline-flex items-center ml-auto">
-    //   <span className={`text-md font-bold mr-2 ${theme.textColors.feature}`}>Alarm</span>
-    //   <SwitchBtn2 onToggle={handleToggle} />
-    // </span>
-    <ToggleSwitch label="Alarm" onToggle={handleToggle} labelColor={theme.textColors.feature} />
-  );
+  return <FeatureToggleSwitch label="Alarm" onToggle={handleToggle} />;
 };

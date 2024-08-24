@@ -1,14 +1,18 @@
-import { AddButton } from './AddButton';
+// Modals
 import { BaseModal } from './BaseModal'; //own open/close functions
 import { BasicModal } from './BasicModal'; //open/close functions from props
+
+// Buttons
+import { AddButton } from './AddButton';
 import { CancelButton } from './CancelButton';
 import { MenuButton } from './MenuButton';
 import { PrimaryButton } from './PrimaryButton';
+
+// Other
 import { AppAlert } from './AppAlert';
-import { TopBarSelect } from './TopBarSelect';
-import { MainContainer } from './MainContainer';
 import { AppSpinner } from './AppSpinner';
-import { TopBarOptions } from './TopBarOptions';
+import { FeatureToggleSwitch } from './FeatureToggleSwitch';
+import { ListItem } from './ListItem';
 
 export {
   AddButton,
@@ -18,8 +22,7 @@ export {
   MenuButton,
   PrimaryButton,
   AppAlert,
-  TopBarSelect,
-  MainContainer,
   AppSpinner,
-  TopBarOptions,
+  FeatureToggleSwitch,
+  ListItem,
 };

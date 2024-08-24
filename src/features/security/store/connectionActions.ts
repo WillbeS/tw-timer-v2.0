@@ -49,7 +49,7 @@ export const connectToServer = createAsyncThunk<
       await api.post(`timer/tasks/${world}`, byWorld[world], token);
     }
 
-    thunkAPI.dispatch(addSuccess('Successfully connected to the server!'));
+    // thunkAPI.dispatch(addSuccess('Successfully connected to the server!'));
 
     return { token, adminId };
   } catch (error: any) {
@@ -66,7 +66,7 @@ export const deleteApiKey = createAsyncThunk<{}, { token: string }, { rejectValu
       await api.delete('key', `${token}`);
 
       // thunkAPI.dispatch(disconnectTasks());
-      thunkAPI.dispatch(addSuccess('Your api key was successfully deleted.'));
+      // thunkAPI.dispatch(addSuccess('Your api key was successfully deleted.'));
     } catch (error: any) {
       thunkAPI.dispatch(addError(error.message));
       console.log(error.message);

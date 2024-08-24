@@ -1,41 +1,72 @@
+// TW - https://coolors.co/palette/8d9585-804e3e-e9dbb9-1f0806-d4c8b2-c09464-f2e4c0-d1b987-c3a66f-564d3d
 import { ColorTheme } from './ColorTheme';
 
-// export const bgColors = {
-//   primary: 'bg-dark-primary500',
-//   main: 'bg-dark-primary800',
-//   lightBox: 'bg-stone-100',
-//   button: 'bg-dark-primary500',
-//   feature: 'bg-dark-primary700',
-// };
+const bg = {
+  main: 'bg-zinc-800',
+  header: 'bg-zinc-700',
+  featureContent: 'bg-zinc-600',
+  featureButton: 'bg-zinc-900',
+  topBar: 'bg-zinc-600',
+  list: 'bg-zinc-700',
+  modal: 'bg-zinc-300',
 
-// export const borderColors = {
-//   primary: 'border-stone-600',
-//   main: 'border-stone-600',
-//   lightBox: 'border-stone-300',
-//   button: 'border-dark-primary700',
-//   feature: 'border-dark-primary500',
-// };
+  msgInfo: 'bg-blue-50',
+  msgSuccess: 'bg-green-50',
+  msgWarning: 'bg-yellow-50',
+  msgError: 'bg-red-50',
 
-// export const textColors = {
-//   primary: 'text-stone-100',
-//   main: 'text-stone-100',
-//   logo: 'text-stone-200',
-//   button: 'text-stone-100',
-//   feature: 'text-stone-100',
-//   lightBox: 'text-stone-700',
-// };
+  icon: '',
+};
 
-// export const fillColors = {
-//   primary: 'fill-stone-200',
-//   main: 'fill-stone-200',
-//   lightBox: 'fill-slate-100',
-//   button: 'fill-sky-800',
-//   feature: 'fill-blue-500',
-// };
+const text = {
+  main: 'text-stone-300',
+  header: 'text-stone-300',
+  featureContent: 'text-stone-200',
+  featureButton: 'text-stone-300',
+  topBar: 'text-stone-200',
+  list: 'text-stone-200',
+  contentLink: 'text-stone-400',
+  modal: 'text-stone-700',
+  logo: 'text-stone-200',
 
-// export const dark: ColorTheme = {
-//   bgColors,
-//   borderColors,
-//   textColors,
-//   fillColors,
-// };
+  msgInfo: 'text-blue-800',
+  msgSuccess: 'text-green-800',
+  msgWarning: 'text-yellow-800',
+  msgError: 'text-red-800',
+
+  icon: '',
+};
+
+const border = {
+  header: 'border-zinc-700',
+  featureButton: 'border-zinc-300',
+  topBar: 'border-zinc-300',
+};
+
+const hoverBg = {
+  header: 'hover:bg-zinc-600',
+  featureButton: 'hover:bg-zinc-800',
+  topBar: 'hover:bg-zinc-700',
+  icon: '',
+};
+
+const hoverText = {
+  main: '',
+  header: 'hover:text-stone-100',
+  featureButton: 'hover:text-stone-100',
+  contentLink: 'hover:text-stone-500',
+};
+
+const fill = {
+  logo: 'fill-stone-300', //logo
+  main: 'fill-zinc-600', //spinner
+};
+
+export const dark: ColorTheme = {
+  bg,
+  border,
+  text,
+  hoverBg,
+  hoverText,
+  fill,
+};

@@ -11,7 +11,7 @@ export type VillageData = {
   y: string;
 };
 
-export type NewTask = {
+export interface NewTask {
   type: string;
   world: string;
   message: string;
@@ -20,26 +20,19 @@ export type NewTask = {
   isRepeating: boolean;
   url?: string | undefined;
   details?: string | undefined;
-};
+}
 
-export type TaskData = {
+export interface TaskData extends NewTask {
   id: string;
   serverId?: number | undefined;
   completed: boolean;
-  type: string;
-  world: string;
-  message: string;
-  dueMs: number;
-  alarmOffset: number;
-  isRepeating: boolean;
-  url?: string | undefined;
-  details?: string | undefined;
-};
+}
 
 export type TasksById = {
   [id: string]: TaskData;
 };
 
+// rename to TaskFormInput
 export type AddTasksFormInput = {
   world: string;
   type: string;
@@ -48,6 +41,7 @@ export type AddTasksFormInput = {
   subtype: undefined | string;
 };
 
+// Rename to TaskFormErrors
 export type AddTasksFormErrors = {
   [key: string]: string | undefined;
   world?: string | undefined;

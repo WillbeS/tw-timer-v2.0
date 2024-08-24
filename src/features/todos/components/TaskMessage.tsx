@@ -1,5 +1,6 @@
 import { TodoView } from '../models/TodoView';
 import { TaskData } from '../data/types';
+import { ContentLink } from '../../../components/theme/layout';
 // import { todoTypes } from '../data/constants';
 // import { AttackMessage } from './AttackMessage';
 
@@ -29,16 +30,9 @@ export const TaskMessage = ({ todoView, onEdit }: Props) => {
   return (
     <>
       {beforeTxt}
-      <a
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-yellow-800  hover:text-red-600"
-        onClick={handleLinkClick}
-      >
+      <ContentLink url={url} onClick={handleLinkClick}>
         {linkTxt}
-        {/* <span className="font-bold pl-1 pr-2">⤴</span> */}
-      </a>
+      </ContentLink>
       {afterTxt}
     </>
   );

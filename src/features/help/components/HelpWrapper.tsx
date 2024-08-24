@@ -1,17 +1,17 @@
-import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
-import { RoundedButton } from '../../../components/ui/RoundedButton';
 
 import { Help } from './Help';
+import { BasicModal, PrimaryButton } from '../../../components/theme';
 
-const OpenBtn = () => <RoundedButton label="Help" symbol="?" onClick={console.log} />;
+// TODO the real one
+const OpenBtn = () => <PrimaryButton onClick={console.log}>Help</PrimaryButton>;
 
 //delete when safe
 export const HelpWrapper = () => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
 
   return (
-    <ModalWrapper2
+    <BasicModal
       heading="TW Timer Help"
       isOpen={modalOpened}
       onOpen={onOpenModal}
@@ -19,6 +19,6 @@ export const HelpWrapper = () => {
       openBtn={<OpenBtn />}
     >
       <Help />
-    </ModalWrapper2>
+    </BasicModal>
   );
 };

@@ -1,12 +1,11 @@
 import { Outlet } from 'react-router-dom';
 
-import { Header } from './components/layouts/Header';
 import ErrorBoundary from './components/ErrorBoundary';
 
 import { TopContent } from './features/todos/components/TopContent';
 import { UIMessage } from './features/messages/components/UIMessage';
 
-import { MainContainer } from './components/theme/MainContainer';
+import { Header, MainContainer } from './components/theme/layout';
 
 function App() {
   // console.log('App is rendering');

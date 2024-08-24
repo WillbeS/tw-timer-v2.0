@@ -3,6 +3,7 @@ type Props = {
   bgColor?: string;
   bgHoverColor?: string;
   textColor?: string;
+  textHoverColor?: string;
   size?: string;
   children?: React.ReactNode;
   onClick?: () => void;
@@ -12,6 +13,7 @@ export const IconButton = ({
   bgColor = 'bg-blue-700',
   bgHoverColor = 'hover:bg-blue-800',
   textColor = 'text-white',
+  textHoverColor = 'hover:text-white',
   size = 'base',
   icon,
   children,
@@ -39,7 +41,7 @@ export const IconButton = ({
     <button
       onClick={handleClick}
       type="button"
-      className={`${getSizeStyles()} font-medium text-center ${textColor} ${bgColor} rounded-lg ${bgHoverColor} flex items-center gap-1 focus:outline-none`}
+      className={`${getSizeStyles()} font-medium text-center ${textColor} ${textHoverColor} ${bgColor} rounded-lg ${bgHoverColor} flex items-center gap-1 focus:outline-none`}
     >
       {icon}
       <span className="hidden md:inline">{children}</span>

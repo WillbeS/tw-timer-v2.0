@@ -1,15 +1,10 @@
 import { useState } from 'react';
 import { TaskTypes } from '../../../data/types';
-import { AlarmOffsetSettings } from '../data/types';
 import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 import { settingsSelector, updateAlarmOffsetSettings } from '../store/settingsSlice';
+import { Input } from '../../../components/utils/form';
 
-type Props = {
-  inputStyles: string;
-  // alarmOffset: AlarmOffsetSettings;
-};
-
-export const AlarmOffsetForm = ({ inputStyles }: Props) => {
+export const AlarmOffsetForm = () => {
   const { alarmOffset } = useAppSelector(settingsSelector);
   const [alarmOffsetSettings, setAlarmOffsetSettings] = useState({ ...alarmOffset });
   const dispatch = useAppDispatch();
@@ -25,23 +20,21 @@ export const AlarmOffsetForm = ({ inputStyles }: Props) => {
   };
 
   return (
-    <>
+    <div className="grid gap-4 mb-4 grid-cols-4">
       {Object.keys(alarmOffsetSettings).map((type, i) => {
         const taskType = type as TaskTypes;
         return (
-          <div className="mb-1" key={i}>
-            <div className="mr-4 w-3/6 inline-block">{type}</div>
-            <input
+          <div className="col-span-2 sm:col-span-1" key={i}>
+            <Input
               type="number"
-              name={type}
+              label={type}
               value={alarmOffsetSettings[taskType]}
-              className={`${inputStyles} w-2/6`}
               onChange={(e) => onInputChange(e, taskType)}
               onBlur={handleSubmit}
             />
           </div>
         );
       })}
-    </>
+    </div>
   );
 };

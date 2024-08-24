@@ -10,7 +10,7 @@ export const ColorThemeBtn = ({ theme, name, onClick }: Props) => {
   return (
     <span
       onClick={() => onClick(name)}
-      className={`cursor-pointer w-10 h-10 rounded-full ${theme.bgColors.main}`}
+      className={`cursor-pointer w-10 h-10 rounded-full ${theme.bg.main}`}
     ></span>
   );
 };

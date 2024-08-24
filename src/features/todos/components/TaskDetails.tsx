@@ -1,10 +1,12 @@
 import { useModalWrapper } from '../../../hooks/useModalWrapper';
-import { ModalWrapper2 } from '../../../components/ui/ModalWrapper2';
-import { todoTypes } from '../data/constants';
-import { MintingDetails } from './MintingDetails';
+// import { todoTypes } from '../data/constants';
+// import { MintingDetails } from './MintingDetails';
+// import { MintingTodoView } from '../models/MintingTodoView';
 import { TodoView } from '../models/TodoView';
-import { MintingTodoView } from '../models/MintingTodoView';
-import { RoundedButton } from '../../../components/ui/RoundedButton';
+import { BasicModal } from '../../../components/theme';
+import { HR } from '../../../components/theme/layout';
+import { IconButton } from '../../../components/utils/IconButton';
+import { TrashIcon } from '../../../components/utils/icons/TrashIcon';
 
 const OpenBtn = () => <span className="pl-2 cursor-pointer">🔎</span>;
 
@@ -17,38 +19,44 @@ export const TaskDetails = ({ taskView, onDelete }: Props) => {
   const { modalOpened, onOpenModal, onCloseModal } = useModalWrapper();
 
   return (
-    <ModalWrapper2
+    <BasicModal
       heading={`🔎 Details`}
       isOpen={modalOpened}
       onOpen={onOpenModal}
       onClose={onCloseModal}
       openBtn={<OpenBtn />}
     >
-      <div className="flex flex-col gap-3">
-        <div className="text-sm">
-          {taskView.getDetails().map((d, i) => {
-            return (
-              <div key={i} className="flex flex-col sm:flex-row mb-2">
-                <div className="sm:basis-2/6 font-bold sm:text-right sm:mr-2">{d.heading}</div>
-                <div className="sm:basis-4/6">{d.content}</div>
-              </div>
-            );
-          })}
+      {/* This is necessary or the details will be rendered every time the list renders, for every single task!!!! */}
+      {modalOpened && (
+        <>
+          <div className="flex flex-col gap-3">
+            <div className="text-sm md:text-base">
+              {taskView.getDetails().map((d, i) => {
+                // console.log('Rendering the details even though not visible!!!');
+                return (
+                  <div key={i} className="flex flex-col sm:flex-row mb-2">
+                    <div className="sm:basis-2/6 font-bold sm:text-right sm:mr-2">{d.heading}</div>
+                    <div className="sm:basis-4/6">{d.content}</div>
+                  </div>
+                );
+              })}
 
-          {/* {taskView.getType() === todoTypes.MINTING ? (
+              {/* {taskView.getType() === todoTypes.MINTING ? (
             <MintingDetails viewData={taskView as MintingTodoView} />
           ) : null} */}
-        </div>
-      </div>
-      <div className="border-t border-slate-300 p-2 mt-4 flex justify-end gap-4">
-        {/* <RoundedButton label="Edit" symbol="✐" /> */}
-        <RoundedButton
-          label="Delete"
-          symbol="🗑"
-          bgColor="bg-red-800"
-          onClick={() => onDelete(taskView.getId())}
-        />
-      </div>
-    </ModalWrapper2>
+            </div>
+          </div>
+          <HR />
+          <div className="p-2 mt-4 flex justify-end gap-4">
+            <IconButton
+              icon={<TrashIcon />}
+              bgColor="bg-red-800"
+              bgHoverColor="hover:bg-red-900"
+              onClick={() => onDelete(taskView.getId())}
+            ></IconButton>
+          </div>
+        </>
+      )}
+    </BasicModal>
   );
 };

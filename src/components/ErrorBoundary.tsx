@@ -42,7 +42,7 @@ class ErrorBoundary extends Component<Props, State> {
                   window.location.reload();
                 }}
               >
-                Clear Cash
+                Clear Cache
               </PrimaryButton>
             </span>
           </div>

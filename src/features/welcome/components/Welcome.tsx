@@ -1,7 +1,8 @@
 import { setAsVisited } from '../srvices/storage';
-import { Help } from '../../help/components/Help';
+
 import { ClosableContentBox, HR } from '../../../components/theme/layout';
 import { InfoIcon } from '../../../components/utils/icons/InfoIcon';
+import { HelpContent } from '../../help/components/HelpContent';
 
 export const Welcome = () => {
   const reloadPage = () => {
@@ -19,7 +20,7 @@ export const Welcome = () => {
         </span>
       </div>
       <HR />
-      <Help />
+      <HelpContent />
     </ClosableContentBox>
   );
 };

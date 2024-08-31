@@ -46,10 +46,6 @@ export const Alert = ({
     return null;
   }
 
-  if (hide) {
-    return null;
-  }
-
   const opacityTransition = show ? 'opacity-100' : 'opacity-0';
 
   return (

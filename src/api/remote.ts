@@ -77,7 +77,7 @@ const makeRequest = async (method: string, endpoint: string, body: unknown, key?
 
     if (!response.ok) {
       const errorMessage = await response.json();
-      console.log(errorMessage + '; status code: ' + response.status);
+      console.log(errorMessage + '; status code: ' + response.status, response.statusText);
 
       throw new Error(errorMessage);
     }

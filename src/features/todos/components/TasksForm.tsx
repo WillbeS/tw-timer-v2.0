@@ -137,7 +137,7 @@ export const TasksForm = ({ onSubmit, onCancel }: ModalFormProps) => {
           <Textarea
             label="Parse from text or type a reminder"
             value={input.text}
-            rows={10}
+            rows={6}
             onKeyDown={onKeyPress}
             onChange={(e) => setInput({ ...input, text: e.target.value })}
             validationError={errors.text}

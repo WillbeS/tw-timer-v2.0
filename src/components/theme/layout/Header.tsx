@@ -24,13 +24,10 @@ export function Header() {
       {/* Buttons */}
       <div className="flex gap-3 items-center">
         <Settings />
-
+        <RemoteConnection />
         <MenuButton icon={<HelpIcon />} onClick={() => navigate('/help')}>
           Help
         </MenuButton>
-        {/* <HelpWrapper /> */}
-
-        <RemoteConnection />
       </div>
     </header>
   );

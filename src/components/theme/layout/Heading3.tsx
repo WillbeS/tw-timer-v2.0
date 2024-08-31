@@ -6,7 +6,7 @@ interface Heading2Props {
 
 export const Heading3 = ({ children, textColor = '', uppercase = false }: Heading2Props) => {
   return (
-    <h3 className={`text-lg font-semibold ${uppercase && 'uppercase'} mb-2 ${textColor}`}>
+    <h3 className={`text-lg font-semibold ${uppercase && 'uppercase'} my-2 ${textColor}`}>
       {children}
     </h3>
   );

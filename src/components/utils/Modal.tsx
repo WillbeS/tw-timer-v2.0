@@ -3,6 +3,10 @@ import { CloseButton } from './CloseButton';
 import { ModalOpenButton } from './ModalOpenButton';
 
 interface ModalProps {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+  maxWidth?: string;
   bgColor?: string;
   textColor?: string;
   headingBorderColor?: string;
@@ -11,13 +15,14 @@ interface ModalProps {
   heading?: React.ReactNode;
   footer?: React.ReactNode;
   openBtn?: React.ReactNode;
-  isOpen: boolean;
-  onOpen: () => void;
-  onClose: () => void;
   children?: React.ReactNode;
 }
 
 export const Modal = ({
+  isOpen,
+  onOpen,
+  onClose,
+  maxWidth = 'max-w-lg',
   bgColor = 'bg-white',
   textColor = 'text-gray-500',
   headingBorderColor = 'border-black/10',
@@ -26,9 +31,6 @@ export const Modal = ({
   heading,
   footer,
   openBtn,
-  isOpen,
-  onOpen,
-  onClose,
   children,
 }: ModalProps) => {
   const handleClose = (e: MouseEvent<HTMLElement>) => {
@@ -54,7 +56,7 @@ export const Modal = ({
           tabIndex={-1}
           className="fixed top-0 left-0 right-0 z-50 w-full p-4 pt-20 overflow-x-hidden overflow-y-auto md:inset-0 h-full bg-black bg-opacity-40"
         >
-          <div onClick={onIgnoreClose} className="relative w-full max-w-lg max-h-full mx-auto">
+          <div onClick={onIgnoreClose} className={`relative w-full ${maxWidth} max-h-full mx-auto`}>
             <div className={`relative ${bgColor} rounded-lg shadow`}>
               <div
                 className={`flex items-center justify-between p-3 md:p-4 border-b ${headingBorderColor} rounded-t`}

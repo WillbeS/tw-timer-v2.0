@@ -7,6 +7,7 @@ interface BasicModalProps {
   isOpen: boolean;
   onOpen: () => void;
   onClose: () => void;
+  maxWidth?: string;
   openBtn?: ReactNode;
   heading?: ReactNode;
   footer?: ReactNode;
@@ -17,6 +18,7 @@ export const BasicModal = ({
   isOpen,
   onOpen,
   onClose,
+  maxWidth = 'max-w-lg',
   openBtn,
   heading,
   footer,
@@ -30,6 +32,7 @@ export const BasicModal = ({
       isOpen={isOpen}
       onOpen={onOpen}
       onClose={onClose}
+      maxWidth={maxWidth}
       heading={heading}
       footer={footer}
       bgColor={theme.bg.modal}

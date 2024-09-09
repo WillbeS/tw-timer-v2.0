@@ -12,7 +12,7 @@ interface ScrrensSlideProps {
 
 const imagesDir = 'img/slides';
 
-const duration = 3000;
+const duration = 5000;
 
 export const ScreensSlide = ({ title, thumbName, images }: ScrrensSlideProps) => {
   const { modalOpened, onCloseModal, onOpenModal } = useModal();
@@ -20,7 +20,7 @@ export const ScreensSlide = ({ title, thumbName, images }: ScrrensSlideProps) =>
   return (
     <BasicModal
       openBtn={<ScreenThumb title={title} imageName={thumbName} />}
-      heading={`Tutorial - How to ${title}`}
+      heading={`Tutorial - ${title}`}
       maxWidth="max-w-2xl"
       isOpen={modalOpened}
       onOpen={onOpenModal}

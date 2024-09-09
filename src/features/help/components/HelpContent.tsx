@@ -9,7 +9,7 @@ export const HelpContent = () => {
   return (
     <div>
       <section className="mb-4">
-        <Heading2>Screenshots - How to...</Heading2>
+        <Heading2>Screenshot Tutorials</Heading2>
         <div className="flex flex-wrap gap-3 justify-evenly">
           <ScreensSlide title="Add Attacks" thumbName="attack.jpg" images={attackImages} />
         </div>

@@ -20,7 +20,6 @@ interface SlideshowProps {
 
 export const Slideshow = ({ imagesDir, images, duration = 3000, onRestart }: SlideshowProps) => {
   const index = useRef(0);
-  const imgHeight = useRef(0);
 
   const image1 = useRef<HTMLImageElement>(null);
   const image2 = useRef<HTMLImageElement>(null);
@@ -35,20 +34,19 @@ export const Slideshow = ({ imagesDir, images, duration = 3000, onRestart }: Sli
       index.current++;
 
       if (index.current >= images.length) {
-        console.log(imgHeight.current);
+        image1.current!.className = `${imgCommonStyles} z-20 opacity-100 relative`;
+        image1.current!.src = `${imagesDir}/${images[0].imageName}`;
         playButtton.current!.className = `absolute ${playButtonStyles}`;
 
         return;
       }
 
-      if (captionDiv.current) {
-        if (images[index.current].caption) {
-          captionDiv.current.className = `${captionsStyles} opacity-100`;
-          const caption: string = images[index.current].caption as string;
-          captionDiv.current.textContent = caption;
-        } else {
-          captionDiv.current.className = `${captionsStyles} opacity-0`;
-        }
+      if (images[index.current].caption) {
+        captionDiv.current!.className = `${captionsStyles} opacity-100`;
+        const caption: string = images[index.current].caption as string;
+        captionDiv.current!.textContent = caption;
+      } else {
+        captionDiv.current!.className = `${captionsStyles} opacity-0`;
       }
 
       const nextImage = images[(index.current + 1) % images.length];
@@ -148,9 +146,6 @@ export const Slideshow = ({ imagesDir, images, duration = 3000, onRestart }: Sli
     );
   };
 
-  console.log('Slideshow rendering');
-  console.log(imgHeight.current);
-
   const imgCommonStyles = 'rounded-md absolute top-0 transition-opacity ease-in duration-500';
   const captionsStyles =
     'absolute top-[82%] md:top-[90%] left-[4%] w-11/12 rounded-md bg-black/80 z-30 text-gray-200 p-1 text-center transition-opacity ease-in duration-500';
@@ -165,7 +160,6 @@ export const Slideshow = ({ imagesDir, images, duration = 3000, onRestart }: Sli
           className={`${imgCommonStyles} opacity-100 z-20 relative`}
           src={`${imagesDir}/${images[0].imageName}`}
           alt="slideshow"
-          onLoad={() => (imgHeight.current = image1.current!.offsetHeight)}
         />
         <img
           ref={image2}

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { SlideImage } from '../../features/help/data/types';
 import { PlayIcon } from './icons/PlayIcon';
 
@@ -15,10 +15,9 @@ interface SlideshowProps {
   imagesDir: string;
   images: SlideImage[];
   duration?: number;
-  onRestart?: () => void;
 }
 
-export const Slideshow = ({ imagesDir, images, duration = 3000, onRestart }: SlideshowProps) => {
+export const Slideshow = ({ imagesDir, images, duration = 3000 }: SlideshowProps) => {
   const index = useRef(0);
 
   const image1 = useRef<HTMLImageElement>(null);
@@ -37,6 +36,7 @@ export const Slideshow = ({ imagesDir, images, duration = 3000, onRestart }: Sli
         image1.current!.className = `${imgCommonStyles} z-20 opacity-100 relative`;
         image1.current!.src = `${imagesDir}/${images[0].imageName}`;
         playButtton.current!.className = `absolute ${playButtonStyles}`;
+        captionDiv.current!.className = `${captionsStyles} opacity-0`;
 
         return;
       }
@@ -148,12 +148,15 @@ export const Slideshow = ({ imagesDir, images, duration = 3000, onRestart }: Sli
 
   const imgCommonStyles = 'rounded-md absolute top-0 transition-opacity ease-in duration-500';
   const captionsStyles =
-    'absolute top-[82%] md:top-[90%] left-[4%] w-11/12 rounded-md bg-black/80 z-30 text-gray-200 p-1 text-center transition-opacity ease-in duration-500';
+    'w-full rounded-md bg-black text-gray-200 p-1 text-sm md:text-lg text-center transition-opacity ease-in duration-500';
   const playButtonStyles =
     'top-[40%] left-[24%] sm:left-[30%] md:left-[40%] px-4 rounded-lg z-40 bg-black/80 hover:bg-gray-800/90 p-2 text-gray-100 cursor-pointer';
 
   return (
     <>
+      <div ref={captionDiv} className={captionsStyles}>
+        {images[index.current]?.caption}
+      </div>
       <div className="relative">
         <img
           ref={image1}
@@ -173,9 +176,7 @@ export const Slideshow = ({ imagesDir, images, duration = 3000, onRestart }: Sli
           src={`${imagesDir}/${images[2].imageName}`}
           alt="slideshow"
         />
-        <div ref={captionDiv} className={captionsStyles}>
-          {images[index.current]?.caption}
-        </div>
+
         <button onClick={onPlayAgain} ref={playButtton} className={`${playButtonStyles} hidden`}>
           <span className="flex gap-2 justify-center">
             Play Again

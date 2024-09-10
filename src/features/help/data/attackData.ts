@@ -125,6 +125,10 @@ const attackImages: SlideImage[] = [
     imageName: 'add-attack/29.jpg',
     caption: 'and you got all the attacks as timed tasks',
   },
+  {
+    imageName: 'add-attack/0.jpg',
+    caption: 'Tutorial - How to add attack tasks',
+  },
 ];
 
 export { attackImages };

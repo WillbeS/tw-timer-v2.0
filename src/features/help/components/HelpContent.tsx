@@ -1,5 +1,5 @@
 import { Heading2, Heading3, HR } from '../../../components/theme/layout';
-import { attackImages } from '../data/slideData';
+import { attackImages, introImages } from '../data';
 import { taskTypesHelp } from '../data/taskTypesHelp';
 import { ScreensSlide } from './ScreensSlide';
 
@@ -11,6 +11,7 @@ export const HelpContent = () => {
       <section className="mb-4">
         <Heading2>Screenshot Tutorials</Heading2>
         <div className="flex flex-wrap gap-3 justify-evenly">
+          <ScreensSlide title="Intro Tour" thumbName="attack.jpg" images={introImages} />
           <ScreensSlide title="Add Attacks" thumbName="attack.jpg" images={attackImages} />
         </div>
       </section>

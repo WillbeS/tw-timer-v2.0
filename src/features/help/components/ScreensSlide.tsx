@@ -12,7 +12,7 @@ interface ScrrensSlideProps {
 
 const imagesDir = 'img/slides';
 
-const duration = 5000;
+const duration = 4000;
 
 export const ScreensSlide = ({ title, thumbName, images }: ScrrensSlideProps) => {
   const { modalOpened, onCloseModal, onOpenModal } = useModal();
@@ -26,7 +26,7 @@ export const ScreensSlide = ({ title, thumbName, images }: ScrrensSlideProps) =>
       onOpen={onOpenModal}
       onClose={onCloseModal}
     >
-      <div className="bg-gray-300">
+      <div className="bg-gray-900 rounded-md pb-1">
         {modalOpened && <Slideshow imagesDir={imagesDir} images={images} duration={duration} />}
       </div>
     </BasicModal>

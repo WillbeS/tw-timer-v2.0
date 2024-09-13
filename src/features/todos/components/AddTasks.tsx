@@ -1,4 +1,4 @@
-import { startLoadingAction, stoptLoadingAction } from '../store/todoSlice';
+import { showCompletedAction, startLoadingAction, stoptLoadingAction } from '../store/todoSlice';
 
 import { AddTasksFormInput } from '../data/types';
 import { getParser } from '../services/parsers';
@@ -27,6 +27,7 @@ export const AddTasks = () => {
       dispatch(addError(error.message));
     } finally {
       dispatch(stoptLoadingAction());
+      dispatch(showCompletedAction(false));
       onCloseModal();
     }
   };

@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "TW Timer",
+  "name": "A helper tool for the online game Tribalars",
   "icons": [
     {
       "src": "favicon.ico",

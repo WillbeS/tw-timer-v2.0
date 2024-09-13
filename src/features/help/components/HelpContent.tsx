@@ -1,7 +1,8 @@
-import { Heading2, Heading3, HR } from '../../../components/theme/layout';
-import { attackImages, introImages } from '../data';
+import { Heading2, Heading3 } from '../../../components/theme/layout';
+import { Slideshow } from '../../../components/utils/Slideshow';
+import { introImages } from '../data';
+import { FRAME_DURATION, SLIDE_IMAGES_DIR } from '../data/const';
 import { taskTypesHelp } from '../data/taskTypesHelp';
-import { ScreensSlide } from './ScreensSlide';
 
 import { TaskTypeItem } from './TaskTypeItem';
 
@@ -9,10 +10,8 @@ export const HelpContent = () => {
   return (
     <div>
       <section className="mb-4">
-        <Heading2>Screenshot Tutorials</Heading2>
-        <div className="flex flex-wrap gap-3 justify-evenly">
-          <ScreensSlide title="Intro Tour" thumbName="attack.jpg" images={introImages} />
-          <ScreensSlide title="Add Attacks" thumbName="attack.jpg" images={attackImages} />
+        <div className={`rounded-md pb-1 mx-auto`}>
+          <Slideshow imagesDir={SLIDE_IMAGES_DIR} images={introImages} duration={FRAME_DURATION} />
         </div>
       </section>
 

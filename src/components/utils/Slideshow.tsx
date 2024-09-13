@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SlideImage } from '../../features/help/data/types';
 import { PlayIcon } from './icons/PlayIcon';
 
@@ -18,6 +18,7 @@ interface SlideshowProps {
 }
 
 export const Slideshow = ({ imagesDir, images, duration = 3000 }: SlideshowProps) => {
+  const [playing, setPlaying] = useState(false);
   const index = useRef(0);
 
   const image1 = useRef<HTMLImageElement>(null);
@@ -28,6 +29,14 @@ export const Slideshow = ({ imagesDir, images, duration = 3000 }: SlideshowProps
 
   useEffect(() => {
     let id: ReturnType<typeof setTimeout>;
+    console.log(playing);
+
+    if (!playing) {
+      playButtton.current!.className = `absolute ${playButtonStyles}`;
+      return;
+    } else {
+      playButtton.current!.className = `hidden ${playButtonStyles}`;
+    }
 
     id = setInterval(() => {
       index.current++;
@@ -36,7 +45,8 @@ export const Slideshow = ({ imagesDir, images, duration = 3000 }: SlideshowProps
         image1.current!.className = `${imgCommonStyles} z-20 opacity-100 relative`;
         image1.current!.src = `${imagesDir}/${images[0].imageName}`;
         playButtton.current!.className = `absolute ${playButtonStyles}`;
-        captionDiv.current!.className = `${captionsStyles} opacity-0`;
+        captionDiv.current!.textContent = images[0].caption as string;
+        setPlaying(false);
 
         return;
       }
@@ -102,7 +112,7 @@ export const Slideshow = ({ imagesDir, images, duration = 3000 }: SlideshowProps
         clearTimeout(id);
       }
     };
-  }, []);
+  }, [playing]);
 
   const setAnimationProps = (
     animAttr1: AnimAttributes,
@@ -144,20 +154,21 @@ export const Slideshow = ({ imagesDir, images, duration = 3000 }: SlideshowProps
         imageName: images[2].imageName,
       },
     );
+    setPlaying(true);
   };
 
   const imgCommonStyles = 'rounded-md absolute top-0 transition-opacity ease-in duration-500';
   const captionsStyles =
-    'w-full rounded-md bg-black text-gray-200 p-1 text-sm md:text-lg text-center transition-opacity ease-in duration-500';
+    'w-fit rounded-md bg-black text-gray-200 p-1 text-[10px] sm:text-[11px] md:text-lg text-center transition-opacity ease-in duration-500 mx-auto';
   const playButtonStyles =
-    'top-[40%] left-[24%] sm:left-[30%] md:left-[40%] px-4 rounded-lg z-40 bg-black/80 hover:bg-gray-800/90 p-2 text-gray-100 cursor-pointer';
+    'top-[40%] left-[34%] sm:left-[40%] md:left-[44%] px-4 rounded-lg z-40 bg-black/80 hover:bg-gray-800/90 p-2 text-gray-100 cursor-pointer';
 
   return (
-    <>
+    <div className="bg-black rounded w-fit mx-auto">
       <div ref={captionDiv} className={captionsStyles}>
         {images[index.current]?.caption}
       </div>
-      <div className="relative">
+      <div className="relative ">
         <img
           ref={image1}
           className={`${imgCommonStyles} opacity-100 z-20 relative`}
@@ -179,11 +190,11 @@ export const Slideshow = ({ imagesDir, images, duration = 3000 }: SlideshowProps
 
         <button onClick={onPlayAgain} ref={playButtton} className={`${playButtonStyles} hidden`}>
           <span className="flex gap-2 justify-center">
-            Play Again
+            Play
             <PlayIcon />
           </span>
         </button>
       </div>
-    </>
+    </div>
   );
 };

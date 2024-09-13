@@ -3,16 +3,13 @@ import { ScreenThumb } from './ScreenThumb';
 import { SlideImage } from '../data/types';
 import { useModal } from '../../../components/theme/hooks/useModal';
 import { Slideshow } from '../../../components/utils/Slideshow';
+import { FRAME_DURATION, SLIDE_IMAGES_DIR } from '../data/const';
 
 interface ScrrensSlideProps {
   title: string;
   thumbName: string;
   images: SlideImage[];
 }
-
-const imagesDir = 'img/slides';
-
-const duration = 4000;
 
 export const ScreensSlide = ({ title, thumbName, images }: ScrrensSlideProps) => {
   const { modalOpened, onCloseModal, onOpenModal } = useModal();
@@ -26,8 +23,10 @@ export const ScreensSlide = ({ title, thumbName, images }: ScrrensSlideProps) =>
       onOpen={onOpenModal}
       onClose={onCloseModal}
     >
-      <div className="bg-gray-900 rounded-md pb-1">
-        {modalOpened && <Slideshow imagesDir={imagesDir} images={images} duration={duration} />}
+      <div className="rounded-md pb-1">
+        {modalOpened && (
+          <Slideshow imagesDir={SLIDE_IMAGES_DIR} images={images} duration={FRAME_DURATION} />
+        )}
       </div>
     </BasicModal>
   );

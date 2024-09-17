@@ -1,9 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
-import {
-  getArrFromStorage,
-  getObjFromStorage,
-  saveToStorage,
-} from '../../../services/storageManager';
+import { getArrFromStorage, saveToStorage } from '../../../services/storageManager';
 
 import { WorldData } from '../data/types';
 import { fetchWorlds } from './worldAction';
@@ -12,20 +8,12 @@ import { UNSELECTED_WORLD, STORAGE_KEY_WORLDS } from '../data/constants';
 
 interface WorldState {
   worlds: WorldData[];
-  connected: {
-    [tag: string]: string;
-  };
-  connectedIds: {
-    [tag: string]: string | null;
-  };
   selectedWorld: string;
   loading: boolean;
 }
 
 const initialState: WorldState = {
   worlds: getArrFromStorage(STORAGE_KEY_WORLDS),
-  connected: getObjFromStorage('connected_worlds'), //delete when safe
-  connectedIds: getObjFromStorage('connected_ids'), //delete when safe
   selectedWorld: UNSELECTED_WORLD,
   loading: false,
 };

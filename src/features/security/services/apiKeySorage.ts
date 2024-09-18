@@ -37,54 +37,54 @@ export const getApiKeyFromStorage = () => {
   // return oldKey;
 };
 
-export const isConnected = (): boolean => {
-  const key = getApiKeyFromStorage();
+// export const isConnected = (): boolean => {
+//   const key = getApiKeyFromStorage();
 
-  return key ? true : false;
-};
+//   return key ? true : false;
+// };
 
 // This is to support legacy code
-const getApiKeyFromOldStorage = (): ApiKey | undefined => {
-  const adminIds = getAdminIds();
-  const tokens = getTokens();
+// const getApiKeyFromOldStorage = (): ApiKey | undefined => {
+//   const adminIds = getAdminIds();
+//   const tokens = getTokens();
 
-  if (Object.keys(adminIds).length > 0) {
-    const world = Object.keys(adminIds)[0];
+//   if (Object.keys(adminIds).length > 0) {
+//     const world = Object.keys(adminIds)[0];
 
-    return {
-      token: tokens[world],
-      adminId: adminIds[world],
-    };
-  }
+//     return {
+//       token: tokens[world],
+//       adminId: adminIds[world],
+//     };
+//   }
 
-  if (Object.keys(tokens).length > 0) {
-    return {
-      token: Object.values(tokens)[0] as string,
-      adminId: undefined,
-    };
-  }
+//   if (Object.keys(tokens).length > 0) {
+//     return {
+//       token: Object.values(tokens)[0] as string,
+//       adminId: undefined,
+//     };
+//   }
 
-  return undefined;
-};
+//   return undefined;
+// };
 
-export const getTokens = () => {
-  const connected = localStorage.getItem('connected_worlds');
+// export const getTokens = () => {
+//   const connected = localStorage.getItem('connected_worlds');
 
-  if (connected) {
-    return JSON.parse(connected);
-  }
+//   if (connected) {
+//     return JSON.parse(connected);
+//   }
 
-  return {};
-};
+//   return {};
+// };
 
-export const getAdminIds = () => {
-  const connectedIds = localStorage.getItem('connected_ids');
+// export const getAdminIds = () => {
+//   const connectedIds = localStorage.getItem('connected_ids');
 
-  if (connectedIds) {
-    return JSON.parse(connectedIds);
-  }
+//   if (connectedIds) {
+//     return JSON.parse(connectedIds);
+//   }
 
-  return {};
-};
+//   return {};
+// };
 
 ////////////////////////////////////////////////////////////////////

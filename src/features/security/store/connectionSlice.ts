@@ -2,23 +2,19 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { ApiKey } from '../data/types';
 import {
   getApiKeyFromStorage,
-  isConnected,
   removeApiKeyFromStorage,
   saveApiKeyToStorage,
 } from '../services/apiKeySorage';
 import { RootState } from '../../../store/store';
 import { connectToServer, deleteApiKey } from './connectionActions';
 
-//The admin id needs to be separate!!!
 interface ConnectionState {
   loading: boolean;
-  online: boolean; // will delete this
   apiKey: ApiKey | undefined;
 }
 
 const initialState: ConnectionState = {
   loading: false,
-  online: isConnected(),
   apiKey: getApiKeyFromStorage(),
 };
 
@@ -38,10 +34,10 @@ const connectionSlice = createSlice({
     });
     builder.addCase(
       connectToServer.fulfilled,
-      (state, action: PayloadAction<{ token: string; adminId: string | undefined }>) => {
+      (state, action: PayloadAction<{ token: string }>) => {
         state.loading = false;
-        const { token, adminId } = action.payload;
-        state.apiKey = { token, adminId };
+        const { token } = action.payload;
+        state.apiKey = { token };
         saveApiKeyToStorage(state.apiKey);
       },
     );

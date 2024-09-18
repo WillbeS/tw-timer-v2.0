@@ -5,7 +5,7 @@ import { connectionSelector, disconnectFromServer } from '../store/connectionSli
 
 import { ConnectedStatus } from './ConnectedStatus';
 import { NotConnectedStatus } from './NotConnectedStatus';
-import { AppSpinner, BaseModal, MenuButton } from '../../../components/theme';
+import { BaseModal, MenuButton } from '../../../components/theme';
 import { LinkIcon } from '../../../components/utils/icons/LinkIcon';
 
 const OpenBtn = () => <MenuButton icon={<LinkIcon />}>Connect</MenuButton>;

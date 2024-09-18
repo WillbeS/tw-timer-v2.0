@@ -11,7 +11,7 @@ import { connectionSelector } from '../features/security/store/connectionSlice';
 
 export const HomePage = () => {
   const dispatch = useAppDispatch();
-  const { online, apiKey } = useAppSelector(connectionSelector);
+  const { apiKey } = useAppSelector(connectionSelector);
 
   useEffect(() => {
     dispatch(fetchWorlds());
@@ -19,9 +19,9 @@ export const HomePage = () => {
     if (apiKey) {
       dispatch(fetchAllTasks(apiKey.token));
     }
-  }, [dispatch, online, apiKey]);
+  }, [dispatch, apiKey]);
 
-  console.log('Rendering the Home page');
+  //console.log('Rendering the Home page');
   // ErrorBoundary test
 
   // Cache related error

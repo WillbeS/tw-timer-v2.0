@@ -3,7 +3,9 @@ import { ColorTheme } from './ColorTheme';
 
 const bg = {
   main: 'bg-zinc-800',
-  header: 'bg-zinc-700',
+  header: 'bg-zinc-800',
+  headerButton: 'bg-zinc-700',
+  mergeBg: 'bg-zinc-800',
   featureContent: 'bg-zinc-600',
   featureButton: 'bg-zinc-900',
   topBar: 'bg-zinc-600',
@@ -21,6 +23,7 @@ const bg = {
 const text = {
   main: 'text-stone-300',
   header: 'text-stone-300',
+  headerButton: 'text-stone-300',
   featureContent: 'text-stone-200',
   featureButton: 'text-stone-300',
   topBar: 'text-stone-200',

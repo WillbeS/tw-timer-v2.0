@@ -1,8 +1,10 @@
 import { Heading2, Heading3 } from '../../../components/theme/layout';
 import { Slideshow } from '../../../components/utils/Slideshow';
-import { introImages } from '../data';
+import { attackImages, introImages } from '../data';
 import { FRAME_DURATION, SLIDE_IMAGES_DIR } from '../data/const';
 import { taskTypesHelp } from '../data/taskTypesHelp';
+import { ScreensSlide } from './ScreensSlide';
+import { ScreenThumb } from './ScreenThumb';
 
 import { TaskTypeItem } from './TaskTypeItem';
 
@@ -10,18 +12,27 @@ export const HelpContent = () => {
   return (
     <div>
       <section className="mb-4">
-        <div className={`rounded-md pb-1 mx-auto`}>
-          <Slideshow imagesDir={SLIDE_IMAGES_DIR} images={introImages} duration={FRAME_DURATION} />
-        </div>
-      </section>
-
-      <section className="mb-4">
         <Heading2>What is TW Timer</Heading2>
         <p>
           The purpose of this tool is to display various TW related (tribalwars.net) timed tasks and
           to trigger an alarm when it's time to complete them (
           <span className="font-semibold">the alarm functionality is not reliable on mobile</span>).
         </p>
+      </section>
+
+      <section className="mb-4">
+        <Heading2>Quick Tutorials</Heading2>
+        <div className={`rounded-md pb-1 mx-auto`}>
+          <Slideshow imagesDir={SLIDE_IMAGES_DIR} images={introImages} duration={FRAME_DURATION} />
+        </div>
+        <Heading3>More Tutorials</Heading3>
+        <div>
+          <ScreensSlide
+            title="Add Attacks"
+            openBtn={<button className="underline">How to add attacks</button>}
+            images={attackImages}
+          />
+        </div>
       </section>
 
       <section className="mb-4">

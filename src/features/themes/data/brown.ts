@@ -2,7 +2,9 @@ import { ColorTheme } from './ColorTheme';
 
 const bg = {
   main: 'bg-amber-800',
-  header: 'bg-yellow-700',
+  header: 'bg-amber-800',
+  headerButton: 'bg-yellow-700',
+  mergeBg: 'bg-amber-800',
   featureContent: 'bg-yellow-700',
   featureButton: 'bg-amber-900',
   topBar: 'bg-yellow-700',
@@ -20,6 +22,7 @@ const bg = {
 const text = {
   main: 'text-white',
   header: 'text-white',
+  headerButton: 'text-white',
   featureContent: 'text-white',
   featureButton: 'text-white',
   topBar: 'text-white',

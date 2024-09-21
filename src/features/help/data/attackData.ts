@@ -6,128 +6,136 @@ const attackImages: SlideImage[] = [
     caption: 'Tutorial - How to add attack tasks',
   },
   {
+    imageName: 'add-attack/0.jpg',
+    caption: 'TW Timer supports several attack scripts - ',
+  },
+  {
     imageName: 'add-attack/1.jpg',
-    caption: 'The TW timer can work with plans generated from popular TW scripts',
+    caption: 'Single Village Planner,',
   },
   {
     imageName: 'add-attack/2.jpg',
-    caption: 'Like the Single Village Attack Planner and others',
+    caption: 'Mass Attack Planner,',
   },
   {
     imageName: 'add-attack/3.jpg',
-    caption: "For example, let's make a plan with the SV planner.",
+    caption: "Devil's Tribal Wars Utilities Planner,",
   },
   {
     imageName: 'add-attack/4.jpg',
-    caption: 'We select a target',
+    caption: 'and Fodox Mass Attack Planner.',
   },
   {
     imageName: 'add-attack/5.jpg',
-    caption: 'and go to the village view as usual to pake a plan',
+    caption: 'To add attack tasks, click the Add button,',
   },
   {
     imageName: 'add-attack/6.jpg',
-    caption: 'in this case for a noble train.',
+    caption: 'fill in the form',
   },
   {
     imageName: 'add-attack/7.jpg',
-    caption: 'Then copy the plan from here',
+    caption: 'and paste the plan into the textarea.',
   },
   {
     imageName: 'add-attack/8.jpg',
-    caption: "the bb coded plan also works so it's up to your preference which one to use",
-  },
-  {
-    imageName: 'add-attack/0.jpg',
-    caption: 'and now go to the TW Timer',
+    caption: 'Your attacks should appear as timed tasks.',
   },
   {
     imageName: 'add-attack/9.jpg',
-    caption: 'and click the Add Task button',
+    caption: 'If you pasted the wrong format',
   },
   {
     imageName: 'add-attack/10.jpg',
-    caption: 'you need to select a world for it to work properly',
+    caption: 'you will see this message',
   },
   {
     imageName: 'add-attack/11.jpg',
-    caption: "then choose a type, in this case it's attack",
+    caption: 'so make sure to copy the right format!',
   },
   {
     imageName: 'add-attack/12.jpg',
-    caption: 'once you do that, you will see another drop down',
+    caption: "Here's an example with the SV Planner:",
   },
   {
     imageName: 'add-attack/13.jpg',
-    caption: 'with some specific attack types',
+    caption: 'Copy the plan from here,',
   },
   {
     imageName: 'add-attack/14.jpg',
-    caption: 'those will show later on you task message',
+    caption: 'in the form, select a world,',
   },
   {
     imageName: 'add-attack/15.jpg',
-    caption: 'the offset means that the alarm will play N seconds before the timer reaches 0',
+    caption: 'choose the attack type,',
   },
   {
     imageName: 'add-attack/16.jpg',
-    caption: 'You can leave it at 90 seconds or set your own offset',
+    caption: 'then a subtype - ',
   },
   {
     imageName: 'add-attack/17.jpg',
-    caption: ' and finlally you paste the plan you copied from your script',
+    caption: 'it will show in the task message -',
   },
   {
     imageName: 'add-attack/18.jpg',
-    caption: 'into the textbox',
+    caption: 'the offset will trigger the alarm earlier',
   },
   {
     imageName: 'add-attack/19.jpg',
-    caption: 'then press Enter or the Save button',
+    caption: 'and finally paste the plan here.',
   },
   {
     imageName: 'add-attack/20.jpg',
-    caption: 'You can see your attack as a timed task now',
+    caption: "and it's done",
   },
   {
     imageName: 'add-attack/21.jpg',
-    caption: 'with a countdown timer',
+    caption: "Now let's use the Mass Attack Planner.",
   },
   {
     imageName: 'add-attack/22.jpg',
-    caption: 'if you switch on the alarm button',
+    caption: 'Copy the plan from here,',
   },
   {
     imageName: 'add-attack/23.jpg',
-    caption: "it will play a sound when it's time to send the attack",
+    caption: 'fill in the form, paste it',
   },
   {
     imageName: 'add-attack/24.jpg',
-    caption: "Another tool you can use is Devil's attack planner",
+    caption: 'and done.',
   },
   {
     imageName: 'add-attack/25.jpg',
-    caption: "here's a plan made with the simple version",
+    caption: "For Devil's Attack Planner:",
   },
   {
     imageName: 'add-attack/26.jpg',
-    caption: 'usually we would use it from our notebook',
+    caption: 'copy the plan from here,',
   },
   {
     imageName: 'add-attack/27.jpg',
-    caption: 'but it can be copied',
+    caption: 'paste it,',
   },
   {
     imageName: 'add-attack/28.jpg',
-    caption: 'and pasted in the TW Timer',
+    caption: 'and tasks are added.',
   },
   {
     imageName: 'add-attack/29.jpg',
-    caption: 'and you got all the attacks as timed tasks',
+    caption: 'With Fodox Mass Attack Planner',
   },
   {
-    imageName: 'add-attack/0.jpg',
-    caption: 'Tutorial - How to add attack tasks',
+    imageName: 'add-attack/30.jpg',
+    caption: 'make sure you select the right format',
+  },
+  {
+    imageName: 'add-attack/31.jpg',
+    caption: 'and same as before',
+  },
+  {
+    imageName: 'add-attack/32.jpg',
+    caption: "it's done!",
   },
 ];
 

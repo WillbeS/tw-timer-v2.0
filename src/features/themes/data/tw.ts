@@ -1,8 +1,10 @@
 import { ColorTheme } from './ColorTheme';
 
 export const bg = {
-  main: 'bg-gradient-to-b from-tw-red600 from-20% via-tw-light via-20% to-tw-light to-90%',
-  header: 'bg-tw-red800',
+  main: 'bg-tw-light',
+  header: 'bg-tw-red600',
+  headerButton: 'bg-tw-red800',
+  mergeBg: 'bg-gradient-to-b from-tw-red600 from-70% via-tw-light via-70% to-tw-light to-90%',
   featureContent: 'bg-tw-greenblue',
   // featureContent: 'bg-white/20',
   featureButton: 'bg-tw-red700',
@@ -21,6 +23,7 @@ export const bg = {
 export const text = {
   main: 'text-red-900',
   header: 'text-white',
+  headerButton: 'text-white',
   featureContent: 'text-white',
   featureButton: 'text-white',
   topBar: 'text-white',

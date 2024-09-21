@@ -6,7 +6,7 @@ export const Help = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col gap-5 mt-10">
+    <div className="flex flex-col gap-5 mt-5">
       {/* <TopBarDiv>
         <div className="text-md md:text-lg font-semibold ">Help</div>
       </TopBarDiv> */}

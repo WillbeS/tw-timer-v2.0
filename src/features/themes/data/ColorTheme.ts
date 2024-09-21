@@ -6,6 +6,14 @@ interface Header {
   header: string;
 }
 
+interface MergeBg {
+  mergeBg: string;
+}
+
+interface HeaderButton {
+  headerButton: string;
+}
+
 interface FeatureContent {
   featureContent: string;
 }
@@ -49,6 +57,8 @@ interface Icon {
 
 type BgColors = Main &
   Header &
+  HeaderButton &
+  MergeBg &
   FeatureContent &
   FeatureButton &
   TopBar &
@@ -59,6 +69,7 @@ type BgColors = Main &
 
 type TextColors = Main &
   Header &
+  HeaderButton &
   FeatureContent &
   FeatureButton &
   TopBar &

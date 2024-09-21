@@ -9,7 +9,7 @@ export const MainContainer = ({ children }: MainContainerProps) => {
   const { theme } = useAppSelector(themeSelector);
   return (
     <div
-      className={`flex flex-col justify-between min-h-screen px-3 lg:px-6 ${theme.bg.main} ${theme.text.main}`}
+      className={`flex flex-col justify-between min-h-screen ${theme.bg.main} ${theme.text.main}`}
     >
       {children}
     </div>

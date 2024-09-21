@@ -10,7 +10,7 @@ export const TopBarDiv = ({ children }: TopBarProps) => {
 
   return (
     <div
-      className={`mt-6 py-3 border-b ${theme.border.topBar} flex justify-end md:justify-between items-center ${theme.text.main}`}
+      className={`py-3 border-b ${theme.border.topBar} flex justify-end md:justify-between items-center ${theme.text.main}`}
     >
       {children}
     </div>

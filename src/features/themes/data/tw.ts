@@ -8,7 +8,8 @@ export const bg = {
   featureContent: 'bg-tw-greenblue',
   // featureContent: 'bg-white/20',
   featureButton: 'bg-tw-red700',
-  topBar: 'bg-tw-brown',
+  // topBar: 'bg-tw-brown',
+  topBar: 'bg-yellow-900',
   list: 'bg-stone-100',
   modal: 'bg-stone-100',
 

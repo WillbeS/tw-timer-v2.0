@@ -32,7 +32,6 @@ export const AddTasks = () => {
     }
   };
 
-  console.log('Add task is rendered');
   return (
     <BasicModal
       openBtn={<AddButton label="Add Tasks" />}

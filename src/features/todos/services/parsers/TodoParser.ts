@@ -128,6 +128,7 @@ export abstract class TodoParser {
       isRepeating: false,
       world: this.input.world,
       url,
+      details: this.input.notes,
     };
   }
 

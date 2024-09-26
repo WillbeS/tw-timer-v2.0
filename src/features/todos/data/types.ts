@@ -39,6 +39,7 @@ export type AddTasksFormInput = {
   alarmOffset: string;
   text: string;
   subtype: undefined | string;
+  notes: string;
 };
 
 // Rename to TaskFormErrors
@@ -49,6 +50,7 @@ export type AddTasksFormErrors = {
   subtype?: string | undefined;
   alarmOffset?: string | undefined;
   text?: string | undefined;
+  notes?: string | undefined;
 };
 
 export type Transport = {

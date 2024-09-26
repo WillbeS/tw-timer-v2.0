@@ -1,28 +1,15 @@
 // Modals
-import { BaseModal } from './BaseModal'; //own open/close functions
-import { BasicModal } from './BasicModal'; //open/close functions from props
+export * from './BaseModal';
+export * from './BasicModal';
 
 // Buttons
-import { AddButton } from './AddButton';
-import { CancelButton } from './CancelButton';
-import { MenuButton } from './MenuButton';
-import { PrimaryButton } from './PrimaryButton';
+export * from './AddButton';
+export * from './CancelButton';
+export * from './MenuButton';
+export * from './PrimaryButton';
 
-// Other
-import { AppAlert } from './AppAlert';
-import { AppSpinner } from './AppSpinner';
-import { FeatureToggleSwitch } from './FeatureToggleSwitch';
-import { ListItem } from './ListItem';
-
-export {
-  AddButton,
-  BaseModal,
-  BasicModal,
-  CancelButton,
-  MenuButton,
-  PrimaryButton,
-  AppAlert,
-  AppSpinner,
-  FeatureToggleSwitch,
-  ListItem,
-};
+// // Other
+export * from './AppAlert';
+export * from './AppSpinner';
+export * from './FeatureToggleSwitch';
+export * from './ListItem';

@@ -29,6 +29,7 @@ export const TasksForm = ({ onSubmit, onCancel }: ModalFormProps) => {
     alarmOffset: alarmOffset[TaskTypes.Reminder],
     text: '',
     subtype: undefined,
+    notes: '',
   });
 
   if (input.type === todoTypes.ATTACK && !input.subtype) {
@@ -102,25 +103,27 @@ export const TasksForm = ({ onSubmit, onCancel }: ModalFormProps) => {
         </div>
 
         {input.type === todoTypes.ATTACK && (
-          <div className="col-span-2">
-            <Select
-              label="Select attack type"
-              value={input.subtype}
-              onChange={(e) => {
-                setInput({
-                  ...input,
-                  subtype: e.target.value,
-                });
-              }}
-              validationError={errors.subtype}
-            >
-              {Object.values(attackSubtypes).map((value, i) => (
-                <option key={i} value={value}>
-                  {value}
-                </option>
-              ))}
-            </Select>
-          </div>
+          <>
+            <div className="col-span-2">
+              <Select
+                label="Select attack type"
+                value={input.subtype}
+                onChange={(e) => {
+                  setInput({
+                    ...input,
+                    subtype: e.target.value,
+                  });
+                }}
+                validationError={errors.subtype}
+              >
+                {Object.values(attackSubtypes).map((value, i) => (
+                  <option key={i} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </Select>
+            </div>
+          </>
         )}
 
         <div className="col-span-2">
@@ -137,10 +140,21 @@ export const TasksForm = ({ onSubmit, onCancel }: ModalFormProps) => {
           <Textarea
             label="Parse from text or type a reminder"
             value={input.text}
-            rows={6}
+            rows={4}
             onKeyDown={onKeyPress}
             onChange={(e) => setInput({ ...input, text: e.target.value })}
             validationError={errors.text}
+          />
+        </div>
+
+        <div className="col-span-2">
+          <Input
+            type="text"
+            label="Notes"
+            value={input.notes}
+            placeholder="Extra notes, will show in details"
+            onChange={(e) => setInput({ ...input, notes: e.target.value })}
+            validationError={errors.notes}
           />
         </div>
       </div>

@@ -1,31 +1,17 @@
+import { ComponentPropsWithoutRef } from 'react';
 import { ValidationError } from './ValidationError';
 
-interface TextareaProps {
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onKeyDown?: (e: React.KeyboardEvent<HTMLTextAreaElement>) => void;
+type TextareaProps = {
   label?: string;
-  value: string;
-  rows?: number;
   size?: 'small' | 'base' | 'large';
-  placeholder?: string;
   validationError?: string;
-  textColor?: string;
-  bgColor?: string;
-  borderColor?: string;
-}
+} & ComponentPropsWithoutRef<'textarea'>;
 
 export const Textarea = ({
-  onChange,
-  onKeyDown,
   label,
-  value,
-  rows = 4,
   size = 'base',
-  placeholder,
   validationError,
-  textColor = 'text-gray-900',
-  bgColor = 'bg-white/50',
-  borderColor = 'border-black/15',
+  ...restTextareaProps
 }: TextareaProps) => {
   const sizeStyles = {
     small: 'text-sm p-1.5 font-base',
@@ -33,16 +19,15 @@ export const Textarea = ({
     large: 'text-lg p-2.5 font-medium',
   };
 
+  const addedStyles = restTextareaProps.className;
+  delete restTextareaProps.className;
+
   return (
     <>
-      {label && <label className={`block mb-2 text-sm font-medium ${textColor}`}>{label}</label>}
+      {label && <label className={`block mb-2 text-sm font-medium  text-gray-900`}>{label}</label>}
       <textarea
-        value={value}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        rows={rows}
-        className={`${bgColor} border ${borderColor} ${textColor} rounded-lg focus:outline-none block w-full ${sizeStyles[size]}`}
-        placeholder={placeholder}
+        className={`bg-white/50 border border-black/15 text-gray-900 rounded-lg focus:outline-none block w-full ${sizeStyles[size]} ${addedStyles}`}
+        {...restTextareaProps}
       />
       <ValidationError fieldError={validationError} />
     </>

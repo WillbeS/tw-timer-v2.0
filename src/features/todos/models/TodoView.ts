@@ -90,7 +90,7 @@ export class TodoView {
   }
 
   public getDetails() {
-    return [
+    const details = [
       {
         heading: 'Full message',
         content: this.todo.message.replaceAll('[*url*]', ''),
@@ -112,6 +112,15 @@ export class TodoView {
         content: formatTimeIntoText(this.todo.alarmOffset),
       },
     ];
+
+    if (this.todo.details && this.todo.details.length > 0) {
+      details.push({
+        heading: 'Notes',
+        content: this.todo.details,
+      });
+    }
+
+    return details;
   }
 
   public update(triggeredBy: string = 'updateBtn'): TaskData | undefined {

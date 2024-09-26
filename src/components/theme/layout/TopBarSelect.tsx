@@ -14,12 +14,7 @@ export const TopBarSelect = ({ value, onChange, children }: TopBarSelectProps) =
     <Select
       value={value}
       onChange={onChange}
-      size="base"
-      borderColor="border-none"
-      bgColor={theme.bg.topBar}
-      bgHoverColor={theme.hoverBg.topBar}
-      textColor={theme.text.topBar}
-      cursorPointer
+      className={`${theme.bg.topBar} border-none cursor-pointer ${theme.hoverBg.topBar} ${theme.text.topBar}`}
     >
       {children}
     </Select>

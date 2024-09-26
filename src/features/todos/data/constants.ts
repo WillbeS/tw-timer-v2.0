@@ -10,7 +10,7 @@ export const WH_BUFFER = {
 
 export const todoTypes = {
   ATTACK: 'attack',
-  SNIPE: 'snipe',
+  SNIPE: 'support',
   DODGE: 'dodge',
   // MINTING: 'minting',
   REMINDER: 'reminder',

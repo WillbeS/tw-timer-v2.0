@@ -18,6 +18,7 @@ export class TodoFormView {
     this.validateWorld(todoInput.world, todoInput.type);
     this.validateAlarmOffset(todoInput.alarmOffset);
     this.validateText(todoInput.text);
+    this.validateNotes(todoInput.notes);
 
     if (todoInput.subtype) {
       this.validateSubtype(todoInput.subtype);
@@ -67,6 +68,12 @@ export class TodoFormView {
   private validateText(text: string) {
     if (text === '') {
       this.addError('text', 'Text for parsing cannot be empty');
+    }
+  }
+
+  private validateNotes(notes: string) {
+    if (notes.length > 50) {
+      this.addError('notes', "Notes can't exceed 50 characters");
     }
   }
 

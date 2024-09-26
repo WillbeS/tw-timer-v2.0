@@ -1,48 +1,21 @@
+import { ComponentPropsWithoutRef } from 'react';
 import { ValidationError } from './ValidationError';
 
-interface InputProps {
-  type?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onBlur?: (e: React.FocusEvent<HTMLInputElement>) => void;
+type InputProps = {
   label?: string;
-  value: string;
-  size?: 'small' | 'base' | 'large';
-  placeholder?: string;
   validationError?: string;
-  textColor?: string;
-  bgColor?: string;
-  borderColor?: string;
-}
+} & ComponentPropsWithoutRef<'input'>;
 
-export const Input = ({
-  type = 'text',
-  onChange,
-  onBlur,
-  label,
-  value,
-  size = 'base',
-  placeholder,
-  validationError,
-  textColor = 'text-gray-900',
-  bgColor = 'bg-white/50',
-  borderColor = 'border-black/15',
-}: InputProps) => {
-  const sizeStyles = {
-    small: 'text-sm p-1.5 font-base',
-    base: 'text-md p-2 font-medium',
-    large: 'text-lg p-2.5 font-medium',
-  };
+export const Input = ({ label, validationError, ...inputProps }: InputProps) => {
+  const addedStyles = inputProps.className;
+  delete inputProps.className;
 
   return (
     <>
-      {label && <label className={`block mb-2 text-sm font-medium ${textColor}`}>{label}</label>}
+      {label && <label className={`block mb-2 text-sm font-medium text-gray-900`}>{label}</label>}
       <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        onBlur={onBlur}
-        className={`${bgColor} border ${borderColor} ${textColor} rounded-lg focus:outline-none block w-full ${sizeStyles[size]}`}
-        placeholder={placeholder}
+        className={`bg-white/50 border border-black/15 text-gray-900 rounded-lg focus:outline-none block w-full text-md p-2 font-medium ${addedStyles}`}
+        {...inputProps}
       />
       <ValidationError fieldError={validationError} />
     </>

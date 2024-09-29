@@ -19,7 +19,7 @@ function App() {
       <MainContainer>
         <div className="relative ">
           <div className={`${theme.bg.header}`}>
-            <div className="md:w-10/12 lg:w-8/12 mx-auto">
+            <div className="md:w-10/12 max-w-4xl lg:w-8/12 mx-auto">
               <UIMessage />
               <Header />
             </div>
@@ -27,12 +27,12 @@ function App() {
 
           <main>
             <div className={`${theme.bg.mergeBg}`}>
-              <div className="px-2 p-3 md:p-5 md:px-5 md:w-10/12 lg:w-8/12 mx-auto">
+              <div className="px-2 p-3 md:p-5 md:px-5 md:w-10/12 max-w-4xl lg:w-8/12 mx-auto">
                 <TopContent />
               </div>
             </div>
 
-            <div className="px-2 md:pb-5 pb-16  md:px-5 md:w-10/12 lg:w-8/12 mx-auto">
+            <div className="px-2 md:pb-5 pb-16  md:px-5 md:w-10/12 max-w-4xl lg:w-8/12 mx-auto">
               <Outlet />
             </div>
           </main>

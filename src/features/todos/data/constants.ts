@@ -32,6 +32,7 @@ export const attackTypes = {
   MASS_ATTACK_RA: 'massAttackRA',
   MASS_ATTACK_FODOX: 'massAttackFodox',
   MASS_ATTACK_DEVIL: 'massAttackDevil',
+  MASS_ATTACK_DEVIL_2: 'massAttackDevil2',
 };
 
 export const snipeTypes = {

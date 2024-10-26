@@ -1,6 +1,6 @@
 import { TodoParser } from './TodoParser';
 import { NewTask, AddTasksFormInput } from '../../data/types';
-import { attackTypes, attackSubtypes } from '../../data/constants';
+import { attackTypes } from '../../data/constants';
 import { convertUTCtoLocalMS } from '../../../../utils/dateTime';
 
 type MatchParts = {
@@ -31,6 +31,11 @@ export class AttackParser extends TodoParser {
           /.*?\[unit\](.*?)\[\/unit\].*?(\d{4}-\d\d-\d\d).*?(\d\d:\d\d:\d\d).*?(\d\d\d\|\d\d\d).*?(\d\d\d\|\d\d\d)/g,
       },
       {
+        name: attackTypes.MASS_ATTACK_DEVIL_2,
+        value:
+          /(\d{3}\|\d{3})->(\d{3}\|\d{3}),\d\d\.\d\d,([a-z]+){1},[a-zA-z]+,(\d{4}-\d\d-\d\d\s\d\d:\d\d:\d\d)\.\d+,[\d:\.]+,(\d{4}-\d\d-\d\d)\s(\d\d:\d\d:\d\d)/g,
+      },
+      {
         name: attackTypes.MASS_ATTACK_FODOX,
         value:
           /.*?(\d{3}\|\d{3}).*?(\d{3}\|\d{3}).*?\[unit\](.*?)\[\/unit\].*?\[b\](\d\d-\d\d-\d{4})\s(\d\d:\d\d:\d\d)/g,
@@ -46,6 +51,9 @@ export class AttackParser extends TodoParser {
         break;
       case attackTypes.MASS_ATTACK_DEVIL:
         parts = this.parseMassAttackDevil(match);
+        break;
+      case attackTypes.MASS_ATTACK_DEVIL_2:
+        parts = this.parseMassAttackDevil2(match);
         break;
       case attackTypes.MASS_ATTACK_RA:
         parts = this.parseMassAttackRA(match);
@@ -96,6 +104,14 @@ export class AttackParser extends TodoParser {
 
   private parseMassAttackDevil(match: RegExpMatchArray): MatchParts {
     let [, unit, dateStr, timeStr, origin, destination] = match;
+    unit = this.getUnitFromBBCode(unit);
+    const dueDateST = new Date(`${dateStr} ${timeStr}`);
+
+    return { unit, origin, destination, dueDateST, url: this.getUrl(origin, destination) };
+  }
+
+  private parseMassAttackDevil2(match: RegExpMatchArray): MatchParts {
+    let [, origin, destination, unit, , dateStr, timeStr] = match;
     unit = this.getUnitFromBBCode(unit);
     const dueDateST = new Date(`${dateStr} ${timeStr}`);
 

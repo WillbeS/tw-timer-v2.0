@@ -2,7 +2,7 @@ import { useAppDispatch } from '../../../store/hooks';
 import { deleteAll, deleteCompleted } from '../store/taskActions';
 import { showCompletedAction } from '../store/todoSlice';
 
-import { TopBarOptions } from '../../../components/theme/layout';
+import { HR, TopBarOptions } from '../../../components/theme/layout';
 import { TrashIcon } from '../../../components/utils/icons/TrashIcon';
 import { DropdownMenuButton } from '../../../components/utils/DropdownMenuButton';
 import { ClockIcon } from '../../../components/utils/icons/ClockIcon';
@@ -36,6 +36,7 @@ export const ListOptionsMenu = () => {
       {/* <DropdownMenuButton label="Clear completed" symbol="🗑" onClick={onClearCompleted} /> */}
       <DropdownMenuButton label="Clear completed" icon={<TrashIcon />} onClick={onClearCompleted} />
       {/* <DropdownMenuButton label="Clear all" symbol="🗑" onClick={onClearAll} /> */}
+      <hr className="h-px my-3 bg-gray-500/20 border-0" />
       <DropdownMenuButton label="Clear all" icon={<TrashIcon />} onClick={onClearAll} />
     </TopBarOptions>
   );

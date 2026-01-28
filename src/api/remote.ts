@@ -23,6 +23,7 @@ async function fetchANumber(...args: Parameters<typeof fetch>): Promise<number> 
 
 const makeHeaders = (key?: string) => {
   const requestHeaders: HeadersInit = new Headers();
+  //it has to be append here instead of set!!!
   requestHeaders.set('Accept', 'application/json');
 
   if (key) {

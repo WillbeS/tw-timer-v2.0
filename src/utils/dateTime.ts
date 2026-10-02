@@ -69,7 +69,7 @@ export const convertUTCtoLocalMS = (dateUTC: Date) => {
   // }
 
   //Temp fix
-  // offset += 60;
+  offset += 60;
 
   return dateUTC.getTime() - offset * 60 * 1000;
 };
